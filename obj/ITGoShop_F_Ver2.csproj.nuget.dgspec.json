@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\ITGoShop_F_Ver2\\ITGoShop_F_Ver2.csproj": {}
+    "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\ITGoShop_F_Ver2.csproj": {}
   },
   "projects": {
-    "F:\\ITGoShop_F_Ver2\\ITGoShop_F_Ver2.csproj": {
+    "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\ITGoShop_F_Ver2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\ITGoShop_F_Ver2\\ITGoShop_F_Ver2.csproj",
+        "projectUniqueName": "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\ITGoShop_F_Ver2.csproj",
         "projectName": "ITGoShop_F_Ver2",
-        "projectPath": "F:\\ITGoShop_F_Ver2\\ITGoShop_F_Ver2.csproj",
+        "projectPath": "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\ITGoShop_F_Ver2.csproj",
         "packagesPath": "C:\\Users\\Selena\\.nuget\\packages\\",
-        "outputPath": "F:\\ITGoShop_F_Ver2\\obj\\",
+        "outputPath": "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Selena\\AppData\\Roaming\\NuGet\\NuGet.Config",
