@@ -33,16 +33,12 @@
                     <a href="index.html"><img src="~/public/client/images/logo.png" alt="logo"></a>
                 </div>
                 <h1>Đăng nhập</h1>
-                <input type="email" name="Email" placeholder="Email" />
-                <input type="password" name="Password" placeholder="Password" />
-                @*<?php
-                    $message = Session::get('message');
-                    if($message)
-                    {
-                    echo '<span class="text-alert">'.$message.'</span>';
-                    Session::put('message', null);
-                    }
-                    ?>*@
+                <input type="email" name="Email" placeholder="Email"  required/>
+                <input type="password" name="Password" placeholder="Password" required/>
+                @if (ViewBag.message != null)
+                {
+                    <span class="text-alert">@ViewBag.message</span>
+                } 
                 <button type="submit">Đăng nhập</button>
             </form>
         </div>

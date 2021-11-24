@@ -30,7 +30,7 @@ namespace ITGoShop_F_Ver2.Models
                 cmd.Parameters.AddWithValue("password", password);
                 using (var reader = cmd.ExecuteReader())
                 {
-                    if(reader.Read())
+                    if (reader.Read())
                     {
                         userInfo.UserId = Convert.ToInt32(reader["UserId"]);
                         userInfo.FirstName = reader["FirstName"].ToString();
@@ -38,7 +38,9 @@ namespace ITGoShop_F_Ver2.Models
                         userInfo.Mobile = reader["Mobile"].ToString();
                         userInfo.UserImage = reader["UserImage"].ToString();
                         userInfo.Admin = Convert.ToInt32(reader["Admin"]);
-                    }    
+                    }
+                    else
+                        return null;
                 }
             }
             return userInfo;
