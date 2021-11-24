@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 
-namespace ITGoShopver1.Models
+namespace ITGoShop_F_Ver2.Models
 {
     public class User
     {
@@ -23,11 +23,6 @@ namespace ITGoShopver1.Models
         public User()
         {
 
-        }
-
-        public User(int v)
-        {
-            this.userId = v;
         }
 
         public User(string mobile, string email, string password, int admin, string userImage, DateTime registeredAt, DateTime lastLogin)

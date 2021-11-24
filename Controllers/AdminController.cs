@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ITGoShopver1.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,14 @@ namespace ITGoShop_F_Ver2.Controllers
 {
     public class AdminController : Controller
     {
-        public IActionResult Dashboard()
+        public IActionResult Index()
         {
             return View();
+        }
+        public IActionResult Dashboard(User userInput)
+        {
+            
+            return View(); 
         }
     }
 }

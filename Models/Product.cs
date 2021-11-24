@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ITGoShopver1.Models
+namespace ITGoShop_F_Ver2.Models
 {
     public class Product
     {
