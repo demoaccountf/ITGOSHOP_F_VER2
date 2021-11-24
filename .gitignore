@@ -396,3 +396,10 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio
+*.editorconfig
+.vs/ITGoShop_F_Ver2/v16/.suo
+*.cache
+*.json
+*.props
+*.json
+*.cache
