@@ -403,3 +403,6 @@ FodyWeavers.xsd
 *.props
 *.json
 *.cache
+.vs/ITGoShop_F_Ver2/v16/.suo
+*.cache
+obj/Debug/netcoreapp3.1/ITGoShop_F_Ver2.csproj.AssemblyReference.cache
