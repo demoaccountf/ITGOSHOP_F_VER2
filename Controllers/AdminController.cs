@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
 
 //using System.Collections.Generic;
 //using System.Linq;
@@ -81,6 +83,14 @@ namespace ITGoShop_F_Ver2.Controllers
             HttpContext.Session.Remove(adminFirstName);
             HttpContext.Session.Remove(adminImage);
             return View("Index");
+        }
+
+        public List<object> load_login_chart()
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            return context.countLoginByDate(DateTime.Now.AddDays(-7), DateTime.Now);
+            //string jsonString = JsonSerializer.Serialize(loginHistory);
+            //return Json(jsonString);
         }
     }
 }

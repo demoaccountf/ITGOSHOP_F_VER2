@@ -666,185 +666,184 @@
         </div>
     </div>
     <script>
+        $(document).ready(function () {
+            load_access_chart();
+
+            function load_access_chart() {
+                $.ajax({
+                    url: "/Admin/load_login_chart",
+                    dataType: "JSON",
+                    data: {},
+                    success: function (jdata) {
+                        new Morris.Line({
+                            element: 'lineChart',
+                            lineColors: ['#819C79', '#fc8710', '#FF6541', '#A4ADD3', '#766B56'],
+                            pointFillColors: ['#ffffff'],
+                            pointStrokeColors: ['black'],
+                            fillOpacity: 0.6,
+                            hideHover: 'auto',
+                            parseTime: false,
+                            xkey: 'period',
+                            ykeys: ['number_access'],
+                            behaveLikeLine: true,
+                            labels: ['Lượng truy cập'],
+                            data: jdata
+                        });
+                    },
+                    error: function (data) {
+                        swal({
+                            text: "Không tìm thấy dữ liệu",
+                            icon: "error",
+                        });
+                    }
+                });
+            }
+
+        });
+    </script>
+    <script>
 	$(document).ready(function(){
-		load_pie_chart();
-		load_default_chart();
-		load_access_chart();
-		// var today = new Date();
-		// $('#tu-ngay').attr('max', today);
-		var line_chart = new Morris.Line({
-			element: 'lineChart',
-			lineColors: ['#819C79', '#fc8710', '#FF6541', '#A4ADD3', '#766B56'],
-			pointFillColors:['#ffffff'],
-			pointStrokeColors:['black'],
-			fillOpacity: 0.6,
-			hideHover: 'auto',
-			parseTime: false,
-			xkey: 'period',
-			ykeys:['number_access'],
-			behaveLikeLine: true,
-			labels: ['Lượng truy cập']
-		});
-		function load_access_chart()
-		{
-			var _token = $('input[name="_token"]').val();
-			$.ajax({
-					url:"{{url('/load-access-chart'",
-					method: "POST",
-					dataType:"json",
-					data:{ _token: _token},
-					success:function(data)
-					{
-						line_chart.setData(data);
-					},
-					error:function(data)
-					{
-						//swal({
-						//text: "Không tìm thấy dữ liệu",
-						//icon: "error",
-						//});
-					}
-				});
-		}
+		
+		
 
-		var pie_chart = new Morris.Donut({
-			element: 'pieChart',
-			resize: true,
-			colors: ['#819C79', '#fc8710', '#FF6541', '#A4ADD3', '#766B56'],
-			data: [
-				{ label: 'Đã tiếp nhận', value: 20 },
-				{ label: 'Đang vận chuyển', value: 10 },
-				{ label: 'Đã hủy', value: 5 },
-				{ label: 'Đã xác nhận', value: 5 },
-				{ label: 'Hoàn thành', value: 20 }
-			],
-		});
-		setInterval(load_pie_chart, 3000);
+	//	var pie_chart = new Morris.Donut({
+	//		element: 'pieChart',
+	//		resize: true,
+	//		colors: ['#819C79', '#fc8710', '#FF6541', '#A4ADD3', '#766B56'],
+	//		data: [
+	//			{ label: 'Đã tiếp nhận', value: 20 },
+	//			{ label: 'Đang vận chuyển', value: 10 },
+	//			{ label: 'Đã hủy', value: 5 },
+	//			{ label: 'Đã xác nhận', value: 5 },
+	//			{ label: 'Hoàn thành', value: 20 }
+	//		],
+	//	});
+	//	setInterval(load_pie_chart, 3000);
 
-		function load_pie_chart()
-		{
-			var _token = $('input[name="_token"]').val();
-			$.ajax({
-					url:"{{url('/load-pie-chart'",
-					method: "POST",
-					dataType:"json",
-					data:{ _token: _token},
-					success:function(data)
-					{
-						pie_chart.setData(data);
-					},
-					error:function(data)
-					{
-						//swal({
-						//text: "Không tìm thấy dữ liệu",
-						//icon: "error",
-						//});
-					}
-				});
-		}
+	//	function load_pie_chart()
+	//	{
+	//		var _token = $('input[name="_token"]').val();
+	//		$.ajax({
+	//				url:"{{url('/load-pie-chart'",
+	//				method: "POST",
+	//				dataType:"json",
+	//				data:{ _token: _token},
+	//				success:function(data)
+	//				{
+	//					pie_chart.setData(data);
+	//				},
+	//				error:function(data)
+	//				{
+	//					//swal({
+	//					//text: "Không tìm thấy dữ liệu",
+	//					//icon: "error",
+	//					//});
+	//				}
+	//			});
+	//	}
 
-		function load_default_chart()
-		{
-			var _token = $('input[name="_token"]').val();
-			$.ajax({
-					url:"{{url('/load-default-chart'",
-					method: "POST",
-					dataType:"json",
-					data:{ _token: _token},
-					success:function(data)
-					{
-						chart.setData(data);
-					},
-					error:function(data)
-					{
-						//swal({
-						//text: "Không tìm thấy dữ liệu",
-						//icon: "error",
-						//});
-					}
-				});
-		}
+	//	function load_default_chart()
+	//	{
+	//		var _token = $('input[name="_token"]').val();
+	//		$.ajax({
+	//				url:"{{url('/load-default-chart'",
+	//				method: "POST",
+	//				dataType:"json",
+	//				data:{ _token: _token},
+	//				success:function(data)
+	//				{
+	//					chart.setData(data);
+	//				},
+	//				error:function(data)
+	//				{
+	//					//swal({
+	//					//text: "Không tìm thấy dữ liệu",
+	//					//icon: "error",
+	//					//});
+	//				}
+	//			});
+	//	}
 
-		$('#sel-loc-theo').change(function(){
-			var _token = $('input[name="_token"]').val();
-			var time_span = $('#sel-loc-theo').val();
-			if(time_span != '----Chọn----')
-			{
-				$.ajax({
-					url:"{{url('/filter-by-time-span'",
-					method: "POST",
-					dataType:"json",
-					data:{ time_span: time_span, _token: _token},
-					success:function(data)
-					{
-						chart.setData(data);
-					},
-					error:function(data)
-					{
-						//swal({
-						//text: "Không tìm thấy dữ liệu",
-						//icon: "error",
-						//});
-					}
-				});
-			}
+	//	$('#sel-loc-theo').change(function(){
+	//		var _token = $('input[name="_token"]').val();
+	//		var time_span = $('#sel-loc-theo').val();
+	//		if(time_span != '----Chọn----')
+	//		{
+	//			$.ajax({
+	//				url:"{{url('/filter-by-time-span'",
+	//				method: "POST",
+	//				dataType:"json",
+	//				data:{ time_span: time_span, _token: _token},
+	//				success:function(data)
+	//				{
+	//					chart.setData(data);
+	//				},
+	//				error:function(data)
+	//				{
+	//					//swal({
+	//					//text: "Không tìm thấy dữ liệu",
+	//					//icon: "error",
+	//					//});
+	//				}
+	//			});
+	//		}
 
-		});
+	//	});
 
-		var chart = new Morris.Bar({
-			element: 'bieuDoDoanhThu',
-			lineColors: ['#819C79', '#fc8710', '#FF6541', '#A4ADD3', '#766B56'],
-			pointFillColors:['#ffffff'],
-			pointStrokeColors:['black'],
-			fillOpacity: 0.6,
-			hideHover: 'auto',
-			parseTime: false,
-			xkey: 'period',
-			ykeys:['sales', 'profit'],
-			behaveLikeLine: true,
-			labels: ['Bán hàng', 'Doanh thu']
-		});
+	//	var chart = new Morris.Bar({
+	//		element: 'bieuDoDoanhThu',
+	//		lineColors: ['#819C79', '#fc8710', '#FF6541', '#A4ADD3', '#766B56'],
+	//		pointFillColors:['#ffffff'],
+	//		pointStrokeColors:['black'],
+	//		fillOpacity: 0.6,
+	//		hideHover: 'auto',
+	//		parseTime: false,
+	//		xkey: 'period',
+	//		ykeys:['sales', 'profit'],
+	//		behaveLikeLine: true,
+	//		labels: ['Bán hàng', 'Doanh thu']
+	//	});
 
-		$('#btn-hien-thi-thong-ke').click(function(){
-			var _token = $('input[name="_token"]').val();
-			var tu_ngay = $('#tu-ngay').val();
-			var den_ngay = $('#den-ngay').val();
-			if(!tu_ngay || !den_ngay)
-			{
-				swal({
-					text: "Vui lòng chọn thời gian báo cáo",
-					icon: "info",
-					});
-			}
-			else if(den_ngay < tu_ngay)
-			{
-				swal({
-					text: "Ngày báo cáo không hợp lệ! Vui lòng nhập lại",
-					icon: "info",
-					});
-			}
-			else
-			{
-				$.ajax({
-					url:"{{url('/filter-by-date'",
-					method: "POST",
-					dataType:"json",
-					data:{tu_ngay: tu_ngay, den_ngay: den_ngay, _token: _token},
-					success:function(data)
-					{
-						chart.setData(data);
-					},
-					error:function(data)
-					{
-						//swal({
-						//text: "Không tìm thấy dữ liệu",
-						//icon: "error",
-						//});
-					}
-				});
+	//	$('#btn-hien-thi-thong-ke').click(function(){
+	//		var _token = $('input[name="_token"]').val();
+	//		var tu_ngay = $('#tu-ngay').val();
+	//		var den_ngay = $('#den-ngay').val();
+	//		if(!tu_ngay || !den_ngay)
+	//		{
+	//			swal({
+	//				text: "Vui lòng chọn thời gian báo cáo",
+	//				icon: "info",
+	//				});
+	//		}
+	//		else if(den_ngay < tu_ngay)
+	//		{
+	//			swal({
+	//				text: "Ngày báo cáo không hợp lệ! Vui lòng nhập lại",
+	//				icon: "info",
+	//				});
+	//		}
+	//		else
+	//		{
+	//			$.ajax({
+	//				url:"{{url('/filter-by-date'",
+	//				method: "POST",
+	//				dataType:"json",
+	//				data:{tu_ngay: tu_ngay, den_ngay: den_ngay, _token: _token},
+	//				success:function(data)
+	//				{
+	//					chart.setData(data);
+	//				},
+	//				error:function(data)
+	//				{
+	//					//swal({
+	//					//text: "Không tìm thấy dữ liệu",
+	//					//icon: "error",
+	//					//});
+	//				}
+	//			});
 
-			}
+	//		}
 
-		});
-	});
+	//	});
+	//});
     </script>

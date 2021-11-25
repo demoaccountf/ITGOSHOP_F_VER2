@@ -176,6 +176,32 @@ namespace ITGoShop_F_Ver2.Models
             return numberLogin;
         }
 
+        public List<object> countLoginByDate(DateTime startDate, DateTime endDate)
+        {
+            List<object> loginHistory = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT COUNT(*) AS NUMBER_LOGIN, LoginDate FROM loginhistory WHERE LOGINDATE BETWEEN @startdate AND @enddate GROUP BY LoginDate";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("startdate", startDate.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("enddate", endDate.ToString("yyyy-MM-dd"));
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            period = ((DateTime)reader["LoginDate"]).ToString("dd-MM-yyyy"),
+                            number_access = Convert.ToInt32(reader["NUMBER_LOGIN"]),
+                        };
+                        loginHistory.Add(obj);
+                    }
+                }
+            }
+            return loginHistory;
+        }
+
         public long getRevenue(DateTime startDate, DateTime endDate)
         {
             int revenue = 0;
