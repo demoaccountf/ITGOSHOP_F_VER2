@@ -3,8 +3,9 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
     // Cái này để format tiền
-    CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN"); 
+    CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 }
+@model IEnumerable<ITGoShop_F_Ver2.Models.Product>
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -36,15 +37,7 @@
                         <div class="card-header">
                             <div class="card-title">Thêm sản phẩm</div>
                         </div>
-                        @*<?php
-                            $message = Session::get('message');
-                            if($message)
-                            {
-                            echo '<label>'.$message.'</label>';
-                            Session::put('message', null);
-                            }
-                            ?>*@
-                        <form role="form" action="/save-product" method="post" enctype="multipart/form-data">
+                        <form role="form" action="/ProductManagement/SaveProduct" method="post" enctype="multipart/form-data">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12 col-lg-6">
@@ -57,10 +50,10 @@
                                     <div class="col-6 col-lg-6">
                                         <div class="form-group" method="post">
                                             <label for="exampleFormControlSelect1">Danh mục sản phẩm</label>
-                                            <select class="form-control" name="Category" id="exampleFormControlSelect1">
+                                            <select class="form-control" name="CategoryId" id="exampleFormControlSelect1">
                                                 @foreach (var item in @ViewBag.AllCategory)
                                                 {
-                                                <option value="@item.CategoryId">@item.CategoryId : @item.CategoryName</option>
+                                                    <option value="@item.CategoryId">@item.CategoryId : @item.CategoryName</option>
                                                 }
                                             </select>
 
@@ -69,10 +62,10 @@
                                     <div class="col-6 col-lg-6">
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Thương hiệu sản phẩm</label>
-                                            <select class="form-control" name="Brand" id="exampleFormControlSelect1">
+                                            <select class="form-control" name="BrandId" id="exampleFormControlSelect1">
                                                 @foreach (var item in @ViewBag.AllBrand)
                                                 {
-                                                <option value="@item.BrandId">ID: @item.BrandId - @item.BrandName (Mã Danh Mục: @item.CategoryId)</option>
+                                                    <option value="@item.BrandId">ID: @item.BrandId - @item.BrandName (Mã Danh Mục: @item.CategoryId)</option>
                                                 }
 
                                             </select>
@@ -81,11 +74,11 @@
                                     <div class="col-6 col-lg-6">
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Thương hiệu nhánh</label>
-                                            <select class="form-control" name="Subbrand" id="exampleFormControlSelect1">
+                                            <select class="form-control" name="SubBrandId" id="exampleFormControlSelect1">
                                                 @foreach (var item in @ViewBag.AllSubBrand)
                                                 {
-                                                <option value="@item.SubBrandId">@item.SubBrandName (ID Thương hiệu chính: @item.BrandId) </option>
-                                                 }
+                                                    <option value="@item.SubBrandId">@item.SubBrandName (ID Thương hiệu chính: @item.BrandId) </option>
+                                                }
                                             </select>
                                         </div>
                                     </div>
@@ -93,10 +86,11 @@
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Chương trình khuyến mãi</label>
                                             <select class="form-control" name="SliderId" id="exampleFormControlSelect1">
-                                                @*@foreach ($banner_list as $key => $banner)
-                                                    <option value="{{$banner->SliderId}}">{{$banner->SliderName}} </option>
-                                                                @endforeach*@
-                                                <option value=""> </option>
+                                                <option value="" selected> </option>
+                                                @foreach (var item in @ViewBag.AllBannerSlider)
+                                                {
+                                                    <option value="@item.SliderId">@item.SliderName </option>
+                                                }
                                             </select>
                                         </div>
                                     </div>

@@ -9,6 +9,7 @@ namespace ITGoShop_F_Ver2.Models
     {
         private int productId;
         private string productName;
+        private int subBrandId;
         private int brandId;
         private string categoryId;
         private float discount;
@@ -19,7 +20,7 @@ namespace ITGoShop_F_Ver2.Models
         private string productImage;
         private int sold;
         private string content;
-        private int slideId;
+        private int sliderId;
         private int view;
         private DateTime startsAt;
         private DateTime endsAt;
@@ -44,7 +45,7 @@ namespace ITGoShop_F_Ver2.Models
             this.productImage = productImage;
             this.sold = sold;
             this.content = content;
-            this.slideId = slideId;
+            this.sliderId = slideId;
             this.view = view;
             this.startsAt = startsAt;
             this.endsAt = endsAt;
@@ -64,11 +65,12 @@ namespace ITGoShop_F_Ver2.Models
         public string ProductImage { get => productImage; set => productImage = value; }
         public int Sold { get => sold; set => sold = value; }
         public string Content { get => content; set => content = value; }
-        public int SlideId { get => slideId; set => slideId = value; }
+        public int SliderId { get => sliderId; set => sliderId = value; }
         public int View { get => view; set => view = value; }
         public DateTime StartsAt { get => startsAt; set => startsAt = value; }
         public DateTime EndsAt { get => endsAt; set => endsAt = value; }
         public DateTime CreatedAt { get => createdAt; set => createdAt = value; }
         public DateTime UpdatedAt { get => updatedAt; set => updatedAt = value; }
+        public int SubBrandId { get => subBrandId; set => subBrandId = value; }
     }
 }
