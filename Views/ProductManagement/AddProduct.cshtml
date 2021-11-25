@@ -58,10 +58,10 @@
                                         <div class="form-group" method="post">
                                             <label for="exampleFormControlSelect1">Danh mục sản phẩm</label>
                                             <select class="form-control" name="Category" id="exampleFormControlSelect1">
-                                                @*@foreach ($product_category_list as $key => $Category)
-                                                        <option value="{{$Category->CategoryId}}">{{$Category->CategoryId}} : {{$Category->CategoryName}}</option>
-                                                    @endforeach*@
-
+                                                @foreach (var item in @ViewBag.AllCategory)
+                                                {
+                                                <option value="@item.CategoryId">@item.CategoryId : @item.CategoryName</option>
+                                                }
                                             </select>
 
                                         </div>
@@ -70,10 +70,10 @@
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Thương hiệu sản phẩm</label>
                                             <select class="form-control" name="Brand" id="exampleFormControlSelect1">
-                                                @*@foreach ($brand_list as $key => $brand)
-                                                    <option value="{{$brand->BrandId}}">ID: {{$brand->BrandId}} - {{$brand->BrandName}} (Mã Danh Mục: {{$brand->CategoryId}} )</option>
-
-                                                                @endforeach*@
+                                                @foreach (var item in @ViewBag.AllBrand)
+                                                {
+                                                <option value="@item.BrandId">ID: @item.BrandId - @item.BrandName (Mã Danh Mục: @item.CategoryId)</option>
+                                                }
 
                                             </select>
                                         </div>
@@ -82,9 +82,10 @@
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Thương hiệu nhánh</label>
                                             <select class="form-control" name="Subbrand" id="exampleFormControlSelect1">
-                                                @*@foreach ($sub_brand_list as $key => $subbrand)
-                                                    <option value="{{$subbrand->SubBrandId}}">{{$subbrand->SubBrandName}} (ID Thương hiệu chính: {{$subbrand->BrandId}}) </option>
-                                                                @endforeach*@
+                                                @foreach (var item in @ViewBag.AllSubBrand)
+                                                {
+                                                <option value="@item.SubBrandId">@item.SubBrandName (ID Thương hiệu chính: @item.BrandId) </option>
+                                                 }
                                             </select>
                                         </div>
                                     </div>

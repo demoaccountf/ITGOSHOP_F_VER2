@@ -7,7 +7,7 @@ namespace ITGoShop_F_Ver2.Controllers
 {
     public class Category
     {
-        private int categoryId;
+        private string categoryId;
         private string categoryName;
         private string categoryImage;
         private int status;
@@ -16,7 +16,7 @@ namespace ITGoShop_F_Ver2.Controllers
         {
         }
 
-        public Category(int categoryId, string categoryName, string categoryImage, int status)
+        public Category(string categoryId, string categoryName, string categoryImage, int status)
         {
             this.categoryId = categoryId;
             this.categoryName = categoryName;
@@ -24,7 +24,7 @@ namespace ITGoShop_F_Ver2.Controllers
             this.status = status;
         }
 
-        public int CategoryId { get => categoryId; set => categoryId = value; }
+        public string CategoryId { get => categoryId; set => categoryId = value; }
         public string CategoryName { get => categoryName; set => categoryName = value; }
         public string CategoryImage { get => categoryImage; set => categoryImage = value; }
         public int Status { get => status; set => status = value; }

@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using ITGoShop_F_Ver2.Controllers;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -402,7 +403,91 @@ namespace ITGoShop_F_Ver2.Models
             return revenueInfo;
         }
 
+        public List<Category> getAllCategory()
+        {
+            List<Category> list = new List<Category>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select * from Category";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Category()
+                        {
+                            CategoryId = reader["CategoryId"].ToString(),
+                            CategoryName = reader["CategoryName"].ToString(),
+                            Status = Convert.ToInt32(reader["Status"]),
+                        });
+                    }
+                    reader.Close();
+                }
 
+                conn.Close();
 
+            }
+            return list;
+        }
+
+        public List<SubBrand> getAllSubBrand()
+        {
+            List<SubBrand> list = new List<SubBrand>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select * from SubBrand";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new SubBrand()
+                        {
+                            SubBrandId = reader["SubBrandId"].ToString(),
+                            SubBrandName = reader["SubBrandName"].ToString(),
+                            BrandId = Convert.ToInt32(reader["BrandId"])
+                        });
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
+
+        public List<Brand> getAllBrand()
+        {
+            List<Brand> list = new List<Brand>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select * from Brand";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Brand()
+                        {
+                            BrandId = Convert.ToInt32(reader["BrandId"]),
+                            BrandName = reader["BrandName"].ToString(),
+                            Description = reader["Description"].ToString(),
+                            //SubBrand = Convert.ToInt32(reader["SubBrand"]),
+                            Status = Convert.ToInt32(reader["Status"]),
+                            BrandLogo = reader["BrandLogo"].ToString(),
+                        });
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
     }
 }
