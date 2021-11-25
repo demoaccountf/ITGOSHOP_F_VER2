@@ -1,4 +1,14 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    string adminFirstName = HttpContextAccessor.HttpContext.Session.GetString("adminFirstName");
+    string adminLastName = HttpContextAccessor.HttpContext.Session.GetString("adminLastName");
+    string adminImage = HttpContextAccessor.HttpContext.Session.GetString("adminImage");
+    if(string.IsNullOrEmpty(adminImage))
+    {
+        adminImage = "default-user-icon.png";
+    }
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,13 +20,13 @@
     <!-- Fonts and icons -->
     <script src="~/public/admin/js/plugin/webfont/webfont.min.js"></script>
     <script>
-		WebFont.load({
-			google: {"families":["Be Vietnam Pro:300,400,700,900"]},
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['~/public/admin/css/fonts.min.css']},
-			active: function() {
-				sessionStorage.fonts = true;
-			}
-		});
+        WebFont.load({
+            google: { "families": ["Be Vietnam Pro:300,400,700,900"] },
+            custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['~/public/admin/css/fonts.min.css'] },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
     </script>
 
     <!-- CSS Files -->
@@ -245,8 +255,7 @@
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <?php $avt = Session::get('UserImage');
-                                    if($avt == ''){$avt = 'default-user-icon.png';} ?>
+
                                     <img src="~/public/images_upload/user/'.$avt)}}" alt="..." class="avatar-img rounded-circle">
                                 </div>
                             </a>
@@ -255,21 +264,12 @@
                                 <div class="dropdown-user-scroll scrollbar-outer">
                                 <li>
                                     <div class="user-box">
-                                        <div class="avatar-lg"><img src="~/public/images_upload/user/'.$avt)}}" alt="image profile" class="avatar-img rounded"></div>
+                                        <div class="avatar-lg"><img src="~/public/images_upload/user/@adminImage" alt="image profile" class="avatar-img rounded"></div>
                                         <?php
                                         $userId = Session::get('UserId');
                                         ?>
                                         <div class="u-text">
-                                            <h4>
-                                                @*<?php
-                                                $firstName = Session::get('FirstName');
-                                                $lastName = Session::get('LastName');
-                                                if($firstName && $lastName)
-                                                {
-                                                echo $lastName .' '.$firstName;
-                                                }
-                                                ?>*@
-                                            </h4>
+                                            <h4>@adminLastName @adminFirstName</h4>
                                             <p class="text-muted">admin1@gmail.com</p><a href="~//ad_profile/'.$userId)}}" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                                         </div>
                                     </div>
@@ -294,12 +294,12 @@
             <div class="sidebar-content">
                 <div class="user">
                     <div class="avatar-sm float-left mr-2">
-                        <img src="~/public/images_upload/user/'.$avt)}}" alt="..." class="avatar-img rounded-circle">
+                        <img src="~/public/images_upload/user/@adminImage" alt="..." class="avatar-img rounded-circle">
                     </div>
                     <div class="info">
                         <a data-toggle="collapse" href="#" aria-expanded="true">
                             <span>
-                                {{$lastName .' '.$firstName}}
+                                @adminLastName @adminFirstName
                                 <!-- Hizrian -->
                                 <span class="user-level">Quản trị viên</span>
                             </span>

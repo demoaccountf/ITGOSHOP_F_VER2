@@ -1,9 +1,11 @@
 using ITGoShop_F_Ver2.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,9 @@ namespace ITGoShop_F_Ver2
             services.Add(new ServiceDescriptor(typeof(ITGoShopContext), new ITGoShopContext(Configuration.GetConnectionString("DefaultConnection"))));
             services.AddSession();
             //services.AddControllersWithViews();
+
+            /* Các services cài thêm*/
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

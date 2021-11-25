@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
@@ -45,6 +45,8 @@ namespace ITGoShop_F_Ver2.Controllers
 
                 // Update last login
                 context.updateLastLogin(userInfo.UserId);
+
+                // Chuyển dữ liệu admin qua
                 return View();
             }
             return RedirectToAction("Index", new { message = "Mật khẩu hoặc tài khoản sai. Xin nhập lại!" });
