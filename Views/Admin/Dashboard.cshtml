@@ -5,7 +5,7 @@
 
     // Cái này để format tiền
     CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN"); }
-
+@Model
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
@@ -277,7 +277,7 @@
                         ?>
                         <div class="card-header">
                             <div class="card-title"><i class="fas fa-fire" style="color:red;"></i> Top sản phẩm bán chạy</div>
-                            <small class="text-muted">Tháng {{$last_month}} và tháng {{$now_month}}</small>
+                            <small class="text-muted">Tháng @DateTime.Now.AddMonths(-1).Month và tháng @DateTime.Now.Month</small>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -295,30 +295,31 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @* @foreach ($top_product as $key => $item)*@
-                                                <tr>
-                                                    <td>
-                                                        <div class="avatar">
-                                                            <img src="~/public/images_upload/product/'.$item->ProductImage" alt="..." class="avatar-img rounded">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <h6 class="fw-bold mb-1"><a href="~//product-detail/'.$item->ProductId">{{$item->ProductName}}</a></h6>
-                                                    </td>
-                                                    <td>
-                                                        {{date("d/m/Y", strtotime($item->StartsAt)
-                                        </td>
-                                        <td>
-                                            <h4 class="text-info fw-bold">+{{number_format($item->number_solded * ($item->Price - $item->Cost)).' '.'₫'}}</h4>
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <h4 class="text-info fw-bold">{{$item->number_solded}}</h4>
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <h4 class="text-info">{{$item->Quantity}}</h4>
-                                                    </td>
-                                                </tr>
-                                                @*@endforeach*@
+                                                @foreach (var item in @ViewBag.topProducts)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <div class="avatar">
+                                                               <img src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="..." class="avatar-img rounded">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="fw-bold mb-1"><a href="~/product-detail">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h6>
+                                                        </td>
+                                                        <td>
+                                                            @item.GetType().GetProperty("StartsAt").GetValue(item, null).ToString("dd-MM-yyyy")
+                                                        </td>
+                                                        <td>
+                                                            <h4 class="text-info fw-bold">+@((@item.GetType().GetProperty("NumberSolded").GetValue(item, null) * (@item.GetType().GetProperty("Price").GetValue(item, null) - @item.GetType().GetProperty("Cost").GetValue(item, null))).ToString("#,###", cul.NumberFormat)) ₫</h4>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <h4 class="text-info fw-bold"> @item.GetType().GetProperty("NumberSolded").GetValue(item, null)</h4>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <h4 class="text-info">@item.GetType().GetProperty("Quantity").GetValue(item, null)</h4>
+                                                        </td>
+                                                    </tr>
+                                                }
                                             </tbody>
                                         </table>
                                     </div>

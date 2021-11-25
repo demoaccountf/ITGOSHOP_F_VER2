@@ -196,6 +196,47 @@ namespace ITGoShop_F_Ver2.Models
             }
             return revenue;
         }
-
+        public List<object> getTopProduct(DateTime startDate, DateTime endDate)
+        {
+            List<object> products = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT SUM(OrderQuantity) AS NumberSolded , ProductName, ProductImage, P.ProductId, StartsAt, Quantity, Cost, Price " +
+                    "FROM (`product` P JOIN `orderdetail` OD ON P.ProductId = OD.ProductId) " +
+                    "JOIN `order` O ON O.OrderId = OD.OrderId " +
+                    "WHERE OrderStatus <> 'Đã hủy' " +
+                    "AND ORDERDATE BETWEEN @startdate AND @enddate " +
+                    "GROUP BY ProductName, ProductImage, P.ProductId, StartsAt, Quantity, Cost, Price " +
+                    "ORDER BY SUM(OrderQuantity) LIMIT 5;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("startdate", startDate.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("enddate", endDate.ToString("yyyy-MM-dd"));
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        while (reader.Read())
+                        {
+                            var obj = new
+                            {
+                                ProductId = Convert.ToInt32(reader["ProductId"]),
+                                ProductName = reader["ProductName"].ToString(),
+                                ProductImage = reader["ProductImage"].ToString(),
+                                StartsAt = (DateTime)reader["StartsAt"],
+                                Quantity = Convert.ToInt32(reader["Quantity"]),
+                                Cost = Convert.ToInt32(reader["Cost"]),
+                                Price = Convert.ToInt32(reader["Price"]),
+                                NumberSolded = Convert.ToInt32(reader["NumberSolded"])
+                            };
+                            products.Add(obj);
+                        }
+                    }
+                    else
+                        return null;
+                }
+            }
+            return products;
+        }
     }
 }

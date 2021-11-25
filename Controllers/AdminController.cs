@@ -55,6 +55,7 @@ namespace ITGoShop_F_Ver2.Controllers
                 ViewBag.totalRevenueThisMonth = context.getRevenue(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1), DateTime.Now);
                 ViewBag.numberOrderToday = context.countOrder(DateTime.Now, DateTime.Now);
                 ViewBag.numberLoginToday = context.countLogin(DateTime.Now, DateTime.Now);
+                ViewBag.topProducts = context.getTopProduct((new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddMonths(-1), DateTime.Now);
                 //ViewBag.numberLoginToday = context.getRevenue(DateTime.Now, DateTime.Now);
                 return View();
             }
