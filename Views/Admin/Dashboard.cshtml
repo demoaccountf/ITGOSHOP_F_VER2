@@ -1,5 +1,10 @@
-﻿@{ ViewData["Title"] = "ITGo Shop";
-                Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
+﻿@using System.Globalization;
+@{ ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    DateTime firstDateOfThisMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+
+    // Cái này để format tiền
+    CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN"); }
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> -->
@@ -67,7 +72,7 @@
 
                                         <p class="card-category">Khách hàng</p>
 
-                                        <h4 class="card-title">{{$number_of_customer}} <div class="float-right text-warning">(+7%)</div></h4>
+                                        <h4 class="card-title">@ViewBag.numberCustomer <div class="float-right text-warning">(+7%)</div></h4>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +92,7 @@
                                 <div class="col-7 col-stats">
                                     <div class="numbers">
                                         <p class="card-category">Sản phẩm</p>
-                                        <h4 class="card-title">{{$number_of_product}}</h4>
+                                        <h4 class="card-title">@ViewBag.numberProduct</h4>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +112,7 @@
                                 <div class="col-7 col-stats">
                                     <div class="numbers">
                                         <p class="card-category">Đơn hàng</p>
-                                        <h4 class="card-title">{{$number_of_order}}</h4>
+                                        <h4 class="card-title">@ViewBag.numberOrder</h4>
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +132,7 @@
                                 <div class="col-7 col-stats">
                                     <div class="numbers">
                                         <p class="card-category">Lượt truy cập</p>
-                                        <h4 class="card-title">{{$login_namnay}}</h4>
+                                        <h4 class="card-title">@ViewBag.numberLoginThisYear</h4>
                                     </div>
                                 </div>
                             </div>
@@ -197,12 +202,12 @@
                 <div class="col-md-4">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <div class="card-title">Doanh thu tháng <?php echo date('m') ?></div>
-                            <div class="card-category"><?php echo date('F j, Y',strtotime("first day of this month")).' - '.date('F j, Y'); ?></div>
+                            <div class="card-title">Doanh thu tháng @DateTime.Now.Month</div>
+                            <div class="card-category">@firstDateOfThisMonth.ToString("MMMM dd, yyyy") - @DateTime.Now.ToString("MMMM dd, yyyy")</div>
                         </div>
                         <div class="card-body pb-0">
                             <div class="mb-4 mt-2">
-                                <h1>{{number_format($this_month_revenue->totalProfit).' '.'₫'}}</h1>
+                                <h1>@ViewBag.totalRevenueThisMonth.ToString("#,###", cul.NumberFormat) ₫</h1>
                             </div>
                             <!-- <div class="pull-in">
                                 <canvas id="dailySalesChart"></canvas>
@@ -212,7 +217,7 @@
                     <div class="card">
                         <div class="card-body pb-0">
                             <div class="h1 fw-bold float-right text-warning">(+7%)</div>
-                            <h2 class="mb-2">{{$order_homnay}}</h2>
+                            <h2 class="mb-2">@ViewBag.numberOrderToday</h2>
                             <p class="text-muted">Số đơn hàng mới hôm nay</p>
                             <div class="pull-in sparkline-fix">
                                 <!-- <div id="lineChart"></div> -->
@@ -222,7 +227,7 @@
                     <div class="card">
                         <div class="card-body pb-0">
                             <div class="h1 fw-bold float-right text-warning">(+30%)</div>
-                            <h2 class="mb-2">{{$login_today}}</h2>
+                            <h2 class="mb-2">@ViewBag.numberLoginToday</h2>
                             <p class="text-muted">Lượt truy cập hôm nay</p>
                             <div class="pull-in sparkline-fix">
                                 <!-- <div id="lineChart"></div> -->
@@ -290,29 +295,29 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               @* @foreach ($top_product as $key => $item)*@
-                                    <tr>
-                                        <td>
-                                            <div class="avatar">
-                                                <img src="~/public/images_upload/product/'.$item->ProductImage" alt="..." class="avatar-img rounded">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <h6 class="fw-bold mb-1"><a href="~//product-detail/'.$item->ProductId">{{$item->ProductName}}</a></h6>
-                                        </td>
-                                        <td>
-                                            {{date("d/m/Y", strtotime($item->StartsAt)
+                                                @* @foreach ($top_product as $key => $item)*@
+                                                <tr>
+                                                    <td>
+                                                        <div class="avatar">
+                                                            <img src="~/public/images_upload/product/'.$item->ProductImage" alt="..." class="avatar-img rounded">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="fw-bold mb-1"><a href="~//product-detail/'.$item->ProductId">{{$item->ProductName}}</a></h6>
+                                                    </td>
+                                                    <td>
+                                                        {{date("d/m/Y", strtotime($item->StartsAt)
                                         </td>
                                         <td>
                                             <h4 class="text-info fw-bold">+{{number_format($item->number_solded * ($item->Price - $item->Cost)).' '.'₫'}}</h4>
-                                        </td>
-                                        <td class="text-right">
-                                            <h4 class="text-info fw-bold">{{$item->number_solded}}</h4>
-                                        </td>
-                                        <td class="text-right">
-                                            <h4 class="text-info">{{$item->Quantity}}</h4>
-                                        </td>
-                                    </tr>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <h4 class="text-info fw-bold">{{$item->number_solded}}</h4>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <h4 class="text-info">{{$item->Quantity}}</h4>
+                                                    </td>
+                                                </tr>
                                                 @*@endforeach*@
                                             </tbody>
                                         </table>
@@ -338,18 +343,18 @@
                         </div>
                         <div class="card-body pb-0">
                             @*@foreach ($top_blog_view as $key => $item)*@
-                <div class="d-flex">
-                    <div class="avatar">
-                        <img src="~/public/images_upload/blog/'.$item->Image" alt="..." class="avatar-img rounded border">
-                    </div>
-                    <div class="flex-1 pt-1 ml-2">
-                        <h6 class="fw-bold mb-1"><a href="~//blog-detail/'.$item->BlogId">{{$item->Title}}</a></h6>
-                        <small class="text-muted"></small>
-                    </div>
-                    <div class="d-flex ml-auto align-items-center">
-                        <h3 class="text-info fw-bold">{{$item->View}}</h3>
-                    </div>
-                </div>
+                            <div class="d-flex">
+                                <div class="avatar">
+                                    <img src="~/public/images_upload/blog/'.$item->Image" alt="..." class="avatar-img rounded border">
+                                </div>
+                                <div class="flex-1 pt-1 ml-2">
+                                    <h6 class="fw-bold mb-1"><a href="~//blog-detail/'.$item->BlogId">{{$item->Title}}</a></h6>
+                                    <small class="text-muted"></small>
+                                </div>
+                                <div class="d-flex ml-auto align-items-center">
+                                    <h3 class="text-info fw-bold">{{$item->View}}</h3>
+                                </div>
+                            </div>
                             <div class="separator-dashed"></div>
                         </div>
                     </div>
@@ -362,18 +367,19 @@
                         </div>
                         <div class="card-body pb-0">
                             @*@foreach ($top_product_view as $key => $item)*@
-                <div class="d-flex">
-                    <div class="avatar">
-                        <img src="~/public/images_upload/product/'.$item->ProductImage" alt="..." class="avatar-img rounded border">
-                    </div>
-                    <div class="flex-1 pt-1 ml-2">
-                        <h6 class="fw-bold mb-1"><a href="~//product-detail/'.$item->ProductId">{{$item->ProductName}}</a></h6>
-                        <small class="text-muted">Ngày mở bán: {{date("d/m/Y", strtotime($item->StartsAt)</small>
+                            <div class="d-flex">
+                                <div class="avatar">
+                                    <img src="~/public/images_upload/product/'.$item->ProductImage" alt="..." class="avatar-img rounded border">
+                                </div>
+                                <div class="flex-1 pt-1 ml-2">
+                                    <h6 class="fw-bold mb-1"><a href="~//product-detail/'.$item->ProductId">{{$item->ProductName}}</a></h6>
+                                    <small class="text-muted">
+                                        Ngày mở bán: {{date("d/m/Y", strtotime($item->StartsAt)</small>
                     </div>
                     <div class="d-flex ml-auto align-items-center">
                         <h3 class="text-info fw-bold">{{$item->View}}</h3>
-                    </div>
-                </div>
+                                </div>
+                            </div>
                             <div class="separator-dashed"></div>
                             @*@endforeach*@
                             <!-- <div class="pull-in">
@@ -388,19 +394,20 @@
                             <div class="card-title"><i class="fas fa-warehouse" style="color:green;"></i> Sản phẩm tồn kho</div>
                         </div>
                         <div class="card-body pb-0">
-                           @* @foreach ($inventory_list as $key => $item)*@
-                <div class="d-flex">
-                    <div class="avatar">
-                        <img src="~/public/images_upload/product/'.$item->ProductImage" alt="..." class="avatar-img rounded border">
-                    </div>
-                    <div class="flex-1 pt-1 ml-2">
-                        <h6 class="fw-bold mb-1"><a href="~//product-detail/'.$item->ProductId">{{$item->ProductName}}</a></h6>
-                        <small class="text-muted">Ngày mở bán: {{date("d/m/Y", strtotime($item->StartsAt)</small>
+                            @* @foreach ($inventory_list as $key => $item)*@
+                            <div class="d-flex">
+                                <div class="avatar">
+                                    <img src="~/public/images_upload/product/'.$item->ProductImage" alt="..." class="avatar-img rounded border">
+                                </div>
+                                <div class="flex-1 pt-1 ml-2">
+                                    <h6 class="fw-bold mb-1"><a href="~//product-detail/'.$item->ProductId">{{$item->ProductName}}</a></h6>
+                                    <small class="text-muted">
+                                        Ngày mở bán: {{date("d/m/Y", strtotime($item->StartsAt)</small>
                     </div>
                     <div class="d-flex ml-auto align-items-center">
                         <h3 class="text-info fw-bold">{{$item->Quantity}}</h3>
-                    </div>
-                </div>
+                                </div>
+                            </div>
                             <div class="separator-dashed"></div>
                             @*@endforeach*@
                             <!-- <div class="pull-in">
