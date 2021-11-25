@@ -214,26 +214,103 @@ namespace ITGoShop_F_Ver2.Models
                 cmd.Parameters.AddWithValue("enddate", endDate.ToString("yyyy-MM-dd"));
                 using (var reader = cmd.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        var obj = new
                         {
-                            var obj = new
-                            {
-                                ProductId = Convert.ToInt32(reader["ProductId"]),
-                                ProductName = reader["ProductName"].ToString(),
-                                ProductImage = reader["ProductImage"].ToString(),
-                                StartsAt = (DateTime)reader["StartsAt"],
-                                Quantity = Convert.ToInt32(reader["Quantity"]),
-                                Cost = Convert.ToInt32(reader["Cost"]),
-                                Price = Convert.ToInt32(reader["Price"]),
-                                NumberSolded = Convert.ToInt32(reader["NumberSolded"])
-                            };
-                            products.Add(obj);
-                        }
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            StartsAt = (DateTime)reader["StartsAt"],
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            Cost = Convert.ToInt32(reader["Cost"]),
+                            Price = Convert.ToInt32(reader["Price"]),
+                            NumberSolded = Convert.ToInt32(reader["NumberSolded"])
+                        };
+                        products.Add(obj);
                     }
-                    else
-                        return null;
+                }
+            }
+            return products;
+        }
+
+        public List<Blog> getTopBlogView()
+        {
+            List<Blog> blogs = new List<Blog>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT * FROM BLOG ORDER BY VIEW DESC LIMIT 5";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        blogs.Add(new Blog()
+                        {
+                            BlogId = Convert.ToInt32(reader["BlogId"]),
+                            Author = reader["Author"].ToString(),
+                            Title = reader["Title"].ToString(),
+                            Summary = reader["Summary"].ToString(),
+                            DateCreate = (DateTime)reader["DateCreate"],
+                            Image = reader["Image"].ToString(),
+                            View = Convert.ToInt32(reader["View"]),
+                        });
+                    }
+                }
+            }
+            return blogs;
+        }
+
+        public List<Product> getTopProductView()
+        {
+            List<Product> products = new List<Product>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT * FROM PRODUCT ORDER BY VIEW DESC LIMIT 5";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        //System.Diagnostics.Debug.WriteLine("1");
+                        products.Add(new Product()
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            StartsAt = (DateTime)reader["StartsAt"],
+                            View = Convert.ToInt32(reader["View"]),
+                        });
+                    }
+                }
+            }
+            return products;
+        }
+
+        public List<Product> getInventoryList()
+        {
+            List<Product> products = new List<Product>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT * FROM PRODUCT ORDER BY SOLD DESC, StartsAt ASC LIMIT 5;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        products.Add(new Product()
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            StartsAt = (DateTime)reader["StartsAt"],
+                            View = Convert.ToInt32(reader["View"]),
+                        });
+                    }
                 }
             }
             return products;

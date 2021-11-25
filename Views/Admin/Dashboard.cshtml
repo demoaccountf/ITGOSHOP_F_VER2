@@ -336,27 +336,26 @@
                 <div class="col-md-4">
                     <div class="card" style="height:510px">
                         <div class="card-header">
-                            <?php $last_month = date("m",strtotime("-1 month"));
-                            $now_month = date('m');
-                            ?>
                             <div class="card-title"><i class="fas fa-fire" style="color:red;"></i>  Bài viết được xem nhiều nhất</div>
-                            <!-- <small class="text-muted">Tháng {{$last_month}} và tháng {{$now_month}}</small> -->
                         </div>
                         <div class="card-body pb-0">
-                            @*@foreach ($top_blog_view as $key => $item)*@
-                            <div class="d-flex">
-                                <div class="avatar">
-                                    <img src="~/public/images_upload/blog/'.$item->Image" alt="..." class="avatar-img rounded border">
+                            @foreach (var item in @ViewBag.topBlogView)
+                            {
+                                <div class="d-flex">
+                                    <div class="avatar">
+                                        <img src="~/public/images_upload/blog/@item.Image" alt="..." class="avatar-img rounded border">
+                                    </div>
+                                    <div class="flex-1 pt-1 ml-2">
+                                        <h6 class="fw-bold mb-1"><a href="~/blog-detail/@item.BlogId">@item.Title</a></h6>
+                                        <small class="text-muted"></small>
+                                    </div>
+                                    <div class="d-flex ml-auto align-items-center">
+                                        <h3 class="text-info fw-bold">@item.View</h3>
+                                    </div>
                                 </div>
-                                <div class="flex-1 pt-1 ml-2">
-                                    <h6 class="fw-bold mb-1"><a href="~//blog-detail/'.$item->BlogId">{{$item->Title}}</a></h6>
-                                    <small class="text-muted"></small>
-                                </div>
-                                <div class="d-flex ml-auto align-items-center">
-                                    <h3 class="text-info fw-bold">{{$item->View}}</h3>
-                                </div>
-                            </div>
-                            <div class="separator-dashed"></div>
+                                <div class="separator-dashed"></div>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -364,28 +363,27 @@
                     <div class="card" style="height:510px">
                         <div class="card-header">
                             <div class="card-title"><i class="fas fa-eye text-success"></i> Sản phẩm được xem nhiều nhất</div>
-                            <small class="text-muted">Tháng {{$last_month}} và tháng {{$now_month}}</small>
+                            <small class="text-muted">Tháng @DateTime.Now.AddMonths(-1).Month và tháng @DateTime.Now.Month @ViewBag.topProductView.Count</small>
                         </div>
                         <div class="card-body pb-0">
-                            @*@foreach ($top_product_view as $key => $item)*@
-                            <div class="d-flex">
-                                <div class="avatar">
-                                    <img src="~/public/images_upload/product/'.$item->ProductImage" alt="..." class="avatar-img rounded border">
+                            @foreach (var item in @ViewBag.topProductView)
+                            {
+                                <div class="d-flex">
+                                    <div class="avatar">
+                                        <img src="~/public/images_upload/product/@item.ProductImage" alt="..." class="avatar-img rounded border">
+                                    </div>
+                                    <div class="flex-1 pt-1 ml-2">
+                                        <h6 class="fw-bold mb-1"><a href="~//product-detail/'.$item->ProductId">@item.ProductName</a></h6>
+                                        <small class="text-muted">
+                                            Ngày mở bán: @item.StartsAt.ToString("dd-MM-yyyy")
+                                        </small>
+                                    </div>
+                                    <div class="d-flex ml-auto align-items-center">
+                                        <h3 class="text-info fw-bold">@item.View</h3>
+                                    </div>
                                 </div>
-                                <div class="flex-1 pt-1 ml-2">
-                                    <h6 class="fw-bold mb-1"><a href="~//product-detail/'.$item->ProductId">{{$item->ProductName}}</a></h6>
-                                    <small class="text-muted">
-                                        Ngày mở bán: {{date("d/m/Y", strtotime($item->StartsAt)</small>
-                    </div>
-                    <div class="d-flex ml-auto align-items-center">
-                        <h3 class="text-info fw-bold">{{$item->View}}</h3>
-                                </div>
-                            </div>
-                            <div class="separator-dashed"></div>
-                            @*@endforeach*@
-                            <!-- <div class="pull-in">
-                                <canvas id="topProductsChart"></canvas>
-                            </div> -->
+                                <div class="separator-dashed"></div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -395,25 +393,25 @@
                             <div class="card-title"><i class="fas fa-warehouse" style="color:green;"></i> Sản phẩm tồn kho</div>
                         </div>
                         <div class="card-body pb-0">
-                            @* @foreach ($inventory_list as $key => $item)*@
-                            <div class="d-flex">
-                                <div class="avatar">
-                                    <img src="~/public/images_upload/product/'.$item->ProductImage" alt="..." class="avatar-img rounded border">
+                            @foreach (var item in @ViewBag.inventoryList)
+                            {
+                                <div class="d-flex">
+                                    <div class="avatar">
+                                        <img src="~/public/images_upload/product/@item.ProductImage" alt="..." class="avatar-img rounded border">
+                                    </div>
+                                    <div class="flex-1 pt-1 ml-2">
+                                        <h6 class="fw-bold mb-1"><a href="~//product-detail/'.$item->ProductId">@item.ProductName</a></h6>
+                                        <small class="text-muted">
+                                            Ngày mở bán: @item.StartsAt.ToString("dd-MM-yyyy")
+                                        </small>
+                                    </div>
+                                    <div class="d-flex ml-auto align-items-center">
+                                        <h3 class="text-info fw-bold">@item.Quantity</h3>
+                                    </div>
                                 </div>
-                                <div class="flex-1 pt-1 ml-2">
-                                    <h6 class="fw-bold mb-1"><a href="~//product-detail/'.$item->ProductId">{{$item->ProductName}}</a></h6>
-                                    <small class="text-muted">
-                                        Ngày mở bán: {{date("d/m/Y", strtotime($item->StartsAt)</small>
-                    </div>
-                    <div class="d-flex ml-auto align-items-center">
-                        <h3 class="text-info fw-bold">{{$item->Quantity}}</h3>
-                                </div>
-                            </div>
-                            <div class="separator-dashed"></div>
-                            @*@endforeach*@
-                            <!-- <div class="pull-in">
-                                <canvas id="topProductsChart"></canvas>
-                            </div> -->
+                                <div class="separator-dashed"></div>
+
+                            }
                         </div>
                     </div>
                 </div>
@@ -596,15 +594,15 @@
                                                         Hôm nay
                                                     </td>
                                                     <td class="text-right">
-                                                        {{$login_today}} lượt truy cập
+                                                        @ViewBag.numberLoginToday lượt truy cập
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-left" ">
+                                                    <td class="text-left">
                                                         Tháng nay
                                                     </td>
                                                     <td class="text-right">
-                                                        {{$login_thangnay}} lượt truy cập
+                                                        @ViewBag.numberLoginThangNay lượt truy cập
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -612,7 +610,7 @@
                                                         Tháng trước
                                                     </td>
                                                     <td class="text-right">
-                                                        {{$login_thangtruoc}} lượt truy cập
+                                                        @ViewBag.numberLoginThangTruoc lượt truy cập
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -620,7 +618,7 @@
                                                         Một năm qua
                                                     </td>
                                                     <td class="text-right">
-                                                        {{$login_namnay}} lượt truy cập
+                                                        @ViewBag.numberLoginNamNay lượt truy cập
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -657,9 +655,8 @@
                         </div>
                         <div class="card-body">
                             <h4 class="mb-1 fw-bold"></h4>
-                            <!-- <div id="task-complete" class="chart-circle mt-4 mb-3"></div> -->
                             <form>
-                                @*@csrf*@
+                               @* <input name="__RequestVerificationToken" type="hidden" value="6fGBtLZmVBZ59oUad1Fr33BuPxANKY9q3Srr5y[...]" />*@
                                 <div id="lineChart" style="height: 250px;"></div>
                             </form>
                         </div>

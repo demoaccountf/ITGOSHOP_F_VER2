@@ -48,15 +48,27 @@ namespace ITGoShop_F_Ver2.Controllers
                 context.updateLastLogin(userInfo.UserId);
 
                 // Chuyển dữ liệu admin qua
+                DateTime homNay = DateTime.Now;
+                DateTime dauThangNay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                int soNgayThangTruoc = DateTime.DaysInMonth(DateTime.Now.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month) - 1;
+                DateTime cuoiThangTruoc = ((new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddMonths(-1)).AddDays(soNgayThangTruoc);
+                DateTime dauThangTruoc = (new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddMonths(-1);
+                DateTime dauNamNay = (new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddYears(-1);
+
                 ViewBag.numberCustomer = context.countCustomer();
                 ViewBag.numberProduct= context.countProduct();
                 ViewBag.numberOrder = context.countOrder();
                 ViewBag.numberLoginThisYear = context.countLoginThisYear();
-                ViewBag.totalRevenueThisMonth = context.getRevenue(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1), DateTime.Now);
-                ViewBag.numberOrderToday = context.countOrder(DateTime.Now, DateTime.Now);
-                ViewBag.numberLoginToday = context.countLogin(DateTime.Now, DateTime.Now);
-                ViewBag.topProducts = context.getTopProduct((new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddMonths(-1), DateTime.Now);
-                //ViewBag.numberLoginToday = context.getRevenue(DateTime.Now, DateTime.Now);
+                ViewBag.totalRevenueThisMonth = context.getRevenue(dauThangNay, homNay);
+                ViewBag.numberOrderToday = context.countOrder(homNay, homNay);
+                ViewBag.numberLoginToday = context.countLogin(homNay, homNay);
+                ViewBag.topProducts = context.getTopProduct(dauThangTruoc, homNay);
+                ViewBag.topBlogView = context.getTopBlogView();
+                ViewBag.topProductView = context.getTopProductView();
+                ViewBag.inventoryList = context.getInventoryList();
+                ViewBag.numberLoginThangNay = context.countLogin(dauThangNay, homNay);
+                ViewBag.numberLoginThangTruoc = context.countLogin(dauThangTruoc, cuoiThangTruoc);
+                ViewBag.numberLoginNamNay = context.countLogin(dauNamNay, homNay);
                 return View();
             }
             return RedirectToAction("Index", new { message = "Mật khẩu hoặc tài khoản sai. Xin nhập lại!" });
