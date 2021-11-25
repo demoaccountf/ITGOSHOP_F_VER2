@@ -1,7 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
+    
+
+
 }
 
 <!DOCTYPE html>
@@ -181,7 +183,7 @@
                             <a href="#">Đơn hàng của tôi</a>
                             <a href="#">Kiểm tra bảo hành</a>
                             <a href="#">Đăng xuất</a>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -282,9 +284,161 @@
             </div>
         </div>
     </footer>
+    <style>
+        .swal-footer, .swal-text {
+            text-align: center;
+        }
+
+        .slider-area .mySlides {
+            display: none
+        }
+
+        .slider-area img {
+            vertical-align: middle;
+            border-radius: 10px 10px 0px 0px;
+            max-height: 260px;
+        }
+
+        .slideshow-container {
+            position: relative;
+            margin: 50px 0px 0px 0px;
+            border: 1px solid #D1D6E0;
+            border-radius: 10px;
+        }
+        /* Next & previous buttons */
+        .slider-area .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+        /* Position the "next button" to the right */
+        .slider-area .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* The dots/bullets/indicators */
+        .slider-area .dot {
+            cursor: pointer;
+            height: 8px;
+            width: 8px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .slider-area .active, .dot:hover {
+            background-color: #717171;
+        }
+    </style>
     <!-- /End Footer Area -->
-    
     @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+    <script>
+		$(document).ready(function(){
+			load_cart();
+			load_cart_quantity();
+			setInterval(load_cart_quantity, 2000);
+		});
+		function load_cart_quantity()
+		{
+			var _token = $('input[name="_token"]').val();
+				$.ajax({
+					url: "{{url('/load-cart-quantity')}}",
+					method:"POST",
+					data:{ _token:_token},
+					success:function(data){
+						$('#so-luong-sp-gio-hang').html(data);
+					},
+					error:function(data)
+					{
+						alert("Lỗi");
+					}
+				});
+		}
+		function load_cart()
+		{
+				var _token = $('input[name="_token"]').val();
+				$.ajax({
+					url: "{{url('/load-cart')}}",
+					method:"POST",
+					data:{ _token:_token},
+					success:function(data){
+						$('#load_card').html(data);
+					},
+					error:function(data)
+					{
+						alert("Lỗi");
+					}
+				});
+		}
+    </script>
+    <script>
+		$(document).ready(function(){
+			$('a[title="Wishlist"]').click(function(){
+				var customer_id = $('#input-customer-id').val();
+				if(customer_id)
+				{
+					var ProductId = $(this).parents('.button-head').find('.ProductId').val();
+					$.ajax({
+						url:"{{url('/add-product-to-wishlist')}}",
+						method: "GET",
+						data:{ProductId: ProductId},
+						success:function(data){
+							if(data == '1')
+							{
+								swal({
+									title: "Thành công",
+									text: "Đã thêm sản phẩm vào danh sách yêu thích.",
+									icon: "success",
+									button: "OK",
+								});
+							}
+							else
+							{
+								swal({
+									text: "Sản phẩm đã tồn tại trong danh sách yêu thích",
+									icon: "info",
+									button: "OK",
+								});
+							}
+
+						},
+						error:function(data)
+						{
+							alert("Lỗi");
+						}
+					});
+				}else{
+					swal({
+						text: "Bạn cần đăng nhập để thêm sản phẩm vào danh sách yêu thích",
+						icon: "info",
+						buttons: ["OK", "Đăng nhập"],
+						}).then(function(isConfirm) {
+							if (isConfirm) {
+								window.location = "{{url('/login')}}";
+							}
+					})
+				}
+
+			});
+		});
+    </script>
 
     <!-- Jquery -->
     <script src="~/public/client/js/jquery.min.js"></script>
@@ -343,68 +497,5 @@
     <!-- Custom scripts-->
     <script type="text/javascript" src="~/public/client/js/main.js"></script>
 </body>
-<style>
-    .swal-footer, .swal-text {
-        text-align: center;
-    }
-</style>
-<style>
-    .slider-area .mySlides {
-        display: none
-    }
 
-    .slider-area img {
-        vertical-align: middle;
-        border-radius: 10px 10px 0px 0px;
-        max-height: 260px;
-    }
-
-    .slideshow-container {
-        position: relative;
-        margin: 50px 0px 0px 0px;
-        border: 1px solid #D1D6E0;
-        border-radius: 10px;
-    }
-    /* Next & previous buttons */
-    .slider-area .prev, .next {
-        cursor: pointer;
-        position: absolute;
-        top: 50%;
-        width: auto;
-        padding: 16px;
-        margin-top: -22px;
-        color: white;
-        font-weight: bold;
-        font-size: 18px;
-        transition: 0.6s ease;
-        border-radius: 0 3px 3px 0;
-        user-select: none;
-    }
-    /* Position the "next button" to the right */
-    .slider-area .next {
-        right: 0;
-        border-radius: 3px 0 0 3px;
-    }
-
-    /* On hover, add a black background color with a little bit see-through */
-    .prev:hover, .next:hover {
-        background-color: rgba(0,0,0,0.8);
-    }
-
-    /* The dots/bullets/indicators */
-    .slider-area .dot {
-        cursor: pointer;
-        height: 8px;
-        width: 8px;
-        margin: 0 2px;
-        background-color: #bbb;
-        border-radius: 50%;
-        display: inline-block;
-        transition: background-color 0.6s ease;
-    }
-
-    .slider-area .active, .dot:hover {
-        background-color: #717171;
-    }
-</style>
 </html>
