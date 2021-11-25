@@ -89,8 +89,45 @@ namespace ITGoShop_F_Ver2.Controllers
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             return context.countLoginByDate(DateTime.Now.AddDays(-7), DateTime.Now);
-            //string jsonString = JsonSerializer.Serialize(loginHistory);
-            //return Json(jsonString);
+        }
+
+        public List<object> load_pie_chart()
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            return context.countOrderByDate(DateTime.Now.AddDays(-30), DateTime.Now);
+        }
+        public List<object> load_default_chart()
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            return context.getRevenueByDate(DateTime.Now.AddDays(-30), DateTime.Now);
+        }
+
+        public List<object> filter_by_time_span(string time_span)
+        {
+            DateTime homNay = DateTime.Now;
+            DateTime dauThangNay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            int soNgayThangTruoc = DateTime.DaysInMonth(DateTime.Now.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month) - 1;
+            DateTime cuoiThangTruoc = ((new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddMonths(-1)).AddDays(soNgayThangTruoc);
+            DateTime dauThangTruoc = (new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddMonths(-1);
+            DateTime dauNamNay = (new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddYears(-1);
+
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            if(time_span == "7ngay")
+                return context.getRevenueByDate(DateTime.Now.AddDays(-7), homNay);
+            if(time_span == "thangnay")
+                return context.getRevenueByDate(dauThangNay, homNay);
+            if (time_span == "thangtruoc")
+                return context.getRevenueByDate(dauThangTruoc, cuoiThangTruoc);
+            return context.getRevenueByDate(DateTime.Now.AddDays(-365), DateTime.Now);
+        }
+
+        
+        public List<object> filter_by_date(DateTime den_ngay, DateTime tu_ngay)
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            System.Diagnostics.Debug.WriteLine(den_ngay);
+            System.Diagnostics.Debug.WriteLine(tu_ngay);
+            return context.getRevenueByDate(tu_ngay, den_ngay);
         }
     }
 }

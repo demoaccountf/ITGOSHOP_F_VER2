@@ -234,7 +234,8 @@ namespace ITGoShop_F_Ver2.Models
                     "WHERE OrderStatus <> 'Đã hủy' " +
                     "AND ORDERDATE BETWEEN @startdate AND @enddate " +
                     "GROUP BY ProductName, ProductImage, P.ProductId, StartsAt, Quantity, Cost, Price " +
-                    "ORDER BY SUM(OrderQuantity) LIMIT 5;";
+                    "ORDER BY SUM(OrderQuantity) DESC " +
+                    "LIMIT 5;";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 cmd.Parameters.AddWithValue("startdate", startDate.ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("enddate", endDate.ToString("yyyy-MM-dd"));
@@ -341,5 +342,65 @@ namespace ITGoShop_F_Ver2.Models
             }
             return products;
         }
+        public List<object> countOrderByDate(DateTime startDate, DateTime endDate)
+        {
+            List<object> ordersInfo = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT COUNT(*) AS Number_Order, OrderStatus " +
+                    "FROM `ORDER` " +
+                    "WHERE OrderDate BETWEEN @startdate AND @enddate " +
+                    "GROUP BY OrderStatus";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("startdate", startDate.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("enddate", endDate.ToString("yyyy-MM-dd"));
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        //System.Diagnostics.Debug.WriteLine("1");
+                        var obj = new
+                        {
+                            label = reader["OrderStatus"].ToString(),
+                            value = Convert.ToInt32(reader["Number_Order"]),
+                        };
+                        ordersInfo.Add(obj);
+                    }
+                }
+            }
+            return ordersInfo;
+        }
+
+        public List<object> getRevenueByDate(DateTime startDate, DateTime endDate)
+        {
+            List<object> revenueInfo = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT * " +
+                    "FROM STATISTIC " +
+                    "WHERE STATISTICDATE BETWEEN @startdate AND @enddate " +
+                    "ORDER BY STATISTICDATE ASC";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("startdate", startDate.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("enddate", endDate.ToString("yyyy-MM-dd"));
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            period = ((DateTime)reader["StatisticDate"]).ToString("dd-MM-yyyy"),
+                            sales = Convert.ToInt32(reader["Sales"]),
+                            profit = Convert.ToInt32(reader["Profit"]),
+                        };
+                        revenueInfo.Add(obj);
+                    }
+                }
+            }
+            return revenueInfo;
+        }
+
     }
 }
