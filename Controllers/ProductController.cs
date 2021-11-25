@@ -16,5 +16,13 @@ namespace ITGoShop_F_Ver2.Controllers
         {
             return View();
         }
+        public IActionResult product_listing2()
+        {
+            return View();
+        }
+        public IActionResult product_listing3()
+        {
+            return View();
+        }
     }
 }

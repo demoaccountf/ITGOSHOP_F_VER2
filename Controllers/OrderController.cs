@@ -6,17 +6,13 @@ using System.Threading.Tasks;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
-    public class CheckoutController : Controller
+    public class OrderController : Controller
     {
-        public IActionResult checkout()
+        public IActionResult my_order()
         {
             return View();
         }
-        public IActionResult login_to_checkout()
-        {
-            return View();
-        }
-        public IActionResult shipping_address()
+        public IActionResult order_detail()
         {
             return View();
         }

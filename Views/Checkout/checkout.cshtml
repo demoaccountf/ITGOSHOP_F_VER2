@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
 <div class="breadcrumbs">
     <div class="container">
         <div class="row">
@@ -45,9 +47,9 @@
                                     <label for="radio-btn[{{$item->ShipMethodId}}]">
                                         <img src="{{URL::to('public/client/Images/thanh-toan-khi-nhan-hang.PNG')}}" alt="#" hidden>{{$item->ShipMethodName}}<i>
                                             //if ($item->EstimatedDeliveryTime <= 24)
-                                                                                                    (Thời gian giao hàng dự kiến: khoảng { { date('h:00 d-m-Y', strtotime("+$item->EstimatedDeliveryTime hours"))} })
-                                                                                                //else
-                                                                                                    (Thời gian giao hàng dự kiến:{{date('d-m-Y',strtotime("+$item->EstimatedDeliveryTime hours"))}})
+                                            (Thời gian giao hàng dự kiến: khoảng { { date('h:00 d-m-Y', strtotime("+$item->EstimatedDeliveryTime hours"))} })
+                                            //else
+                                            (Thời gian giao hàng dự kiến:{{date('d-m-Y',strtotime("+$item->EstimatedDeliveryTime hours"))}})
                                             //endif
                                         </i>
                                     </label>
@@ -181,7 +183,7 @@
                                             <select class="form-control select-tinhthanhpho" style="height:35px" name="tinhthanhpho">
                                                 <option>--- Chọn Tỉnh/Thành phố ---</option>
                                                 //foreach ($all_tinhthanhpho as $key => $tinhthanhpho)
-                                                    <option value="{{$tinhthanhpho->matp}}">{{$tinhthanhpho->name}}</option>
+                                                <option value="{{$tinhthanhpho->matp}}">{{$tinhthanhpho->name}}</option>
                                                 //endforeach
                                             </select>
                                         </div>

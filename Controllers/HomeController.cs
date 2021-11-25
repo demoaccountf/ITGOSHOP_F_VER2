@@ -23,11 +23,15 @@ namespace ITGoShop_F_Ver2.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult login()
         {
             return View();
         }
 
+        public IActionResult search_result()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
