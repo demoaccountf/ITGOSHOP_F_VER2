@@ -69,7 +69,9 @@
         <nav class="navigation">
             <div class="container-fluid">
                 <div class="navigation__column left">
-                    <div class="header__logo"><a class="ps-logo" href=""><img src="~/public/client/Images/logo.png" alt=""></a></div>
+                    <div class="header__logo pl-40"><a class="ps-logo" href="//home')}}"><img src="~/public/client/Images/logo.png" alt=""></a></div>
+                    <input type="text" id="input-customer-id" value="get('CustomerId')" hidden><!--Đừng xóa cái này  -->
+                    <input type="text" id="input-admin-id" value="('CustomerId')" hidden>
                 </div>
                 <div class="navigation__column center">
                     <ul class="main-menu menu">
@@ -77,16 +79,12 @@
                             <a href="#">Laptop</a>
                             <div class="mega-menu">
                                 <div class="mega-wrap">
-
                                     <div class="mega-column">
-                                        <h4 class="mega-heading">brand_name</h4>
+                                        <h4 class="mega-heading">HP</h4>
                                         <ul class="mega-item">
-                                            <li><a href="#">brand_name</a></li>
-
-                                            <!-- <li><a href="product-listing.html">ZBook</a></li>
-                                            <li><a href="product-listing.html">Envy</a></li>
-                                            <li><a href="product-listing.html">Omen</a></li>
-                                            <li><a href="product-listing.html">Pavilion</a></li> -->
+                                            <li><a href="product-listing.html">Elitedesk</a></li>
+                                            <li><a href="product-listing.html">Z Workstation</a></li>
+                                            <li><a href="product-listing.html">Pavilion</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -138,54 +136,41 @@
                     </ul>
                 </div>
                 <div class="navigation__column right">
-                    <form class="ps-search--header" action="" method="post">
-                        <input class="form-control" type="text" placeholder="Search Product…">
-                        <button><i class="fa fa-search"></i></button>
+                    <form class="ps-search--header" action="/search_result" method="POST">
+                        <input class="form-control" type="text" name="kw_submit" placeholder="Tìm kiếm">
+                        <button type="submit"><i class="fa fa-search"></i></button>
                     </form>
                     <div class="ps-cart">
-                        <a class="ps-cart__toggle" href="#"><span><i>2</i></span><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                        <a class="ps-cart__toggle" href="/show-cart'" title="Giỏ hàng">
+                            <span><i id="so-luong-sp-gio-hang"></i></span>
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        </a>
                         <div class="ps-cart__listing">
-                            <div class="ps-cart__content">
-                                <div class="ps-cart-item">
-                                    <a class="ps-cart-item__close" href="#"></a>
-                                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="~/public/client/Images/cart-preview/2.jpg" alt=""></div>
-                                    <div class="ps-cart-item__content">
-                                        <a class="ps-cart-item__title" href="product-detail.html">The Crusty Croissant</a>
-                                        <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
-                                    </div>
-                                </div>
-                                <div class="ps-cart-item">
-                                    <a class="ps-cart-item__close" href="#"></a>
-                                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="~/public/client/Images/cart-preview/3.jpg" alt=""></div>
-                                    <div class="ps-cart-item__content">
-                                        <a class="ps-cart-item__title" href="product-detail.html">The Rolling Pin</a>
-                                        <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ps-cart__total">
-                                <p>Number of items:<span>36</span></p>
-                                <p>Item Total:<span>£528.00</span></p>
-                            </div>
-
-                            <div class="ps-cart__footer"><a href="checkout.html" class="ps-btn">Checkout</a></div>
+                            <div id="load_card"></div>
                         </div>
-
                     </div>
                     <div class="menu-toggle"><span></span></div>
-                    <a class="ps-cart__toggle" href="#"><i class="fa fa-bell-o" aria-hidden="true" title="Thông báo"></i></a>
-                    <a class="ps-cart__toggle" href="#"><i class="fa fa-heart-o" aria-hidden="true" title="Wish List"></i></a>
+                    <a class="ps-cart__toggle" href="#}"><i class="fa fa-bell-o" aria-hidden="true" title="Thông báo"></i></a>
+                    <?php
+                    //$CustomerId= Session::get('CustomerIdId');
+                    $CustomerId= Session::get('CustomerId');
+                    if($CustomerId) { ?>
 
+                    <a class="ps-cart__toggle" href="{{URL::to('/wishlist')}}"><i class="fa fa-heart-o" aria-hidden="true" title="Wish List"></i></a>
+
+                    <?php } ?>
+                   
                     <div class="dropdown">
-                        <div class="nut_dropdown"><a href="#" class="ps-cart__toggle"><i class="fa fa-user-circle-o" title="Đăng Nhập"></i></a></div>
+                        <div class="nut_dropdown"><a href="//login" class="ps-cart__toggle"><i class="fa fa-user-circle-o" title="Đăng Nhập"></i></a></div>
                         <div class="noidung_dropdown">
-                            <a href="#">Tài khoản</a>
-                            <a href="#">Đơn hàng của tôi</a>
-                            <a href="#">Kiểm tra bảo hành</a>
-                            <a href="#">Đăng xuất</a>
 
+                            <a href="//profile/CustomerId)}}">Tài khoản</a>
+                            <a href="/my-orders">Đơn hàng của tôi</a>
+                            <a href="/customer-logout">Kiểm tra bảo hành</a>
+                            <a href="/customer-logout">Đăng xuất</a>
                         </div>
                     </div>
+
                 </div>
             </div>
         </nav>
@@ -439,7 +424,98 @@
 			});
 		});
     </script>
+    <script>
+		$('body').on('click', '.btn-thanh-toan' ,function(){
+			var numberOfProduct = Number($('#so-luong-sp-gio-hang').text());
+			if(numberOfProduct == 0)
+			{
+				swal({
+					// title: "Giỏ hàng trống",
+					text: "Bạn vẫn chưa chọn sản phẩm nào để mua.",
+					// icon: "warning",
+					button: "OK",
+				});
+			}
+			else{
+				window.location.href = '{{URL::to('/checkout')}}';
+			}
+		});
+    </script>
+    <script>
+		$('.add-to-cart-a-tag').click( function()
+			{
+				var productId = $(this).parent().find('input').val();
+				var numberOfProduct = Number($('#so-luong-sp-gio-hang').text()) + 1;
+				$.ajax({
+					url: '{{URL::to('/add-to-cart')}}',
+					methed:"GET",
+					data:{ProductId:productId, Quantity: 1},
+					success:function(data)
+					{
+						load_cart();
+						$('#so-luong-sp-gio-hang').text(numberOfProduct);
+						swal({
+								title: "Thông báo",
+								text: "Đã thêm sản phẩm vào giỏ hàng!",
+								icon: "success",
+								buttons: ["Tiếp tục mua hàng", "Xem giỏ hàng"],
+							}).then(function(isConfirm) {
+								if (isConfirm) {
+										window.location = "{{url('/show-cart')}}";
+								}
+							})
+					},
+					error:function(data)
+					{
+						alert('Error');
+					}
+				});
+			});
+    </script>
+    <script type="text/javascript">
+	// Hàm load data vào dropdownbox Phường/Xã
+	function load_xaphuong_dropdownbox()
+	{
+		var maqh = $(".select-quanhuyen").val();
+		$.ajax({
+			url: '{{URL::to('/load-xaphuongthitran-dropdownbox')}}',
+			method:"GET",
+			data:{maqh: maqh},
+			success:function(data)
+			{
+				$(".select-xaphuongthitran").html(data);
+			},
+			error:function(data)
+			{
+				alert('Lỗi');
+			}
+		});
+	}
 
+	$(document).ready(function(){
+		$('.select-tinhthanhpho').change(function(){
+			var matp = $(this).val();
+			$.ajax({
+				url: '{{URL::to('/load-quanhuyen-dropdownbox')}}',
+				method:"GET",
+				data:{matp: matp},
+				success:function(data)
+				{
+					$(".select-quanhuyen").html(data);
+					load_xaphuong_dropdownbox();
+				},
+				error:function(data)
+				{
+					alert('Lỗi');
+				}
+			});
+		});
+
+		$('.select-quanhuyen').change(function(){
+			load_xaphuong_dropdownbox();
+		});
+	});
+    </script>
     <!-- Jquery -->
     <script src="~/public/client/js/jquery.min.js"></script>
     <script src="~/public/client/js/jquery-migrate-3.0.0.js"></script>
