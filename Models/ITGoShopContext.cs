@@ -489,5 +489,35 @@ namespace ITGoShop_F_Ver2.Models
             }
             return list;
         }
+
+        public List<BannerSlider> getAllBannerSlider()
+        {
+            List<BannerSlider> list = new List<BannerSlider>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select * from BannerSlider";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new BannerSlider()
+                        {
+                            SliderId = Convert.ToInt32(reader["SliderId"]),
+                            SliderImage = reader["SliderImage"].ToString(),
+                            SliderName = reader["SliderName"].ToString(),
+                            SliderStatus = Convert.ToInt32(reader["SliderStatus"]),
+                            //BlogId = Convert.ToInt32(reader["BlogId"])
+                        });
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
     }
 }
