@@ -138,7 +138,7 @@
                                             @foreach (var item in @ViewBag.AllProduct)
                                             {
                                                 <tr>
-                                                    <td><a href="/update-product/@item.GetType().GetProperty("ProductId").GetValue(item, null)" class="active" ui-toggle-class="" style="color:black">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></td>
+                                                    <td><a href="/ProductManagement/update_product?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)" class="active" ui-toggle-class="" style="color:black">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></td>
                                                     <td>
                                                         @item.GetType().GetProperty("CategoryName").GetValue(item, null)
                                                         <input type="text" class="ProductId" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
@@ -175,7 +175,7 @@
                                                                 </a>
                                                             </button>
                                                             <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Cập nhật sản phẩm">
-                                                                <a href="javascript:void(0)" class="active" ui-toggle-class="">
+                                                                <a href="/ProductManagement/update_product?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)" class="active" ui-toggle-class="">
                                                                     <i class="fa fa-edit text-active"></i>
                                                                 </a>
                                                             </button>

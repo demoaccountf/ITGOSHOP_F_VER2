@@ -76,5 +76,16 @@ namespace ITGoShop_F_Ver2.Controllers
             context.deleteProduct(ProductId);
         }
 
+        public IActionResult update_product(int productId)
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.ProductInfo = context.getProductInfo(productId);
+            ViewBag.AllCategory = context.getAllCategory();
+            ViewBag.AllBrand = context.getAllBrand();
+            ViewBag.AllSubBrand = context.getAllSubBrand();
+            ViewBag.AllBannerSlider = context.getAllBannerSlider();
+            return View();
+        }
+
     }
 }

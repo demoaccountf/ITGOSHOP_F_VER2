@@ -1,16 +1,13 @@
 ﻿@using System.Globalization;
-@{ ViewData["Title"] = "Thêm sản phẩm";
+@{ ViewData["Title"] = "Cập nhật thông tin sản phẩm";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-
-    // Cái này để format tiền
-    CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 }
-@model IEnumerable<ITGoShop_F_Ver2.Models.Product>
+
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Forms</h4>
+                <h4 class="page-title">Chỉnh sửa sản phẩm</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -21,13 +18,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Forms</a>
-                    </li>
-                    <li class="separator">
-                        <i class="flaticon-right-arrow"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">Basic Form</a>
+                        <a href="#">Chỉnh Sửa Sản Phẩm</a>
                     </li>
                 </ul>
             </div>
@@ -35,16 +26,22 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Thêm sản phẩm</div>
+                            <div class="card-title">Chỉnh sửa thông tin phẩm</div>
                         </div>
-                        <form role="form" action="/ProductManagement/SaveProduct" method="post" enctype="multipart/form-data">
+                        <form role="form" action="/ProductManagement/save_update_product?productId=@ViewBag.ProductInfo.ProductId" method="post" enctype="multipart/form-data">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12 col-lg-6">
                                         <div class="form-group">
+                                            <label for="disableinput">Mã sản phẩm</label>
+                                            <input type="text" class="form-control" id="disableinput" value="@ViewBag.ProductInfo.ProductId" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <div class="form-group">
                                             <label for="email2">Tên sản phẩm</label>
-                                            <input type="text" name="ProductName" class="form-control" id="email2" required>
-                                            <!-- <small id="emailHelp2" class="form-text text-muted">Lưu ý: ...</small> -->
+                                            <input type="text" name="ProductName" class="form-control" id="email2" placeholder="Nhập tên sản phẩm" value="@ViewBag.ProductInfo.ProductName">
+
                                         </div>
                                     </div>
                                     <div class="col-6 col-lg-6">
@@ -53,7 +50,14 @@
                                             <select class="form-control" name="CategoryId" id="exampleFormControlSelect1">
                                                 @foreach (var item in @ViewBag.AllCategory)
                                                 {
-                                                    <option value="@item.CategoryId">@item.CategoryId : @item.CategoryName</option>
+                                                    @if (@item.CategoryId == @ViewBag.ProductInfo.CategoryId)
+                                                    {
+                                                        <option selected value="@item.CategoryId">@item.CategoryId : @item.CategoryName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.CategoryId">@item.CategoryId : @item.CategoryName</option>
+                                                    }
                                                 }
                                             </select>
 
@@ -65,9 +69,15 @@
                                             <select class="form-control" name="BrandId" id="exampleFormControlSelect1">
                                                 @foreach (var item in @ViewBag.AllBrand)
                                                 {
-                                                    <option value="@item.BrandId">ID: @item.BrandId - @item.BrandName (Mã Danh Mục: @item.CategoryId)</option>
+                                                    @if (@item.BrandId == @ViewBag.ProductInfo.BrandId)
+                                                    {
+                                                        <option selected value="@item.BrandId">ID: @item.BrandId - @item.BrandName (Mã Danh Mục: @item.CategoryId)</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.BrandId">ID: @item.BrandId - @item.BrandName (Mã Danh Mục: @item.CategoryId)</option>
+                                                    }
                                                 }
-
                                             </select>
                                         </div>
                                     </div>
@@ -77,7 +87,14 @@
                                             <select class="form-control" name="SubBrandId" id="exampleFormControlSelect2">
                                                 @foreach (var item in @ViewBag.AllSubBrand)
                                                 {
-                                                    <option value="@item.SubBrandId">@item.SubBrandName (ID Thương hiệu chính: @item.BrandId) </option>
+                                                    @if (@item.SubBrandId == @ViewBag.ProductInfo.SubBrandId)
+                                                    {
+                                                        <option selected value="@item.SubBrandId">@item.SubBrandName (ID Thương hiệu chính: @item.BrandId) </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.SubBrandId">@item.SubBrandName (ID Thương hiệu chính: @item.BrandId) </option>
+                                                    }
                                                 }
                                             </select>
                                         </div>
@@ -86,10 +103,18 @@
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Chương trình khuyến mãi</label>
                                             <select class="form-control" name="SliderId" id="exampleFormControlSelect1">
-                                                <option value="" selected> </option>
+                                                @*<option value="" selected> </option>*@
                                                 @foreach (var item in @ViewBag.AllBannerSlider)
                                                 {
-                                                    <option value="@item.SliderId">@item.SliderName </option>
+                                                    @if (@item.SliderId == @ViewBag.ProductInfo.SliderId)
+                                                    {
+                                                        <option selectd value="@item.SliderId">@item.SliderName </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.SliderId">@item.SliderName </option>
+}
+
                                                 }
                                             </select>
                                         </div>
@@ -98,7 +123,7 @@
                                         <div class="form-group">
                                             <label class="mb-3"><b>Giá sản phẩm</b></label>
                                             <div class="input-group mb-3">
-                                                <input type="text" name="Price" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                                                <input type="text" name="Price" class="form-control" aria-label="Amount (to the nearest dollar)" value="@ViewBag.ProductInfo.Price" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">VND</span>
                                                 </div>
@@ -109,19 +134,18 @@
                                         <div class="form-group">
                                             <label class="mb-3"><b>Giá vốn</b></label>
                                             <div class="input-group mb-3">
-                                                <input type="text" name="Cost" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                                                <input type="text" name="Cost" class="form-control" aria-label="Amount (to the nearest dollar)" value="@ViewBag.ProductInfo.Cost" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">VND</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-6 col-lg-6">
                                         <div class="form-group">
                                             <label class="mb-3"><b>Giảm giá</b></label>
                                             <div class="input-group mb-3">
-                                                <input type="text" name="Discount" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                                                <input type="text" name="Discount" class="form-control" aria-label="Amount (to the nearest dollar)" value="@ViewBag.ProductInfo.Discount">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -132,16 +156,16 @@
                                     <div class="col-6 col-lg-6">
                                         <div class="form-group">
                                             <label for="email2">Số lượng tồn kho</label>
-                                            <input type="number" min="0" name="Quantity" class="form-control" id="email2" placeholder="Nhập số lượng sản phẩm" required>
+                                            <input type="text" name="Quantity" class="form-control" id="email2" placeholder="Nhập số lượng sản phẩm" value="@ViewBag.ProductInfo.Quantity">
                                         </div>
                                     </div>
 
 
-
                                     <div class="col-6 col-lg-6">
                                         <div class="form-group">
-                                            <label for="exampleFormControlFile1">Thêm ảnh sản phẩm</label>
-                                            <input type="file" name="ProductImage" class="form-control-file" id="exampleFormControlFile1" required>
+                                            <label for="exampleFormControlFile1">Hình ảnh sản phẩm</label>
+                                            <input type="file" name="product_image" class="form-control-file" id="exampleFormControlFile1">
+                                            <img src="~/public/images_upload/product/@ViewBag.ProductInfo.ProductImage" height=100 width=100>
                                         </div>
                                     </div>
                                     <div class="col-6 col-lg-6">
@@ -149,11 +173,25 @@
                                             <label class="form-label d-block">Hiển thị</label>
                                             <div class="selectgroup selectgroup-secondary selectgroup-pills">
                                                 <label class="selectgroup-item">
-                                                    <input type="radio" name="Status" value="1" class="selectgroup-input" checked="">
+                                                    @if (@ViewBag.ProductInfo.Status == 1)
+                                                    {
+                                                        <input type="radio" name="Status" value="1" class="selectgroup-input" checked="">
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="Status" value="1" class="selectgroup-input">
+                                                    }
                                                     <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-eye"></i></span>
                                                 </label>
                                                 <label class="selectgroup-item">
-                                                    <input type="radio" name="Status" value="0" class="selectgroup-input">
+                                                    @if (@ViewBag.ProductInfo.Status == 0)
+                                                    {
+                                                        <input type="radio" name="Status" value="0" class="selectgroup-input" checked="">
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="Status" value="0" class="selectgroup-input">
+                                                    }
                                                     <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-eye-slash"></i></span>
                                                 </label>
                                             </div>
@@ -162,15 +200,14 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="comment">Nội dung sản phẩm</label>
-                                            <textarea class="form-control" name="Content" id="ckeditor1" rows="5" placeholder="Mô tả sản phẩm" required></textarea>
+                                            <textarea class="form-control" name="Content" id="ckeditor1" rows="5" placeholder="Mô tả sản phẩm">@ViewBag.ProductInfo.Content</textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="card-action">
-                                <button type="submit" name="add_product" class="btn btn-success">Thêm sản phẩm</button>
-                                <button class="btn btn-danger">Hủy</button>
+                                <button type="submit" name="update_product" class="btn btn-success">Cập nhật thông tin sản phẩm</button>
+                                <a href="/ProductManagement/view_product" class="btn btn-danger">Hủy</a>
                             </div>
                         </form>
                     </div>
@@ -178,3 +215,4 @@
             </div>
         </div>
     </div>
+</div>
