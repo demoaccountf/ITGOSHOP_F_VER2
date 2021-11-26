@@ -76,8 +76,8 @@
                 <div class="navigation__column center">
 
                     <ul class="main-menu menu">
-                        //foreach ($product_category_list as $key => $category)
-                        //if ($category->CategoryId == "LT000")
+                        <!--//foreach ($product_category_list as $key => $category)
+                        //if ($category->CategoryId == "LT000")-->
                         <li class="menu-item menu-item-has-children has-mega-menu">
                             <a href="/Product/product_listing2/category-CategoryId">Laptop</a>
                             <div class="mega-menu">
@@ -100,10 +100,10 @@
                                 </div>
                             </div>
                         </li>
-                        //endif
+                        <!--//endif
                         //endforeach
                         //foreach ($product_category_list as $key => $category)
-                        //if ($category->CategoryId == "PC000")
+                        //if ($category->CategoryId == "PC000")-->
                         <li class="menu-item menu-item-has-children has-mega-menu">
                             <a href="/Product/product_listing2/category-CategoryId">PC</a>
                             <div class="mega-menu">
@@ -126,13 +126,13 @@
                                 </div>
                             </div>
                         </li>
-                        //endif
+                        <!--//endif
                         //endforeach
                         //foreach ($product_category_list as $key => $category)
-                        //if ($category->CategoryId == "PK000")
-                            <li class="menu-item"><a href="/Product/product_listing2/category-CategoryId">Phụ Kiện</a></li>
-                        //endif
-                        //endforeach
+                        //if ($category->CategoryId == "PK000")-->
+                        <li class="menu-item"><a href="/Product/product_listing2/category-CategoryId">Phụ Kiện</a></li>
+                        <!--//endif
+                        //endforeach-->
                         <li class="menu-item"><a href="/Blog/all_blog">Tin Tức</a></li>
                     </ul>
                 </div>
@@ -152,15 +152,15 @@
                     </div>
                     <div class="menu-toggle"><span></span></div>
                     <a class="ps-cart__toggle" href="#}"><i class="fa fa-bell-o" aria-hidden="true" title="Thông báo"></i></a>
-                    <?php
+                    <!--<?php
                     //$CustomerId= Session::get('CustomerIdId');
                     $CustomerId= Session::get('CustomerId');
-                    if($CustomerId) { ?>
+                    if($CustomerId) { ?> -->
 
-                    <a class="ps-cart__toggle" href="/Wishlist/wishlist"><i class="fa fa-heart-o" aria-hidden="true" title="Wish List"></i></a>
+                    <a class="ps-cart__toggle" href="/wishlist')}}"><i class="fa fa-heart-o" aria-hidden="true" title="Wish List"></i></a>
 
-                    <?php } ?>
-                   
+                    <!--<?php } ?> -->
+
                     <div class="dropdown">
                         <div class="nut_dropdown"><a href="//login" class="ps-cart__toggle"><i class="fa fa-user-circle-o" title="Đăng Nhập"></i></a></div>
                         <div class="noidung_dropdown">
@@ -331,6 +331,20 @@
 
         .slider-area .active, .dot:hover {
             background-color: #717171;
+        }
+    </style>
+    <style>
+        .ps-search--header > input {
+            padding: 0 20px;
+            border: none;
+            height: 40px;
+            background-color: #e8e8e8;
+            /* -webkit-border-radius: 40px; */
+            -moz-border-radius: 40px;
+            -ms-border-radius: 40px;
+            border-radius: 40px;
+            font-size: 13px;
+            color: #767779;
         }
     </style>
     <!-- /End Footer Area -->
