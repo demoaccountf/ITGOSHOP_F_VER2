@@ -33,19 +33,33 @@ namespace ITGoShop_F_Ver2.Models
         //{
         //    System.Diagnostics.Debug.WriteLine("PID: " + productId);
         //    var product = Product.Where(p => p.ProductId == productId).FirstOrDefault();
-           
+
         //    product.Status = 0;
         //    this.SaveChanges();
         //}
 
-        //public void activeProduct(int productId)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("PID: " + productId);
-        //    var product = Product.Where(p => p.ProductId == productId).FirstOrDefault();
-        //    product.Status = 1;
-            
-        //    this.SaveChanges();
-        //}
+        public void updateProduct(Product productInfo)
+        {
+            var product = Product.Where(p => p.ProductId == productInfo.ProductId).FirstOrDefault();
+            product.ProductName = productInfo.ProductName;
+            product.Quantity = productInfo.Quantity;
+            product.Cost = productInfo.Cost;
+            product.Price = productInfo.Price;
+            product.Content = productInfo.Content;
+            product.Discount= productInfo.Discount;
+            product.UpdatedAt = DateTime.Now;
+            product.Status = productInfo.Status;
+            product.BrandId = productInfo.BrandId;
+            product.SliderId = productInfo.SliderId;
+            product.CategoryId = productInfo.CategoryId;
+            product.SubBrandId = productInfo.SubBrandId;
+            if(!string.IsNullOrEmpty(productInfo.ProductImage))
+            {
+                product.ProductImage = productInfo.ProductImage;
+                // Chưa làm xóa ảnh cũ ở đây
+            }    
+            this.SaveChanges();
+        }
         public void deleteProduct(int productId)
         {
             var product = (from p in Product

@@ -606,49 +606,6 @@ namespace ITGoShop_F_Ver2.Models
             }
         }
 
-        //public object getProductInfo(int productId)
-        //{
-        //    object obj;
-        //    using (MySqlConnection conn = GetConnection())
-        //    {
-        //        conn.Open();
-        //        var str = "SELECT * FROM (Product P JOIN category C ON P.CategoryId = C.CategoryId) " +
-        //            "JOIN brand B ON B.BrandId = P.BrandId " +
-        //            "where ProductId = @productId";
-        //        MySqlCommand cmd = new MySqlCommand(str, conn);
-        //        cmd.Parameters.AddWithValue("ProductId", productId);
-        //        using (var reader = cmd.ExecuteReader())
-        //        {
-        //            if (reader.Read())
-        //            {
-        //                obj = new
-        //                {
-        //                    ProductId = Convert.ToInt32(reader["ProductId"]),
-        //                    Quantity = Convert.ToInt32(reader["Quantity"]),
-        //                    ProductName = reader["ProductName"].ToString(),
-        //                    ProductImage = reader["ProductImage"].ToString(),
-        //                    Sold = Convert.ToInt32(reader["Sold"]),
-        //                    Cost = Convert.ToInt32(reader["Cost"]),
-        //                    Price = Convert.ToInt32(reader["Price"]),
-        //                    Status = Convert.ToInt32(reader["Status"]),
-        //                    //CreatedAt = (DateTime)reader["CreatedAt"],
-        //                    //UpdatedAt = (DateTime)reader["UpdatedAt"],
-        //                    CategoryId = reader["CategoryId"].ToString(),
-        //                    CategoryName = reader["CategoryName"].ToString(),
-        //                    BrandId = reader["BrandId"].ToString(),
-        //                    BrandName = reader["BrandName"].ToString(),
-        //                    SubBrandId = Convert.ToInt32(reader["SubBrandId"]),
-        //                    SubBrandName = reader["SubBrandName"].ToString(),
-        //                };
-
-        //            }
-        //            else
-        //                return null;
-        //        }
-        //    }
-        //    return obj;
-        //}
-
         public Product getProductInfo(int productId)
         {
             Product productInfo = new Product();
@@ -673,8 +630,6 @@ namespace ITGoShop_F_Ver2.Models
                         productInfo.Price = Convert.ToInt32(reader["Price"]);
                         productInfo.Status = Convert.ToInt32(reader["Status"]);
                         productInfo.Discount = Convert.ToInt32(reader["Discount"]);
-                        //CreatedAt = (DateTime)reader["CreatedAt"],
-                        //UpdatedAt = (DateTime)reader["UpdatedAt"],
                         productInfo.CategoryId = reader["CategoryId"].ToString();
                         productInfo.SubBrandId = reader["SubBrandId"].ToString();
                         productInfo.BrandId = Convert.ToInt32(reader["BrandId"]);

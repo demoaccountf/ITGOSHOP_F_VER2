@@ -87,5 +87,30 @@ namespace ITGoShop_F_Ver2.Controllers
             return View();
         }
 
+        [Obsolete]
+        public IActionResult save_update_product(Product product, List<IFormFile> productImage)
+        {
+            System.Diagnostics.Debug.WriteLine("PImg: " + product.ProductImage +"-"+ product.ProductName);
+            if (!string.IsNullOrEmpty(product.ProductImage))
+            {
+                //Lưu ảnh sản phẩm vào trước
+                string path = Path.Combine(this.Environment.WebRootPath, "public/images_upload/product");
+                foreach (IFormFile postedFile in productImage)
+                {
+                    // Lấy tên file
+                    product.ProductImage = DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName;
+                    // Lưu file vào project
+                    string fileName = Path.GetFileName(DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName);
+                    using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
+                    {
+                        postedFile.CopyTo(stream);
+                    }
+                }
+            }
+            var context = new ITGoShopLINQContext();
+            context.updateProduct(product);
+            return RedirectToAction("view_product");
+
+        }
     }
 }
