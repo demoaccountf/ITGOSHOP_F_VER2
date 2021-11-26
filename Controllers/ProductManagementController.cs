@@ -20,7 +20,7 @@ namespace ITGoShop_F_Ver2.Controllers
         {
             Environment = _environment;
         }
-        public IActionResult AddProduct()
+        public IActionResult add_product()
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
@@ -48,9 +48,33 @@ namespace ITGoShop_F_Ver2.Controllers
             }
 
             var context = new ITGoShopLINQContext();
-            context.SaveProduct(newProduct);
-            return RedirectToAction("AddProduct");
+            context.saveProduct(newProduct);
+            return RedirectToAction("add_product");
 
         }
+
+        public IActionResult view_product()
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.AllProduct = context.getAllProduct();
+            return View();
+        }
+        public void unactive_product(int ProductId)
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            context.updateProductStatus(ProductId, 0); 
+        }
+        public void active_product(int ProductId)
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            context.updateProductStatus(ProductId, 1);
+        }
+
+        public void delete_product(int ProductId)
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            context.deleteProduct(ProductId);
+        }
+
     }
 }

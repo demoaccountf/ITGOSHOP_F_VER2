@@ -9,7 +9,6 @@ namespace ITGoShop_F_Ver2.Models
     {
         private int productId;
         private string productName;
-        private int subBrandId;
         private int brandId;
         private string categoryId;
         private float discount;
@@ -71,6 +70,5 @@ namespace ITGoShop_F_Ver2.Models
         public DateTime EndsAt { get => endsAt; set => endsAt = value; }
         public DateTime CreatedAt { get => createdAt; set => createdAt = value; }
         public DateTime UpdatedAt { get => updatedAt; set => updatedAt = value; }
-        public int SubBrandId { get => subBrandId; set => subBrandId = value; }
     }
 }

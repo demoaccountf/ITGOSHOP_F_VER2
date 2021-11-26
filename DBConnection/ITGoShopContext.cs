@@ -420,6 +420,7 @@ namespace ITGoShop_F_Ver2.Models
                             CategoryId = reader["CategoryId"].ToString(),
                             CategoryName = reader["CategoryName"].ToString(),
                             Status = Convert.ToInt32(reader["Status"]),
+                            
                         });
                     }
                     reader.Close();
@@ -476,7 +477,7 @@ namespace ITGoShop_F_Ver2.Models
                             BrandId = Convert.ToInt32(reader["BrandId"]),
                             BrandName = reader["BrandName"].ToString(),
                             Description = reader["Description"].ToString(),
-                            //SubBrand = Convert.ToInt32(reader["SubBrand"]),
+                            CategoryId = reader["CategoryId"].ToString(),
                             Status = Convert.ToInt32(reader["Status"]),
                             BrandLogo = reader["BrandLogo"].ToString(),
                         });
@@ -518,6 +519,91 @@ namespace ITGoShop_F_Ver2.Models
 
             }
             return list;
+        }
+
+        public List<object> getAllProduct()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "SELECT * FROM (Product P JOIN category C ON P.CategoryId = C.CategoryId) JOIN brand B ON B.BrandId = P.BrandId;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            CategoryName = reader["CategoryName"].ToString(),
+                            BrandName = reader["BrandName"].ToString(),
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            Price = Convert.ToInt32(reader["Price"]),
+                            Status = Convert.ToInt32(reader["Status"]),
+                            ProductImage = reader["ProductImage"].ToString()
+                        };
+                        list.Add(obj);
+                }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
+
+        public void updateProductStatus(int productId, int status)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "UPDATE PRODUCT SET Status = @status WHERE ProductId = @productId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("status", status);
+                cmd.Parameters.AddWithValue("productId", productId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void deleteProduct(int productId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "DELETE FROM OrderDetail WHERE ProductId = @productId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("productId", productId);
+                cmd.ExecuteNonQuery();
+
+                str = "DELETE FROM Comment WHERE ProductId = @productId";
+                cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("productId", productId);
+                cmd.ExecuteNonQuery();
+
+                str = "DELETE FROM WishList WHERE ProductId = @productId";
+                cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("productId", productId);
+                cmd.ExecuteNonQuery();
+
+                str = "DELETE FROM ProductGallary WHERE ProductId = @productId";
+                cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("productId", productId);
+                cmd.ExecuteNonQuery();
+
+                str = "DELETE FROM CartItem WHERE ProductId = @productId";
+                cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("productId", productId);
+                cmd.ExecuteNonQuery();
+
+                str = "DELETE FROM Product WHERE ProductId = @productId";
+                cmd = new MySqlCommand(str, conn);
+
+                cmd.Parameters.AddWithValue("productId", productId);
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 }
