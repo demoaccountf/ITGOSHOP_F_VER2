@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    Layout = null;
+}
 @model User
 
 <!DOCTYPE html>
@@ -29,14 +31,17 @@
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="#" method="post" class="signin-form">
+            <form action="/Home/Index" method="post" class="signin-form">
                 <div class="logo">
-                    <a href="index.html"><img src="~/public/client/Images/logo.png" alt="logo"></a>
+                    <a href="index.html"><img src="~/public/client/images/logo.png" alt="logo"></a>
                 </div>
                 <h1>Đăng nhập</h1>
-                <input type="email" asp-for="Email" placeholder="Email" />
-                <input type="password" asp-for="Password" placeholder="Password" />
-                <span class="text-alert" style="color:red">@ViewBag.Message</span>
+                <input type="email" name="Email" placeholder="Email" required />
+                <input type="password" name="Password" placeholder="Password" required />
+                @if (ViewBag.message != null)
+                {
+                    <span class="text-alert">@ViewBag.message</span>
+                }
                 <button type="submit">Đăng nhập</button>
             </form>
         </div>
