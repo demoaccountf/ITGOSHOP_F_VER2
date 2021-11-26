@@ -20,6 +20,8 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<Product> Product { set; get; }
         public DbSet<Brand> Brand { set; get; }
         public DbSet<Category> Category { set; get; }
+        public DbSet<BannerSlider> BannerSlider { set; get; }
+        public DbSet<Campaign> Campaign { set; get; }
         public void saveProduct(Product newProduct)
         {
             newProduct.StartsAt = DateTime.Now;
@@ -73,21 +75,39 @@ namespace ITGoShop_F_Ver2.Models
             }
         }
 
-        //public IQueryable getAllProduct()
-        //{
-        //    var products = from p in Product
-        //                   join b in Brand on p.BrandId equals b.BrandId
-        //                   join c in Category on p.CategoryId equals c.CategoryId
-        //                   select new
-        //                   {
-        //                       ProductId = p.ProductId,
-        //                       ProductName = p.ProductName
-        //                   };
-        //    foreach (var item in products)
-        //    {
-        //        System.Diagnostics.Debug.WriteLine(item.ProductName);
-        //    }
-        //    return products;
-        //}
+        public List<BannerSlider> getAllBannerSliders()
+        {
+            return BannerSlider.ToList();
+        }
+
+        public List<Campaign> getAllCampaign()
+        {
+            return Campaign.ToList();
+        }
+
+        public void updateSliderStatus(int sliderId, int status)
+        {
+            var slider = BannerSlider.Where(p => p.SliderId == sliderId).FirstOrDefault();
+            slider.SliderStatus = status;
+            this.SaveChanges();
+        }
+
+        public void deleteSlider(int sliderId)
+        {
+            // Code thiếu chỗ xóa các bảng liên quan ở đây
+            var slider = BannerSlider.Where(p => p.SliderId == sliderId).FirstOrDefault();
+
+            if (slider != null)
+            {
+                Remove(slider);
+                SaveChanges();
+            }
+        }
+
+        public void saveSlider(BannerSlider newSlider)
+        {
+            BannerSlider.Add(newSlider);
+            SaveChanges();
+        }
     }
 }

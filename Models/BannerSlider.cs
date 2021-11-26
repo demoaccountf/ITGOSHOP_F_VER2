@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,15 +10,17 @@ namespace ITGoShop_F_Ver2.Controllers
     {
         private int sliderId;
         private string sliderName, sliderImage;
-        private int sliderStatus, blogId;
+        private int sliderStatus;
+        private int? blogId;
         private DateTime createdAt, updatedAt;
-        private int campaignId, campaignDiscount, saleQuantity;
+        private string? campaignId;
+        private int campaignDiscount, saleQuantity;
 
         public BannerSlider()
         {
         }
 
-        public BannerSlider(int sliderId, string sliderName, string sliderImage, int sliderStatus, int blogId, DateTime createdAt, DateTime updatedAt, int campaignId, int campaignDiscount, int saleQuantity)
+        public BannerSlider(int sliderId, string sliderName, string sliderImage, int sliderStatus, int blogId, DateTime createdAt, DateTime updatedAt, string campaignId, int campaignDiscount, int saleQuantity)
         {
             this.sliderId = sliderId;
             this.sliderName = sliderName;
@@ -31,14 +34,15 @@ namespace ITGoShop_F_Ver2.Controllers
             this.saleQuantity = saleQuantity;
         }
 
+        [Key]
         public int SliderId { get => sliderId; set => sliderId = value; }
         public string SliderName { get => sliderName; set => sliderName = value; }
         public string SliderImage { get => sliderImage; set => sliderImage = value; }
         public int SliderStatus { get => sliderStatus; set => sliderStatus = value; }
-        public int BlogId { get => blogId; set => blogId = value; }
+        public int? BlogId { get => blogId; set => blogId = value; }
         public DateTime CreatedAt { get => createdAt; set => createdAt = value; }
         public DateTime UpdatedAt { get => updatedAt; set => updatedAt = value; }
-        public int CampaignId { get => campaignId; set => campaignId = value; }
+        public string? CampaignId { get => campaignId; set => campaignId = value; }
         public int CampaignDiscount { get => campaignDiscount; set => campaignDiscount = value; }
         public int SaleQuantity { get => saleQuantity; set => saleQuantity = value; }
     }
