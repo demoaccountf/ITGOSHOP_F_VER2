@@ -24,23 +24,22 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<Campaign> Campaign { set; get; }
         public DbSet<Order> Order { set; get; }
         public DbSet<LoginHistory> LoginHistory { set; get; }
+        public DbSet<ShipMethod> ShipMethod { set; get; }
         public void saveProduct(Product newProduct)
         {
             newProduct.StartsAt = DateTime.Now;
             newProduct.CreatedAt = DateTime.Now;
             newProduct.UpdatedAt = DateTime.Now;
-            this.Product.Add(newProduct);
-            this.SaveChanges();
+            Product.Add(newProduct);
+            SaveChanges();
         }
 
-        //public void unactiveProduct(int productId)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("PID: " + productId);
-        //    var product = Product.Where(p => p.ProductId == productId).FirstOrDefault();
-
-        //    product.Status = 0;
-        //    this.SaveChanges();
-        //}
+        public void saveShipMethod(ShipMethod newShipMethod)
+        {
+            //newShipMethod.CreatedAt = DateTime.Now; // Câu lệnh này bị lỗi
+            ShipMethod.Add(newShipMethod);
+            SaveChanges();
+        }
 
         public void updateProduct(Product productInfo)
         {
@@ -87,6 +86,11 @@ namespace ITGoShop_F_Ver2.Models
             return Campaign.ToList();
         }
 
+        public List<ShipMethod> getAllShipMethod()
+        {
+            return ShipMethod.ToList();
+        }
+
         public void updateSliderStatus(int sliderId, int status)
         {
             var slider = BannerSlider.Where(p => p.SliderId == sliderId).FirstOrDefault();
@@ -128,6 +132,23 @@ namespace ITGoShop_F_Ver2.Models
             order.OrderStatus = OrderStatus;
             order.PaymentStatus = PaymentStatus;
             SaveChanges();
+        }
+
+        public void updateShipMethodStatus(int shipMethodId, int status)
+        {
+            var shipmethod = ShipMethod.Where(p => p.ShipMethodId == shipMethodId).FirstOrDefault();
+            shipmethod.Status = status;
+            this.SaveChanges();
+        }
+        public void deleteShipMethod(int shipmethodId)
+        {
+            var shipmethod = ShipMethod.Where(p => p.ShipMethodId == shipmethodId).FirstOrDefault();
+
+            if (shipmethod != null)
+            {
+                Remove(shipmethod);
+                SaveChanges();
+            }
         }
     }
 }
