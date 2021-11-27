@@ -74,69 +74,70 @@
                     <input type="text" id="input-admin-id" value="('CustomerId')" hidden>
                 </div>
                 <div class="navigation__column center">
+
                     <ul class="main-menu menu">
+                        <!--//foreach ($product_category_list as $key => $category)
+                        //if ($category->CategoryId == "LT000")-->
                         <li class="menu-item menu-item-has-children has-mega-menu">
-                            <a href="#">Laptop</a>
+                            <a href="/Product/product_listing2/category-CategoryId">Laptop</a>
                             <div class="mega-menu">
                                 <div class="mega-wrap">
+                                    //foreach ($main_brand_list as $key => $main_brand)
+                                    //if ($main_brand->CategoryId == "LT000")
                                     <div class="mega-column">
-                                        <h4 class="mega-heading">HP</h4>
+                                        <a href="/Product/product_listing/main_brand->BrandId"> <h4 class="mega-heading">{{$main_brand->BrandName}}</h4> </a>
+                                        //foreach ($sub_brand_list as $key => $SubBrand)
+                                        //if ($SubBrand->BrandId == $main_brand->BrandId)
                                         <ul class="mega-item">
-                                            <li><a href="product-listing.html">Elitedesk</a></li>
-                                            <li><a href="product-listing.html">Z Workstation</a></li>
-                                            <li><a href="product-listing.html">Pavilion</a></li>
+                                            <li><a href="/Product/product_listing3/SubBrand->SubBrandId">{{$SubBrand->SubBrandName}}</a></li>
                                         </ul>
+                                        //endif
+                                        //endforeach
                                     </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="menu-item menu-item-has-children has-mega-menu">
-                            <a href="#">PC</a>
-                            <div class="mega-menu">
-                                <div class="mega-wrap">
-                                    <div class="mega-column">
-                                        <h4 class="mega-heading">HP</h4>
-                                        <ul class="mega-item">
-                                            <li><a href="product-listing.html">Elitedesk</a></li>
-                                            <li><a href="product-listing.html">Z Workstation</a></li>
-                                            <li><a href="product-listing.html">Pavilion</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="mega-column">
-                                        <h4 class="mega-heading">DELL</h4>
-                                        <ul class="mega-item">
-                                            <li><a href="product-listing.html">Optiplex</a></li>
-                                            <li><a href="product-listing.html">Precision</a></li>
-                                            <li><a href="product-listing.html">Alienware</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="mega-column">
-                                        <h4 class="mega-heading">Lenovo</h4>
-                                        <ul class="mega-item">
-                                            <li><a href="product-listing.html">ThinkCentre</a></li>
-                                            <li><a href="product-listing.html">Legion</a></li>
-                                            <li><a href="product-listing.html">ThinkStation</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="mega-column">
-                                        <h4 class="mega-heading">Apple</h4>
-                                        <ul class="mega-item">
-                                            <li><a href="product.php">iMac</a></li>
-                                            <li><a href="product-listing.html">Mac</a></li>
-                                            <li><a href="product-listing.html">Mac Pro</a></li>
-                                        </ul>
-                                    </div>
+                                    //endif
+                                    //endforeach
 
                                 </div>
                             </div>
                         </li>
-                        <li class="menu-item"><a href="product-listing.html">Phụ Kiện</a></li>
-                        <li class="menu-item"><a href="bloggrid.php">Blogs</a></li>
+                        <!--//endif
+                        //endforeach
+                        //foreach ($product_category_list as $key => $category)
+                        //if ($category->CategoryId == "PC000")-->
+                        <li class="menu-item menu-item-has-children has-mega-menu">
+                            <a href="/Product/product_listing2/category-CategoryId">PC</a>
+                            <div class="mega-menu">
+                                <div class="mega-wrap">
+                                    //foreach ($main_brand_list as $key => $main_brand)
+                                    //if ($main_brand->CategoryId == "PC000")
+                                    <div class="mega-column">
+                                        <a href="/Product/product_listing/main_brand->BrandId"><h4 class="mega-heading">{{$main_brand->BrandName}}</h4></a>
+                                        //foreach ($sub_brand_list as $key => $SubBrand)
+                                        //if ($SubBrand->BrandId == $main_brand->BrandId)
+                                        <ul class="mega-item">
+                                            <li><a href="/Product/product_listing3/SubBrand->SubBrandId">{{$SubBrand->SubBrandName}}</a></li>
 
+                                        </ul>
+                                        //endif
+                                        //endforeach
+                                    </div>
+                                    //endif
+                                    //endforeach
+                                </div>
+                            </div>
+                        </li>
+                        <!--//endif
+                        //endforeach
+                        //foreach ($product_category_list as $key => $category)
+                        //if ($category->CategoryId == "PK000")-->
+                        <li class="menu-item"><a href="/Product/product_listing2/category-CategoryId">Phụ Kiện</a></li>
+                        <!--//endif
+                        //endforeach-->
+                        <li class="menu-item"><a href="/Blog/all_blog">Tin Tức</a></li>
                     </ul>
                 </div>
                 <div class="navigation__column right">
-                    <form class="ps-search--header" action="/search_result" method="POST">
+                    <form class="ps-search--header" action="/Home/search_result" method="POST">
                         <input class="form-control" type="text" name="kw_submit" placeholder="Tìm kiếm">
                         <button type="submit"><i class="fa fa-search"></i></button>
                     </form>
@@ -151,21 +152,21 @@
                     </div>
                     <div class="menu-toggle"><span></span></div>
                     <a class="ps-cart__toggle" href="#}"><i class="fa fa-bell-o" aria-hidden="true" title="Thông báo"></i></a>
-                    <?php
+                    <!--<?php
                     //$CustomerId= Session::get('CustomerIdId');
                     $CustomerId= Session::get('CustomerId');
-                    if($CustomerId) { ?>
+                    if($CustomerId) { ?> -->
 
-                    <a class="ps-cart__toggle" href="{{URL::to('/wishlist')}}"><i class="fa fa-heart-o" aria-hidden="true" title="Wish List"></i></a>
+                    <a class="ps-cart__toggle" href="/wishlist')}}"><i class="fa fa-heart-o" aria-hidden="true" title="Wish List"></i></a>
 
-                    <?php } ?>
-                   
+                    <!--<?php } ?> -->
+
                     <div class="dropdown">
                         <div class="nut_dropdown"><a href="//login" class="ps-cart__toggle"><i class="fa fa-user-circle-o" title="Đăng Nhập"></i></a></div>
                         <div class="noidung_dropdown">
 
-                            <a href="//profile/CustomerId)}}">Tài khoản</a>
-                            <a href="/my-orders">Đơn hàng của tôi</a>
+                            <a href="/Profile/profile">Tài khoản</a>
+                            <a href="/Order/my-orders">Đơn hàng của tôi</a>
                             <a href="/customer-logout">Kiểm tra bảo hành</a>
                             <a href="/customer-logout">Đăng xuất</a>
                         </div>
@@ -330,6 +331,20 @@
 
         .slider-area .active, .dot:hover {
             background-color: #717171;
+        }
+    </style>
+    <style>
+        .ps-search--header > input {
+            padding: 0 20px;
+            border: none;
+            height: 40px;
+            background-color: #e8e8e8;
+            /* -webkit-border-radius: 40px; */
+            -moz-border-radius: 40px;
+            -ms-border-radius: 40px;
+            border-radius: 40px;
+            font-size: 13px;
+            color: #767779;
         }
     </style>
     <!-- /End Footer Area -->
