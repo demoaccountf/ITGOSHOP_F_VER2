@@ -77,7 +77,7 @@ namespace ITGoShop_F_Ver2.Models
 
         public List<BannerSlider> getAllBannerSliders()
         {
-            return BannerSlider.ToList();
+            return BannerSlider.OrderByDescending(b => b.CreatedAt).ToList();
         }
 
         public List<Campaign> getAllCampaign()
@@ -94,6 +94,7 @@ namespace ITGoShop_F_Ver2.Models
 
         public void deleteSlider(int sliderId)
         {
+            System.Diagnostics.Debug.WriteLine("PID: " + sliderId);
             // Code thiếu chỗ xóa các bảng liên quan ở đây
             var slider = BannerSlider.Where(p => p.SliderId == sliderId).FirstOrDefault();
 
@@ -106,6 +107,8 @@ namespace ITGoShop_F_Ver2.Models
 
         public void saveSlider(BannerSlider newSlider)
         {
+            newSlider.CreatedAt = DateTime.Now;
+            newSlider.UpdatedAt = DateTime.Now;
             BannerSlider.Add(newSlider);
             SaveChanges();
         }

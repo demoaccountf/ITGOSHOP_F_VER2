@@ -206,7 +206,6 @@
                 var ProductId = $(this).parents('tr').find('.ProductId').val();
                 var activeButton = $(this);
                 var unactiveButton = $(this).parent().find('button[data-original-title="Ẩn sản phẩm"]');
-                alert(ProductId);
                 $.ajax({
                     url: "/ProductManagement/unactive_product",
                     method: "GET",
@@ -224,7 +223,6 @@
                 var ProductId = $(this).parents('tr').find('.ProductId').val();
                 var unactiveButton = $(this);
                 var activeButton = $(this).parent().find('button[data-original-title="Hiển thị sản phẩm"]');
-                alert(ProductId);
                 $.ajax({
                     url: '/ProductManagement/active_product',
                     method: "GET",

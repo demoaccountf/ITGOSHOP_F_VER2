@@ -28,52 +28,63 @@ namespace ITGoShop_F_Ver2.Controllers
 
         public IActionResult Index(string message)
         {
-            if(!string.IsNullOrEmpty(message))
+            if(HttpContext.Session.GetInt32("adminId") != null)
+            {
+                // Nếu admin đăng nhập rồi thì vô thẳng dashboard
+                return View("Dashboard");
+            }
+            if (!string.IsNullOrEmpty(message))
             {
                 ViewBag.message = message;
-            }    
+            }
             return View();
+
         }
-        public IActionResult Dashboard(User userInput)
+
+        public IActionResult check_password(User userInput)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             User userInfo = context.getUserInfo(userInput.Email, userInput.Password);
-            if(userInfo != null)
+            if (userInfo != null)
             {
                 //System.Diagnostics.Debug.WriteLine("Admin: " + userInfo.UserId);
                 HttpContext.Session.SetInt32("adminId", userInfo.UserId);
                 HttpContext.Session.SetString("adminLastName", userInfo.LastName);
                 HttpContext.Session.SetString("adminFirstName", userInfo.FirstName);
                 HttpContext.Session.SetString("adminImage", userInfo.UserImage);
-
                 // Update last login
                 context.updateLastLogin(userInfo.UserId);
-
-                // Chuyển dữ liệu admin qua
-                DateTime homNay = DateTime.Now;
-                DateTime dauThangNay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                int soNgayThangTruoc = DateTime.DaysInMonth(DateTime.Now.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month) - 1;
-                DateTime cuoiThangTruoc = ((new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddMonths(-1)).AddDays(soNgayThangTruoc);
-                DateTime dauThangTruoc = (new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddMonths(-1);
-                DateTime dauNamNay = (new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddYears(-1);
-
-                ViewBag.numberCustomer = context.countCustomer();
-                ViewBag.numberProduct= context.countProduct();
-                ViewBag.numberOrder = context.countOrder();
-                ViewBag.numberLoginThisYear = context.countLoginThisYear();
-                ViewBag.totalRevenueThisMonth = context.getRevenue(dauThangNay, homNay);
-                ViewBag.numberOrderToday = context.countOrder(homNay, homNay);
-                ViewBag.numberLoginToday = context.countLogin(homNay, homNay);
-                ViewBag.topProducts = context.getTopProduct(dauThangTruoc, homNay);
-                ViewBag.topBlogView = context.getTopBlogView();
-                ViewBag.topProductView = context.getTopProductView();
-                ViewBag.inventoryList = context.getInventoryList();
-                ViewBag.numberLoginThangNay = context.countLogin(dauThangNay, homNay);
-                ViewBag.numberLoginThangTruoc = context.countLogin(dauThangTruoc, cuoiThangTruoc);
-                ViewBag.numberLoginNamNay = context.countLogin(dauNamNay, homNay);
-                return View();
+                return RedirectToAction("Dashboard");
             }
             return RedirectToAction("Index", new { message = "Mật khẩu hoặc tài khoản sai. Xin nhập lại!" });
+        }
+        public IActionResult Dashboard()
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            
+            // Chuyển dữ liệu admin qua
+            DateTime homNay = DateTime.Now;
+            DateTime dauThangNay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            int soNgayThangTruoc = DateTime.DaysInMonth(DateTime.Now.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month) - 1;
+            DateTime cuoiThangTruoc = ((new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddMonths(-1)).AddDays(soNgayThangTruoc);
+            DateTime dauThangTruoc = (new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddMonths(-1);
+            DateTime dauNamNay = (new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddYears(-1);
+
+            ViewBag.numberCustomer = context.countCustomer();
+            ViewBag.numberProduct = context.countProduct();
+            ViewBag.numberOrder = context.countOrder();
+            ViewBag.numberLoginThisYear = context.countLoginThisYear();
+            ViewBag.totalRevenueThisMonth = context.getRevenue(dauThangNay, homNay);
+            ViewBag.numberOrderToday = context.countOrder(homNay, homNay);
+            ViewBag.numberLoginToday = context.countLogin(homNay, homNay);
+            ViewBag.topProducts = context.getTopProduct(dauThangTruoc, homNay);
+            ViewBag.topBlogView = context.getTopBlogView();
+            ViewBag.topProductView = context.getTopProductView();
+            ViewBag.inventoryList = context.getInventoryList();
+            ViewBag.numberLoginThangNay = context.countLogin(dauThangNay, homNay);
+            ViewBag.numberLoginThangTruoc = context.countLogin(dauThangTruoc, cuoiThangTruoc);
+            ViewBag.numberLoginNamNay = context.countLogin(dauNamNay, homNay);
+            return View();
         }
 
         public IActionResult Logout()

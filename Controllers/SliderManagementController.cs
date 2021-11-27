@@ -34,10 +34,10 @@ namespace ITGoShop_F_Ver2.Controllers
             context.updateSliderStatus(SliderId, Status);
         }
 
-        public void delete_slider(int SliderId, int Status)
+        public void delete_slider(int SliderId)
         {
             var context = new ITGoShopLINQContext();
-            context.updateSliderStatus(SliderId, Status);
+            context.deleteSlider(SliderId);
         }
 
         public IActionResult add_slider()
