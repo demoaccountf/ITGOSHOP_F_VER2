@@ -52,6 +52,9 @@ namespace ITGoShop_F_Ver2.Controllers
                 HttpContext.Session.SetString("adminLastName", userInfo.LastName);
                 HttpContext.Session.SetString("adminFirstName", userInfo.FirstName);
                 HttpContext.Session.SetString("adminImage", userInfo.UserImage);
+                var LINQContext = new ITGoShopLINQContext();
+                LoginHistory login = new LoginHistory(userInfo.UserId, DateTime.Now, DateTime.Now);
+                LINQContext.updateLoginHistory(login);
                 // Update last login
                 context.updateLastLogin(userInfo.UserId);
                 return RedirectToAction("Dashboard");

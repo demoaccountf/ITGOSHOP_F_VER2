@@ -22,6 +22,8 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<Category> Category { set; get; }
         public DbSet<BannerSlider> BannerSlider { set; get; }
         public DbSet<Campaign> Campaign { set; get; }
+        public DbSet<Order> Order { set; get; }
+        public DbSet<LoginHistory> LoginHistory { set; get; }
         public void saveProduct(Product newProduct)
         {
             newProduct.StartsAt = DateTime.Now;
@@ -110,6 +112,21 @@ namespace ITGoShop_F_Ver2.Models
             newSlider.CreatedAt = DateTime.Now;
             newSlider.UpdatedAt = DateTime.Now;
             BannerSlider.Add(newSlider);
+            SaveChanges();
+        }
+
+
+        public void updateLoginHistory(LoginHistory login)
+        {
+            LoginHistory.Add(login);
+            SaveChanges();
+        }
+
+        public void updateOrderStatus(int OrderId, string OrderStatus, string PaymentStatus)
+        {
+            var order = Order.Where(p => p.OrderId == OrderId).FirstOrDefault();
+            order.OrderStatus = OrderStatus;
+            order.PaymentStatus = PaymentStatus;
             SaveChanges();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,14 +15,14 @@ namespace ITGoShop_F_Ver2.Controllers
         {
         }
 
-        public LoginHistory(int loginId, int userId, DateTime loginDate, DateTime loginTime)
+        public LoginHistory(int userId, DateTime loginDate, DateTime loginTime)
         {
-            this.loginId = loginId;
             this.userId = userId;
             this.loginDate = loginDate;
             this.loginTime = loginTime;
         }
 
+        [Key]
         public int LoginId { get => loginId; set => loginId = value; }
         public int UserId { get => userId; set => userId = value; }
         public DateTime LoginDate { get => loginDate; set => loginDate = value; }

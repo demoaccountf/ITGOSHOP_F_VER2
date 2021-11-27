@@ -13,18 +13,18 @@ namespace ITGoShop_F_Ver2.Controllers
         private DateTime estimatedDeliveryTime;
         private string shipMethod;
         private DateTime orderDate;
-        private DateTime orderDateCompleted;
-        private int orderStatus;
+        private DateTime? orderDateCompleted;
+        private string orderStatus;
         private string paymentMethod;
-        private int paymentStatus;
+        private string paymentStatus;
         private string description;
-        private DateTime dateUpdate;
+        private DateTime? dateUpdate;
 
         public Order()
         {
         }
 
-        public Order(int orderId, int userId, long total, int shippingAddressId, int shipFee, DateTime estimatedDeliveryTime, string shipMethod, DateTime orderDate, DateTime orderDateCompleted, int orderStatus, string paymentMethod, int paymentStatus, string description, DateTime dateUpdate)
+        public Order(int orderId, int userId, long total, int shippingAddressId, int shipFee, DateTime estimatedDeliveryTime, string shipMethod, DateTime orderDate, DateTime orderDateCompleted, string orderStatus, string paymentMethod, string paymentStatus, string description, DateTime dateUpdate)
         {
             this.orderId = orderId;
             this.userId = userId;
@@ -50,11 +50,11 @@ namespace ITGoShop_F_Ver2.Controllers
         public DateTime EstimatedDeliveryTime { get => estimatedDeliveryTime; set => estimatedDeliveryTime = value; }
         public string ShipMethod { get => shipMethod; set => shipMethod = value; }
         public DateTime OrderDate { get => orderDate; set => orderDate = value; }
-        public DateTime OrderDateCompleted { get => orderDateCompleted; set => orderDateCompleted = value; }
-        public int OrderStatus { get => orderStatus; set => orderStatus = value; }
+        public DateTime? OrderDateCompleted { get => orderDateCompleted; set => orderDateCompleted = value; }
+        public string OrderStatus { get => orderStatus; set => orderStatus = value; }
         public string PaymentMethod { get => paymentMethod; set => paymentMethod = value; }
-        public int PaymentStatus { get => paymentStatus; set => paymentStatus = value; }
+        public string PaymentStatus { get => paymentStatus; set => paymentStatus = value; }
         public string Description { get => description; set => description = value; }
-        public DateTime DateUpdate { get => dateUpdate; set => dateUpdate = value; }
+        public DateTime? DateUpdate { get => dateUpdate; set => dateUpdate = value; }
     }
 }

@@ -641,5 +641,37 @@ namespace ITGoShop_F_Ver2.Models
             }
             return productInfo;
         }
+
+        public List<object> getAllOrder()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "SELECT* FROM `ORDER` O JOIN USER U ON O.UserId = U.UserId ORDER BY O.ORDERID DESC";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            OrderId = Convert.ToInt32(reader["OrderId"]),
+                            FirstName = reader["FirstName"].ToString(),
+                            LastName = reader["LastName"].ToString(),
+                            OrderStatus = reader["OrderStatus"].ToString(),
+                            Total = Convert.ToInt32(reader["Total"]),
+                            PaymentStatus = reader["PaymentStatus"].ToString()
+                        };
+                        list.Add(obj);
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
     }
 }

@@ -1549,19 +1549,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Selena\\.nuget\\packages\\": {}
+    "C:\\Users\\ACER\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\ITGoShop_F_Ver2.csproj",
+      "projectUniqueName": "D:\\C#Code\\New folder (2)\\ITGoShop_F_Ver2.csproj",
       "projectName": "ITGoShop_F_Ver2",
-      "projectPath": "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\ITGoShop_F_Ver2.csproj",
-      "packagesPath": "C:\\Users\\Selena\\.nuget\\packages\\",
-      "outputPath": "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\obj\\",
+      "projectPath": "D:\\C#Code\\New folder (2)\\ITGoShop_F_Ver2.csproj",
+      "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+      "outputPath": "D:\\C#Code\\New folder (2)\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Selena\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1618,7 +1622,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }
