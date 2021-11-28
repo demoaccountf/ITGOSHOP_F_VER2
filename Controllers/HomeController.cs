@@ -27,7 +27,9 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllBlog = context.getAllBlog();
             ViewBag.AllBannerSlider = context.getAllBannerSlider();
             ViewBag.Top3Product = context.getTop3ProductView();
-            ViewBag.getLTProduct = context.getLTProduct();
+            ViewBag.LTProduct = context.getLTProduct();
+            ViewBag.PCProduct = context.getPCProduct();
+            ViewBag.PKProduct = context.getPKProduct();
             return View();
         }
 
