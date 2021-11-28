@@ -496,7 +496,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "select * from blog";
+                string str = "select * from blog where Status = 1";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -508,7 +508,38 @@ namespace ITGoShop_F_Ver2.Models
                             Author = reader["Author"].ToString(),
                             Title = reader["Title"].ToString(),
                             Summary = reader["Summary"].ToString(),
-                            Content = reader["Summary"].ToString(),
+                            Content = reader["Content"].ToString(),
+                            Image = reader["Image"].ToString(),
+                        });
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
+        public List<Blog> getBlog()
+        {
+            List<Blog> list = new List<Blog>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select * from blog ORDER BY DatePost DESC LIMIT 3";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Blog()
+                        {
+                            BlogId = Convert.ToInt32(reader["BlogId"]),
+                            Author = reader["Author"].ToString(),
+                            Title = reader["Title"].ToString(),
+                            Summary = reader["Summary"].ToString(),
+                            Content = reader["Content"].ToString(),
+                            DatePost = (DateTime)reader["DatePost"],
                             Image = reader["Image"].ToString(),
                         });
                     }
@@ -584,7 +615,7 @@ namespace ITGoShop_F_Ver2.Models
             }
             return list;
         }
-        public List<object> get3Product(DateTime startDate, DateTime endDate)
+        public List<object> get3Product()
         {
             List<object> products = new List<object>();
             using (MySqlConnection conn = GetConnection())
@@ -594,13 +625,11 @@ namespace ITGoShop_F_Ver2.Models
                     "FROM (`product` P JOIN `orderdetail` OD ON P.ProductId = OD.ProductId) " +
                     "JOIN `order` O ON O.OrderId = OD.OrderId " +
                     "WHERE OrderStatus <> 'Đã hủy' " +
-                    "AND ORDERDATE BETWEEN @startdate AND @enddate " +
+                    
                     "GROUP BY ProductName, ProductImage, P.ProductId, StartsAt, Quantity, Cost, Price " +
                     "ORDER BY SUM(OrderQuantity) DESC " +
                     "LIMIT 3;";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
-                cmd.Parameters.AddWithValue("startdate", startDate.ToString("yyyy-MM-dd"));
-                cmd.Parameters.AddWithValue("enddate", endDate.ToString("yyyy-MM-dd"));
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -618,7 +647,9 @@ namespace ITGoShop_F_Ver2.Models
                         };
                         products.Add(obj);
                     }
+                    reader.Close();
                 }
+                conn.Close();
             }
             return products;
         }
@@ -641,6 +672,7 @@ namespace ITGoShop_F_Ver2.Models
                             ProductName = reader["ProductName"].ToString(),
                             ProductImage = reader["ProductImage"].ToString(),
                             StartsAt = (DateTime)reader["StartsAt"],
+                            Price = Convert.ToInt32(reader["Price"]),
                             View = Convert.ToInt32(reader["View"]),
                         });
                     }
@@ -938,6 +970,35 @@ namespace ITGoShop_F_Ver2.Models
 
             }
             return list;
+        }
+
+        public Blog getBlogDetail(int blogId)
+        {
+            Blog Info = new Blog();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT * FROM Blog " +
+                    "where BlogId = @blogId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("BlogId", blogId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                            Info.BlogId = Convert.ToInt32(reader["BlogId"]);
+                            Info.Author = reader["Author"].ToString();
+                            Info.Title = reader["Title"].ToString();
+                            Info.Summary = reader["Summary"].ToString();
+                            Info.Content = reader["Content"].ToString();
+                            Info.DatePost = (DateTime)reader["DatePost"];
+                            Info.Image = reader["Image"].ToString();
+                    }
+                    else
+                        return null;
+                }
+            }
+            return Info;
         }
 
     }
