@@ -496,7 +496,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "select * from blog";
+                string str = "select * from blog where Status = 1";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {

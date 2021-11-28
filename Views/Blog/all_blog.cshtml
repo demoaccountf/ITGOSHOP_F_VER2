@@ -22,18 +22,19 @@
         <div class="ps-container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                    //foreach($all_content as $key => $blog)
+                    @foreach (var item in @ViewBag.AllBlog)
+                    {   
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  " style="height: 400px; width: 570px">
                         <div class="ps-post">
-                            <div class="ps-post__thumbnail"><a class="ps-post__overlay"></a><img src="~/public/images_upload/blog/blog-Image)}}" alt=""></div>
+                            <div class="ps-post__thumbnail"><a class="ps-post__overlay"></a><img src="~/public/images_upload/blog/@item.GetType().GetProperty("Image").GetValue(item, null)" alt=""></div>
                             <div class="ps-post__content">
-                                <a class="ps-post__title" href="/blog-detail/blogBlogId)}}">Title</a>
-                                <p class="ps-post__meta"><span>By:<a class="mr-5">{{$blog->Author}}</a></span>-<span class="ml-3">{{$blog->DatePost}}</span></p>
-                                <p>{{$blog->Summary}}</p><a class="ps-morelink" href="/Blog/blog-detail/blog->BlogId">Đọc tiếp<i class="fa fa-long-arrow-right"></i></a>
+                                <a class="ps-post__title" href="/blog-detail/@item.GetType().GetProperty("BlogId").GetValue(item, null)">Title</a>
+                                <p class="ps-post__meta"><span>By:<a class="mr-5">@item.GetType().GetProperty("Author").GetValue(item, null)</a></span>-<span class="ml-3">@item.GetType().GetProperty("DateCreate").GetValue(item, null)</span></p>
+                                <p>@item.GetType().GetProperty("Summary").GetValue(item, null)</p><a class="ps-morelink" href="/Blog/blog_detail/@item.GetType().GetProperty("BlogId").GetValue(item, null)">Đọc tiếp<i class="fa fa-long-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
-                    //endforeach
+                    }
                 </div>
             </div>
             {{ $all_content->links() }}
