@@ -79,7 +79,7 @@
                             @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "LT000")
                             {
                                 <li class="menu-item menu-item-has-children has-mega-menu">
-                                    <a href="/Product/product_listing2/@item.GetType().GetProperty("CategoryId").GetValue(item, null)">Laptop</a>
+                                    <a href="/Product/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)">Laptop</a>
                                     <div class="mega-menu">
                                         <div class="mega-wrap">
                                             @foreach (var brand in @ViewBag.AllBrand)
@@ -87,13 +87,13 @@
                                                 @if (brand.GetType().GetProperty("CategoryId").GetValue(brand, null) == "LT000")
                                                 {
                                                     <div class="mega-column">
-                                                        <a href="/Product/product_listing/@brand.GetType().GetProperty("BrandId").GetValue(brand, null)"> <h4 class="mega-heading">@brand.GetType().GetProperty("BrandName").GetValue(brand, null)</h4> </a>
+                                                        <a href="/Product/product_listing?brandId=@brand.GetType().GetProperty("BrandId").GetValue(brand, null)"> <h4 class="mega-heading">@brand.GetType().GetProperty("BrandName").GetValue(brand, null)</h4> </a>
                                                         @foreach (var subbrand in @ViewBag.AllSubBrand)
                                                         {
                                                             @if (subbrand.GetType().GetProperty("BrandId").GetValue(subbrand, null) == brand.GetType().GetProperty("BrandId").GetValue(brand, null))
                                                             {
                                                                 <ul class="mega-item">
-                                                                    <li><a href="/Product/product_listing3/@subbrand.GetType().GetProperty("SubBrandId").GetValue(subbrand, null)">@subbrand.GetType().GetProperty("SubBrandName").GetValue(subbrand, null)</a></li>
+                                                                    <li><a href="/Product/product_listing3?subbrandId=@subbrand.GetType().GetProperty("SubBrandId").GetValue(subbrand, null)">@subbrand.GetType().GetProperty("SubBrandName").GetValue(subbrand, null)</a></li>
                                                                 </ul>
                                                             }
                                                         }
@@ -111,7 +111,7 @@
                             @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "PC000")
                             {
                                 <li class="menu-item menu-item-has-children has-mega-menu">
-                                    <a href="/Product/product_listing2/@item.GetType().GetProperty("CategoryId").GetValue(item, null)">PC</a>
+                                    <a href="/Product/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)">PC</a>
                                     <div class="mega-menu">
                                         <div class="mega-wrap">
                                             @foreach (var brand in @ViewBag.AllBrand)
@@ -119,7 +119,7 @@
                                                 @if (brand.GetType().GetProperty("CategoryId").GetValue(brand, null) == "PC000")
                                                 {
                                                     <div class="mega-column">
-                                                        <a href="/Product/product_listing/@brand.GetType().GetProperty("BrandId").GetValue(brand, null)"> <h4 class="mega-heading">@brand.GetType().GetProperty("BrandName").GetValue(brand, null)</h4> </a>
+                                                        <a href="/Product/product_listing?brandId=@brand.GetType().GetProperty("BrandId").GetValue(brand, null)"> <h4 class="mega-heading">@brand.GetType().GetProperty("BrandName").GetValue(brand, null)</h4> </a>
                                                         @foreach (var subbrand in @ViewBag.AllSubBrand)
                                                         {
                                                             @if (subbrand.GetType().GetProperty("BrandId").GetValue(subbrand, null) == brand.GetType().GetProperty("BrandId").GetValue(brand, null))
@@ -141,7 +141,7 @@
                         {
                             @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "PK000")
                             {
-                                <li class="menu-item"><a href="/Product/product_listing2/@item.GetType().GetProperty("CategoryId").GetValue(item, null)">Phụ Kiện</a></li>
+                                <li class="menu-item"><a href="/Product/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)">Phụ Kiện</a></li>
                             }
                         }
                         <li class="menu-item"><a href="/Blog/all_blog">Tin Tức</a></li>
