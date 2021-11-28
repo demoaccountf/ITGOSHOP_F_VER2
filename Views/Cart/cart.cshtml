@@ -1,6 +1,9 @@
-﻿@{
+﻿@using System.Globalization;
+@{ ViewData["Title"] = "Giỏ hàng - ITGoShop";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
-}
+
+    // Cái này để format tiền
+    CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN"); }
 <!-- Breadcrumbs -->
 <div class="breadcrumbs">
     <div class="container">
@@ -9,7 +12,7 @@
                 <div class="bread-inner">
                     <ul class="bread-list">
                         <li><a href="product-detail.html">Trang chủ<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="{{URL::to('/show-cart')}}">Giỏ hàng</a></li>
+                        <li class="active"><a href="~//show-cart">Giỏ hàng</a></li>
                     </ul>
                 </div>
             </div>
@@ -22,11 +25,6 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-9">
-                <!-- Shopping Summery -->
-                <?php
-                $content = Cart::content();
-                $number_product = Cart::count();
-                ?>
                 <table class="table shopping-summery">
                     <thead>
                         <tr class="main-hading">
@@ -39,57 +37,60 @@
                         </tr>
                     </thead>
                     <tbody id="table-card">
-                        //if ($number_product == 0)
-                        <tr>
-                            <td colspan="6">
-                                <img style="display: block; width: auto; height: 250px; margin-left: auto; margin-right: auto; " src="{{URL::to('public/client/Images/empty-cart.png')}}">
-                            </td>
-                        </tr>
-                                    //else
-                                    //foreach ($content as $item)
-                        <tr>
-                            <td class="image" data-title="No" style="width: 60px; height: 60px;"><img style="margin: auto; max-width: 60px; max-height: 60px; width: auto; height: auto; " src="{{URL::to('public/images_upload/product/'.$item->options->image)}}" alt="#"></td>
-                            <td class="product-des" data-title="Description">
-                                <p class="product-name"><a href="/Product/product-detail/item->id)}}">{{$item->name}}</a></p>
-                            </td>
-                            <td class="price" data-title="Price" data-value="{{$item->price}}"><span>{{number_format($item->price, 0, " ", ".").' ₫'}}</span></td>
-                            <td class="qty" data-title="Qty">
-                                <!-- Input Order -->
-                                <div class="input-group">
-                                    <div class="button minus">
-                                        <button type="button" class="btn btn-primary btn-number" data-type="minus" data-field="quant[{{$item->id}}]">
-                                            <i class="ti-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" name="quant[{{$item->id}}]" id="{{$item->rowId}}" class="input-number" data-min="1" data-max="100" value="{{$item->qty}}">
-                                    <div class="button plus">
-                                        <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[{{$item->id}}]">
-                                            <i class="ti-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <!--/ End Input Order -->
-                            </td>
+                        @if (ViewBag.numberItem < 1)
+                        {
+                            <tr>
+                                <td colspan="6">
+                                    <img style="display: block; width: auto; height: 250px; margin-left: auto; margin-right: auto; " src="~/public/client/Images/empty-cart.png">
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in ViewBag.cart)
+                            {
+                                <tr>
+                                    <td class="image" data-title="No" style="width: 60px; height: 60px;">
+                                        <img style="margin: auto; max-width: 60px; max-height: 60px; width: auto; height: auto; " src="~/public/images_upload/product/@item.Product.ProductImage" alt="#">
+                                    </td>
+                                    <td class="product-des" data-title="Description">
+                                        <p class="product-name"><a href="/Product/product-detail/@item.Product.ProductId">@item.Product.ProductId</a></p>
+                                    </td>
+                                    <td class="price" data-title="Price" data-value="@item.Product.Price"><span>@item.Product.Price</span></td>
+                                    <td class="qty" data-title="Qty">
+                                        <!-- Input Order -->
+                                        <div class="input-group">
+                                            <div class="button minus">
+                                                <button type="button" class="btn btn-primary btn-number" data-type="minus" data-field="quant[@item.Product.ProductId]">
+                                                    <i class="ti-minus"></i>
+                                                </button>
+                                            </div>
+                                            <input type="text" name="quant[@item.Product.ProductId]" id="{{$item->rowId}}" class="input-number" data-min="1" data-max="100" value="@item.Product.Quantity">
+                                            <div class="button plus">
+                                                <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[@item.Product.ProductId]">
+                                                    <i class="ti-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!--/ End Input Order -->
+                                    </td>
 
 
-                            <td class="total-amount" data-title="Total">
-                                <?php $subtotal = $item->price * $item->qty; ?>
-                                <span class="thanh-tien" data-value="{{$subtotal}}">
-                                    <?php echo number_format($subtotal, 0, " ", ".").' ₫'; ?>
-                                </span>
-                            </td>
+                                    <td class="total-amount" data-title="Total">
+                                        @{ int subtotal = item.Product.Price * item.Product.Quantity; }
+                                        <span class="thanh-tien" data-value="@subtotal">@subtotal </span>
+                                    </td>
 
-                            <!-- <td class="action" data-title="Remove">
-                                <a href="{{URL::to('/remove-item/'.$item->rowId)}}"><i class="ti-trash remove-icon"></i></a>
-                            </td> -->
-                            <!-- //onClick="removeItem(this.id) -->
-                            <td class="action" data-title="Remove">
-                                <button id="{{$item->rowId}}" class="delete-button"><i class="ti-trash remove-icon"></i></button>
-                            </td>
-
-                        </tr>
-                        //endforeach
-                        //endif
+                                    <!-- <td class="action" data-title="Remove">
+                                        <a href="~//remove-item/'.$item->rowId)}}"><i class="ti-trash remove-icon"></i></a>
+                                    </td> -->
+                                    <!-- //onClick="removeItem(this.id) -->
+                                    <td class="action" data-title="Remove">
+                                        <button id="{{$item->rowId}}" class="delete-button"><i class="ti-trash remove-icon"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                 </table>
                 <!--/ End Shopping Summery -->
@@ -99,25 +100,24 @@
                 <div class="total-amount">
                     <div class="right" style="padding: 20px; width: 280px; background-color: white; position: absolute; top:0px">
                         <ul>
-                            <li>Tạm tính<span id="tam-tinh">{{(Cart::subtotal(0, ',', '.')).' ₫'}}</span></li>
+                            <li>Tạm tính<span id="tam-tinh">@ViewBag.total</span></li>
 
                             <li>Giảm giá<span>0 ₫</span></li>
-                            <li class="last">Tổng cộng<span id="tong-cong">{{(Cart::total(0, ',', '.')).' ₫'}}</span></li>
+                            <li class="last">Tổng cộng<span id="tong-cong">@ViewBag.total</span></li>
                         </ul>
                         <div class="button5">
                             <a href="javascript:void(0)" class="btn btn-thanh-toan">Thanh Toán</a>
-                            <a href="{{URL::to('/')}}" class="btn">Tiếp tục mua hàng</a>
+                            <a href="~//" class="btn">Tiếp tục mua hàng</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
     </div>
 </div>
 <!--/ End Shopping Cart -->
 <!-- Start Shop Services Area -->
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -232,124 +232,117 @@
 <!-- Modal end -->
 
 <script type="text/javascript">
-		function numberWithCommas(x) // Hàm để format tiền
-		{
-			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-		}
-		$(document).ready(function(){
-			$(".delete-button").click( function(){
-				$(this).parent().parent().remove();
-				var ItemId = $(this).attr('id');
-				var numberProduct = $(this).parents('tr').find('.input-number').val();
-				$.ajax({
-					url: '{{URL::to('/remove-item')}}',
-					methed:"GET",
-					data:{id:ItemId },
-					success:function(data)
-					{
-						load_cart();
-						$('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) - numberProduct);
-						swal({
-								title: "Thông báo",
-								text: "Đã xóa sản phẩm khỏi giỏ hàng!",
-								icon: "success",
-								buttons: "OK",
-							})
-						// if($('tr').length == 0)
-						// {
-						// 	$('#table-card').append('<tr><td colspan="6"><img style="display: block; width: auto; height: 250px; margin-left: auto; margin-right: auto; " src="{{URL::to('public/client/Images/empty-cart.png')}}"></td></tr>');
-						// }
-					},
-					error:function(data)
-					{
-						alert('Lỗi');
-					}
-				});
-				// Tính lại tổng tiền
-				var sum = 0;
-                $('.thanh-tien').each(function() {
-                    sum += Number($(this).attr("data-value"));
-                });
-				sum = numberWithCommas(sum);
-				$("#tam-tinh").text(sum + ' ₫');
-				$("#tong-cong").text(sum + ' ₫');
-			}),
-
-			$(".input-number").on('input', function(){
-				var newQuantity = $(this).val();
-				var rowId = $(this).attr('id');
-				if(newQuantity != 0)
-				{
-
-					$.ajax({
-						url: '{{URL::to('/update-quantity')}}',
-						methed:"GET",
-						data:{rowId: rowId, newQuantity: newQuantity},
-						// success:funtion(data)
-						// {
-						// 	load_cart();
-						// },
-						error:function(data)
-						{
-							alert('Lỗi nhập');
-						}
-					});
-				}
-				var $parent = $(this).parents('tr');
-				var soluong = $(this).val();
-				var dongia = $parent.find('.price').attr('data-value');
-				var thanhtien = numberWithCommas(soluong * dongia) +' đ';
-				$parent.find('.thanh-tien').html(thanhtien);
-
-			}),
-
-			$("button[data-type='plus'], button[data-type='minus']").click( function()
-			{
-				var $parent = $(this).parents('tr');
-				var thisButtonType = $(this).attr('data-type');
-				var newQuantity = $parent.find('.input-number').val();
-				var rowId = $parent.find('.input-number').attr('id');
-
-				$.ajax({
-					url: '{{URL::to('/update-quantity')}}',
-					methed:"GET",
-					data:{rowId: rowId, newQuantity: newQuantity},
-					success:function(data)
-					{
-						load_cart();
-						// var numberProduct = Number($('#so-luong-sp-gio-hang').text());
-						// if(thisButtonType == 'plus')
-						// 	$('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) + 1);
-						// else
-						// {
-						// 	if(numberProduct > 1)
-						// 	{
-						// 		$('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) - 1);
-						// 	}
-						// }
-					},
-					error:function(data)
-					{
-						alert('Lỗi');
-					}
-				});
-                var dongia = $parent.find('.price').attr('data-value');
-				var thanhtien = numberWithCommas(newQuantity * dongia) +' ₫';
-				$parent.find('.thanh-tien').attr("data-value", newQuantity * dongia);
-				$parent.find('.thanh-tien').html(thanhtien);
-
-			}),
-			$('body').on('DOMSubtreeModified', '.thanh-tien', function(){
-                var sum = 0;
-                $('.thanh-tien').each(function() {
-					//alert($(this).text().replace(' ₫', '').replace('.', ''));
-                    sum += Number($(this).attr("data-value"));
-                });
-				sum = numberWithCommas(sum);
-				$("#tam-tinh").text(sum + ' ₫');
-				$("#tong-cong").text(sum + ' ₫');
+    function numberWithCommas(x) // Hàm để format tiền
+    {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    $(document).ready(function () {
+        $(".delete-button").click(function () {
+            $(this).parent().parent().remove();
+            var ItemId = $(this).attr('id');
+            var numberProduct = $(this).parents('tr').find('.input-number').val();
+            $.ajax({
+                url: '~/remove-item',
+                methed: "GET",
+                data: { id: ItemId },
+                success: function (data) {
+                    load_cart();
+                    $('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) - numberProduct);
+                    swal({
+                        title: "Thông báo",
+                        text: "Đã xóa sản phẩm khỏi giỏ hàng!",
+                        icon: "success",
+                        buttons: "OK",
+                    })
+                    // if($('tr').length == 0)
+                    // {
+                    // 	$('#table-card').append('<tr><td colspan="6"><img style="display: block; width: auto; height: 250px; margin-left: auto; margin-right: auto; " src="~/public/client/Images/empty-cart.png"></td></tr>');
+                    // }
+                },
+                error: function (data) {
+                    alert('Lỗi');
+                }
             });
-		});
+            // Tính lại tổng tiền
+            var sum = 0;
+            $('.thanh-tien').each(function () {
+                sum += Number($(this).attr("data-value"));
+            });
+            sum = numberWithCommas(sum);
+            $("#tam-tinh").text(sum + ' ₫');
+            $("#tong-cong").text(sum + ' ₫');
+        }),
+
+            $(".input-number").on('input', function () {
+                var newQuantity = $(this).val();
+                var rowId = $(this).attr('id');
+                if (newQuantity != 0) {
+
+                    $.ajax({
+                        url: '~/update-quantity',
+                        methed: "GET",
+                        data: { rowId: rowId, newQuantity: newQuantity },
+                        // success:funtion(data)
+                        // {
+                        // 	load_cart();
+                        // },
+                        error: function (data) {
+                            alert('Lỗi nhập');
+                        }
+                    });
+                }
+                var $parent = $(this).parents('tr');
+                var soluong = $(this).val();
+                var dongia = $parent.find('.price').attr('data-value');
+                var thanhtien = numberWithCommas(soluong * dongia) + ' đ';
+                $parent.find('.thanh-tien').html(thanhtien);
+
+            }),
+
+            $("button[data-type='plus'], button[data-type='minus']").click(function () {
+                var $parent = $(this).parents('tr');
+                var thisButtonType = $(this).attr('data-type');
+                var newQuantity = $parent.find('.input-number').val();
+                var rowId = $parent.find('.input-number').attr('id');
+
+                $.ajax({
+                    url: '~//update-quantity',
+                    methed: "GET",
+                    data: { rowId: rowId, newQuantity: newQuantity },
+                    success: function (data) {
+                        load_cart();
+                        // var numberProduct = Number($('#so-luong-sp-gio-hang').text());
+                        // if(thisButtonType == 'plus')
+                        // 	$('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) + 1);
+                        // else
+                        // {
+                        // 	if(numberProduct > 1)
+                        // 	{
+                        // 		$('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) - 1);
+                        // 	}
+                        // }
+                    },
+                    error: function (data) {
+                        alert('Lỗi');
+                    }
+                });
+                var dongia = $parent.find('.price').attr('data-value');
+                var thanhtien = numberWithCommas(newQuantity * dongia) + ' ₫';
+                $parent.find('.thanh-tien').attr("data-value", newQuantity * dongia);
+                $parent.find('.thanh-tien').html(thanhtien);
+
+            }),
+            $('body').on('DOMSubtreeModified', '.thanh-tien', function () {
+                var sum = 0;
+                $('.thanh-tien').each(function () {
+                    //alert($(this).text().replace(' ₫', '').replace('.', ''));
+                    sum += Number($(this).attr("data-value"));
+                });
+                sum = numberWithCommas(sum);
+                $("#tam-tinh").text(sum + ' ₫');
+                $("#tong-cong").text(sum + ' ₫');
+            });
+    });
 </script>
 
 <script type="text/javascript">

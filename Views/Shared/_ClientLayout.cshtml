@@ -5,7 +5,6 @@
 
 
 }
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -154,7 +153,7 @@
                         <button type="submit"><i class="fa fa-search"></i></button>
                     </form>
                     <div class="ps-cart">
-                        <a class="ps-cart__toggle" href="/show-cart'" title="Giỏ hàng">
+                        <a class="ps-cart__toggle" href="/Cart/show_cart" title="Giỏ hàng">
                             <span><i id="so-luong-sp-gio-hang"></i></span>
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         </a>
@@ -360,188 +359,174 @@
         }
     </style>
     <!-- /End Footer Area -->
-    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/public/admin/js/plugin/sweetalert/sweetalert.min.js"></script>
+    
     <script>
-		$(document).ready(function(){
-			load_cart();
-			load_cart_quantity();
-			setInterval(load_cart_quantity, 2000);
-		});
-		function load_cart_quantity()
-		{
-			var _token = $('input[name="_token"]').val();
-				$.ajax({
-					url: "{{url('/load-cart-quantity')}}",
-					method:"POST",
-					data:{ _token:_token},
-					success:function(data){
-						$('#so-luong-sp-gio-hang').html(data);
-					},
-					error:function(data)
-					{
-						alert("Lỗi");
-					}
-				});
-		}
-		function load_cart()
-		{
-				var _token = $('input[name="_token"]').val();
-				$.ajax({
-					url: "{{url('/load-cart')}}",
-					method:"POST",
-					data:{ _token:_token},
-					success:function(data){
-						$('#load_card').html(data);
-					},
-					error:function(data)
-					{
-						alert("Lỗi");
-					}
-				});
-		}
+        //$(document).ready(function(){
+        //	load_cart();
+        //	load_cart_quantity();
+        //	setInterval(load_cart_quantity, 2000);
+        //});
+        function load_cart_quantity() {
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "/load-cart-quantity",
+                method: "POST",
+                data: { _token: _token },
+                success: function (data) {
+                    $('#so-luong-sp-gio-hang').html(data);
+                },
+                error: function (data) {
+                    alert("Lỗi");
+                }
+            });
+        }
+        function load_cart() {
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "/load-cart",
+                method: "POST",
+                data: { _token: _token },
+                success: function (data) {
+                    $('#load_card').html(data);
+                },
+                error: function (data) {
+                    alert("Lỗi");
+                }
+            });
+        }
     </script>
     <script>
-		$(document).ready(function(){
-			$('a[title="Wishlist"]').click(function(){
-				var customer_id = $('#input-customer-id').val();
-				if(customer_id)
-				{
-					var ProductId = $(this).parents('.button-head').find('.ProductId').val();
-					$.ajax({
-						url:"{{url('/add-product-to-wishlist')}}",
-						method: "GET",
-						data:{ProductId: ProductId},
-						success:function(data){
-							if(data == '1')
-							{
-								swal({
-									title: "Thành công",
-									text: "Đã thêm sản phẩm vào danh sách yêu thích.",
-									icon: "success",
-									button: "OK",
-								});
-							}
-							else
-							{
-								swal({
-									text: "Sản phẩm đã tồn tại trong danh sách yêu thích",
-									icon: "info",
-									button: "OK",
-								});
-							}
+        $(document).ready(function () {
+            $('a[title="Wishlist"]').click(function () {
+                var customer_id = $('#input-customer-id').val();
+                if (customer_id) {
+                    var ProductId = $(this).parents('.button-head').find('.ProductId').val();
+                    $.ajax({
+                        url: "/add-product-to-wishlist",
+                        method: "GET",
+                        data: { ProductId: ProductId },
+                        success: function (data) {
+                            if (data == '1') {
+                                swal({
+                                    title: "Thành công",
+                                    text: "Đã thêm sản phẩm vào danh sách yêu thích.",
+                                    icon: "success",
+                                    button: "OK",
+                                });
+                            }
+                            else {
+                                swal({
+                                    text: "Sản phẩm đã tồn tại trong danh sách yêu thích",
+                                    icon: "info",
+                                    button: "OK",
+                                });
+                            }
 
-						},
-						error:function(data)
-						{
-							alert("Lỗi");
-						}
-					});
-				}else{
-					swal({
-						text: "Bạn cần đăng nhập để thêm sản phẩm vào danh sách yêu thích",
-						icon: "info",
-						buttons: ["OK", "Đăng nhập"],
-						}).then(function(isConfirm) {
-							if (isConfirm) {
-								window.location = "{{url('/login')}}";
-							}
-					})
-				}
+                        },
+                        error: function (data) {
+                            alert("Lỗi");
+                        }
+                    });
+                } else {
+                    swal({
+                        text: "Bạn cần đăng nhập để thêm sản phẩm vào danh sách yêu thích",
+                        icon: "info",
+                        buttons: ["OK", "Đăng nhập"],
+                    }).then(function (isConfirm) {
+                        if (isConfirm) {
+                            window.location = "/login";
+                        }
+                    })
+                }
 
-			});
-		});
+            });
+        });
     </script>
     <script>
-		$('body').on('click', '.btn-thanh-toan' ,function(){
-			var numberOfProduct = Number($('#so-luong-sp-gio-hang').text());
-			if(numberOfProduct == 0)
-			{
-				swal({
-					// title: "Giỏ hàng trống",
-					text: "Bạn vẫn chưa chọn sản phẩm nào để mua.",
-					// icon: "warning",
-					button: "OK",
-				});
-			}
-			else{
-				window.location.href = '{{URL::to('/checkout')}}';
-			}
-		});
+        $('body').on('click', '.btn-thanh-toan', function () {
+            var numberOfProduct = Number($('#so-luong-sp-gio-hang').text());
+            if (numberOfProduct == 0) {
+                swal({
+                    // title: "Giỏ hàng trống",
+                    text: "Bạn vẫn chưa chọn sản phẩm nào để mua.",
+                    // icon: "warning",
+                    button: "OK",
+                });
+            }
+            else {
+                window.location.href = '/checkout';
+            }
+        });
     </script>
     <script>
-		$('.add-to-cart-a-tag').click( function()
-			{
-				var productId = $(this).parent().find('input').val();
-				var numberOfProduct = Number($('#so-luong-sp-gio-hang').text()) + 1;
-				$.ajax({
-					url: '{{URL::to('/add-to-cart')}}',
-					methed:"GET",
-					data:{ProductId:productId, Quantity: 1},
-					success:function(data)
-					{
-						load_cart();
-						$('#so-luong-sp-gio-hang').text(numberOfProduct);
-						swal({
-								title: "Thông báo",
-								text: "Đã thêm sản phẩm vào giỏ hàng!",
-								icon: "success",
-								buttons: ["Tiếp tục mua hàng", "Xem giỏ hàng"],
-							}).then(function(isConfirm) {
-								if (isConfirm) {
-										window.location = "{{url('/show-cart')}}";
-								}
-							})
-					},
-					error:function(data)
-					{
-						alert('Error');
-					}
-				});
-			});
+        $('.add-to-cart-a-tag').click(function () {
+
+            var productId = $(this).parent().find('input').val();
+            var numberOfProduct = Number($('#so-luong-sp-gio-hang').text()) + 1;
+            $.ajax({
+                url: '/Cart/add_to_cart',
+                methed: "GET",
+                data: { ProductId: productId, Quantity: 1 },
+                success: function (data) {
+                    //load_cart();
+                    //$('#so-luong-sp-gio-hang').text(numberOfProduct);
+                    swal({
+                        title: "Thông báo",
+                        text: "Đã thêm sản phẩm vào giỏ hàng!",
+                        icon: "success",
+                        buttons: ["Tiếp tục mua hàng", "Xem giỏ hàng"],
+                    }).then(function (isConfirm) {
+                        if (isConfirm) {
+                            window.location = "/Cart/show_cart";
+                        }
+                    })
+                },
+                error: function (data) {
+                    alert('Error');
+                }
+            });
+        });
     </script>
     <script type="text/javascript">
-	// Hàm load data vào dropdownbox Phường/Xã
-	function load_xaphuong_dropdownbox()
-	{
-		var maqh = $(".select-quanhuyen").val();
-		$.ajax({
-			url: '{{URL::to('/load-xaphuongthitran-dropdownbox')}}',
-			method:"GET",
-			data:{maqh: maqh},
-			success:function(data)
-			{
-				$(".select-xaphuongthitran").html(data);
-			},
-			error:function(data)
-			{
-				alert('Lỗi');
-			}
-		});
-	}
+        // Hàm load data vào dropdownbox Phường/Xã
+        function load_xaphuong_dropdownbox() {
+            var maqh = $(".select-quanhuyen").val();
+            $.ajax({
+                url: '/load-xaphuongthitran-dropdownbox',
+                method: "GET",
+                data: { maqh: maqh },
+                success: function (data) {
+                    $(".select-xaphuongthitran").html(data);
+                },
+                error: function (data) {
+                    alert('Lỗi');
+                }
+            });
+        }
 
-	$(document).ready(function(){
-		$('.select-tinhthanhpho').change(function(){
-			var matp = $(this).val();
-			$.ajax({
-				url: '{{URL::to('/load-quanhuyen-dropdownbox')}}',
-				method:"GET",
-				data:{matp: matp},
-				success:function(data)
-				{
-					$(".select-quanhuyen").html(data);
-					load_xaphuong_dropdownbox();
-				},
-				error:function(data)
-				{
-					alert('Lỗi');
-				}
-			});
-		});
+        $(document).ready(function () {
+            $('.select-tinhthanhpho').change(function () {
+                var matp = $(this).val();
+                $.ajax({
+                    url: '/load-quanhuyen-dropdownbox',
+                    method: "GET",
+                    data: { matp: matp },
+                    success: function (data) {
+                        $(".select-quanhuyen").html(data);
+                        load_xaphuong_dropdownbox();
+                    },
+                    error: function (data) {
+                        alert('Lỗi');
+                    }
+                });
+            });
 
-		$('.select-quanhuyen').change(function(){
-			load_xaphuong_dropdownbox();
-		});
-	});
+            $('.select-quanhuyen').change(function () {
+                load_xaphuong_dropdownbox();
+            });
+        });
     </script>
     <!-- Jquery -->
     <script src="~/public/client/js/jquery.min.js"></script>

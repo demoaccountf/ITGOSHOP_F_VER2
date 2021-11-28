@@ -1001,5 +1001,53 @@ namespace ITGoShop_F_Ver2.Models
             return Info;
         }
 
+
+        /*================Code thầy Hùng =================*/
+        public List<Product> findAll()
+        {
+            List<Product> list = new List<Product>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from Product", conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Product()
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            Price = Convert.ToInt32(reader["Price"].ToString()),
+                            ProductImage = reader["ProductImage"].ToString(),
+                        });
+                    }
+                }
+
+            }
+            return list;
+        }
+
+        //public Product findProduct(int Id)
+        //{
+        //    Product pro = new Product();
+        //    using (MySqlConnection conn = GetConnection())
+        //    {
+        //        conn.Open();
+        //        var str = "select * from Product where ProductId=@ma";
+        //        MySqlCommand cmd = new MySqlCommand(str, conn);
+        //        cmd.Parameters.AddWithValue("ma", Id);
+        //        using (var reader = cmd.ExecuteReader())
+        //        {
+        //            reader.Read();
+        //            pro.ProductId = Convert.ToInt32(reader["ProductId"]);
+        //            pro.ProductName = reader["ProductName"].ToString();
+        //            pro.Price = Convert.ToInt32(reader["Price"].ToString());
+        //            pro.ProductImage = reader["ProductImage"].ToString();
+        //        }
+        //    }
+        //    return (pro);
+        //}
+        /*================Hết code thầy Hùng =================*/
     }
 }
