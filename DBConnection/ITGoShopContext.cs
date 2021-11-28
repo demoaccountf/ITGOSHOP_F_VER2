@@ -1000,6 +1000,37 @@ namespace ITGoShop_F_Ver2.Models
             }
             return Info;
         }
+        public List<Blog> getBlogRelate()
+        {
+            List<Blog> list = new List<Blog>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select * from blog ORDER BY DatePost DESC LIMIT 3";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Blog()
+                        {
+                            BlogId = Convert.ToInt32(reader["BlogId"]),
+                            Author = reader["Author"].ToString(),
+                            Title = reader["Title"].ToString(),
+                            Summary = reader["Summary"].ToString(),
+                            Content = reader["Content"].ToString(),
+                            DatePost = (DateTime)reader["DatePost"],
+                            Image = reader["Image"].ToString(),
+                        });
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
 
     }
 }
