@@ -520,13 +520,46 @@ namespace ITGoShop_F_Ver2.Models
             }
             return list;
         }
+        public List<Blog> getListBlog()
+        {
+            List<Blog> list = new List<Blog>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select * from blog " +
+                             "where Status = 1 " +
+                             "ORDER BY DatePost DESC ";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Blog()
+                        {
+                            BlogId = Convert.ToInt32(reader["BlogId"]),
+                            Author = reader["Author"].ToString(),
+                            Title = reader["Title"].ToString(),
+                            Summary = reader["Summary"].ToString(),
+                            Content = reader["Content"].ToString(),
+                            DateCreate = (DateTime)reader["DateCreate"],
+                            Image = reader["Image"].ToString(),
+                        });
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
         public List<Blog> getBlog()
         {
             List<Blog> list = new List<Blog>();
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "select * from blog ORDER BY DatePost DESC LIMIT 3";
+                string str = "select * from blog where Status = 1 ORDER BY DatePost DESC LIMIT 3";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -1000,14 +1033,15 @@ namespace ITGoShop_F_Ver2.Models
             }
             return Info;
         }
-        public List<Blog> getBlogRelate()
+        public List<Blog> getBlogRelate(int blogId)
         {
             List<Blog> list = new List<Blog>();
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "select * from blog ORDER BY DatePost DESC LIMIT 3";
+                string str = "select * from blog where Status = 1 and BlogId <> @blogId  ORDER BY DatePost DESC LIMIT 5";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("BlogId", blogId);
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
