@@ -26,6 +26,7 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllSubBrand = context.getAllSubBrand();
             ViewBag.AllBlog = context.getAllBlog();
             ViewBag.AllBannerSlider = context.getAllBannerSlider();
+            ViewBag.Top3Product = context.getTop3ProductView();
             return View();
         }
 
