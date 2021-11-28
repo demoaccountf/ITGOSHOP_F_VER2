@@ -703,5 +703,39 @@ namespace ITGoShop_F_Ver2.Models
             }
             return list;
         }
+
+        public List<object> getAllComments()
+        {
+            List<object> list= new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT * FROM (COMMENT C " +
+                    "JOIN USER U ON C.UserId = U.UserId) " +
+                    "JOIN PRODUCT P ON P.ProductId = C.ProductId " +
+                    "WHERE ParentComment IS NULL " +
+                    "ORDER BY Reply ASC, CommentId DESC;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            CommentId = Convert.ToInt32(reader["CommentId"]),
+                            CommentContent = reader["CommentContent"].ToString(),
+                            UserName = reader["LastName"].ToString() + " " + reader["FirstName"].ToString(),
+                            ProductName = reader["ProductName"].ToString(),
+                            CreatedAt = ((DateTime)reader["CreatedAt"]).ToString("dd-MM-yyyy"),
+                            Reply = Convert.ToInt32(reader["Reply"]),
+                            CommentStatus = Convert.ToInt32(reader["CommentStatus"]),
+                        };
+                        list.Add(obj);
+                    }
+                }
+            }
+            return list;
+        }
+
     }
 }

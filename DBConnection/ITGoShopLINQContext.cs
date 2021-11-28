@@ -26,6 +26,7 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<LoginHistory> LoginHistory { set; get; }
         public DbSet<ShipMethod> ShipMethod { set; get; }
         public DbSet<ProductGallary> ProductGallary { set; get; }
+        public DbSet<Comment> Comment { set; get; }
         public void saveProduct(Product newProduct)
         {
             newProduct.StartsAt = DateTime.Now;
@@ -91,12 +92,38 @@ namespace ITGoShop_F_Ver2.Models
         {
             return ShipMethod.ToList();
         }
+        //1 bảng
+        //public List<Comment> getAllComments()
+        //{
+        //    return Comment.ToList();
+        //}
+
+        //join nhiều bảng
+        //public IQueryable getAllComments()
+        //{
+        //    //var commentList = Comment.Join(User,c => c.UserId,u => u.UserId, (c, u) => new
+        //    //{
+        //    //    CommentId = c.CommentId,
+        //    //    UserId = c.UserId,
+        //    //    UserName = u.LastName
+        //    //});
+        //    var commentList = from c in Comment
+        //                 join u in User on c.UserId equals u.UserId
+        //                 select new  MyCategory
+        //                 {
+        //                     CommentId = c.CommentId,
+        //                     UserId = c.UserId,
+        //                     UserName = u.LastName
+        //                 };
+        //    return commentList;
+        //}
+       
 
         public void updateSliderStatus(int sliderId, int status)
         {
             var slider = BannerSlider.Where(p => p.SliderId == sliderId).FirstOrDefault();
             slider.SliderStatus = status;
-            this.SaveChanges();
+            SaveChanges();
         }
 
         public void deleteSlider(int sliderId)
