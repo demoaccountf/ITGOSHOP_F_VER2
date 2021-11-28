@@ -178,34 +178,5 @@ namespace ITGoShop_F_Ver2.Models
                 SaveChanges();
             }
         }
-
-        public List<ProductGallary> getProductGallary(int productId)
-        {
-            return ProductGallary.Where(p => p.ProductId == productId).ToList();
-        }
-
-        public void updateProductGallaryStatus(int GallaryId, int status)
-        {
-            var productGallary = ProductGallary.Where(p => p.GallaryId == GallaryId).FirstOrDefault();
-            productGallary.GallaryStatus = status;
-            SaveChanges();
-        }
-
-        public void deleteProductGallary(int GallaryId)
-        {
-            var productGallary = ProductGallary.Where(p => p.GallaryId == GallaryId).FirstOrDefault();
-
-            if (productGallary != null)
-            {
-                Remove(productGallary);
-                SaveChanges();
-            }
-        }
-
-        public void saveProductGallary(ProductGallary productGallary)
-        {
-            ProductGallary.Add(productGallary);
-            SaveChanges();
-        }
     }
 }

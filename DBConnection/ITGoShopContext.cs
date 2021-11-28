@@ -584,6 +584,175 @@ namespace ITGoShop_F_Ver2.Models
             }
             return list;
         }
+        public List<object> get3Product(DateTime startDate, DateTime endDate)
+        {
+            List<object> products = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT SUM(OrderQuantity) AS NumberSolded , ProductName, ProductImage, P.ProductId, StartsAt, Quantity, Cost, Price " +
+                    "FROM (`product` P JOIN `orderdetail` OD ON P.ProductId = OD.ProductId) " +
+                    "JOIN `order` O ON O.OrderId = OD.OrderId " +
+                    "WHERE OrderStatus <> 'Đã hủy' " +
+                    "AND ORDERDATE BETWEEN @startdate AND @enddate " +
+                    "GROUP BY ProductName, ProductImage, P.ProductId, StartsAt, Quantity, Cost, Price " +
+                    "ORDER BY SUM(OrderQuantity) DESC " +
+                    "LIMIT 5;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("startdate", startDate.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("enddate", endDate.ToString("yyyy-MM-dd"));
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            StartsAt = (DateTime)reader["StartsAt"],
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            Cost = Convert.ToInt32(reader["Cost"]),
+                            Price = Convert.ToInt32(reader["Price"]),
+                            NumberSolded = Convert.ToInt32(reader["NumberSolded"])
+                        };
+                        products.Add(obj);
+                    }
+                }
+            }
+            return products;
+        }
+        public List<Product> getTop3ProductView()
+        {
+            List<Product> products = new List<Product>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT * FROM PRODUCT ORDER BY VIEW DESC LIMIT 3";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        //System.Diagnostics.Debug.WriteLine("1");
+                        products.Add(new Product()
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            StartsAt = (DateTime)reader["StartsAt"],
+                            View = Convert.ToInt32(reader["View"]),
+                        });
+                    }
+                }
+            }
+            return products;
+        }
+
+        public List<object> getLTProduct()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'LT000' ORDER BY VIEW DESC LIMIT 8 ;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            CategoryName = reader["CategoryName"].ToString(),
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            Price = Convert.ToInt32(reader["Price"]),
+                            Status = Convert.ToInt32(reader["Status"]),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            View = Convert.ToInt32(reader["View"]),
+                            Discount = Convert.ToDouble(reader["Discount"])
+                        };
+                        list.Add(obj);
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
+
+        public List<object> getPCProduct()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'PC000' ORDER BY VIEW DESC LIMIT 8 ;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            CategoryName = reader["CategoryName"].ToString(),
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            Price = Convert.ToInt32(reader["Price"]),
+                            Status = Convert.ToInt32(reader["Status"]),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            View = Convert.ToInt32(reader["View"]),
+                            Discount = Convert.ToDouble(reader["Discount"])
+                        };
+                        list.Add(obj);
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
+
+        public List<object> getPKProduct()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'PK000' ORDER BY VIEW DESC LIMIT 8 ;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            CategoryName = reader["CategoryName"].ToString(),
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            Price = Convert.ToInt32(reader["Price"]),
+                            Status = Convert.ToInt32(reader["Status"]),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            View = Convert.ToInt32(reader["View"]),
+                            Discount = Convert.ToDouble(reader["Discount"])
+                        };
+                        list.Add(obj);
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
 
         public void updateProductStatus(int productId, int status)
         {
