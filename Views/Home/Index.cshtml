@@ -389,26 +389,27 @@
                     </div>
                 </div>
                 <!-- Start Single List  -->
-                //foreach ($top_product as $key => $product)
-                <div class="single-list">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-12">
-                            <div class="list-image overlay" style="width: 230px; height: 200px;">
-                                <img style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="{{URL::to('public/images_upload/product/'.$product->ProductImage)}}" alt="#">
-                                <a href="javascript:void(0)" class="buy add-to-cart-a-tag"><i class="fa fa-shopping-bag"></i></a>
-                                <input type="text" value="{{$product->ProductId}}" hidden>
+                @foreach (var item in @ViewBag.Top3Product)
+                {
+                    <div class="single-list">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="list-image overlay" style="width: 230px; height: 200px;">
+                                    <img style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
+                                    <a href="javascript:void(0)" class="buy add-to-cart-a-tag"><i class="fa fa-shopping-bag"></i></a>
+                                    <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-12 no-padding">
-                            <div class="content">
-                                <h5 class="title"><a style="text-decoration:none" href="{{URL::to('/product-detail/'.$product->ProductId)}}">{{$product->ProductName}}</a></h5>
-                                <p class="price with-discount">{{number_format($product->Price).' '.'₫'}}</p>
-                                <h5 class="title"><a>Đã bán: {{$product->number_solded}} sản phẩm </a> </h5>
+                            <div class="col-lg-6 col-md-6 col-12 no-padding">
+                                <div class="content">
+                                    <h5 class="title"><a style="text-decoration:none" href="/Product/product-detail/@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
+                                    <p class="price with-discount">@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</p>
+                                    <h5 class="title"><a>Đã bán: @item.GetType().GetProperty("NumberSolded").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫  sản phẩm </a> </h5>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                //endforeach
+                }
                 <!-- End Single List  -->
             </div>
             <div class="col-lg-6 col-md-6 col-12">
@@ -434,11 +435,8 @@
                         <div class="col-lg-6 col-md-6 col-12 no-padding">
                             <div class="content">
                                 <h5 class="title"><a style="text-decoration:none" href="/Product/product-detail/@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
-                                @{
-                                    double dc = @item.GetType().GetProperty("Price").GetValue(item, null) * (100 - (@item.GetType().GetProperty("Discount").GetValue(item, null)));
-
-                                    <p class="price with-discount">@dc.ToString("#,###", cul.NumberFormat) ₫</p>
-                                }
+                                <p class="price with-discount">@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</p>
+                                
                                 <h5 class="title"><a>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null) <i class=" ti-eye"></i></a> </h5>
                             </div>
                         </div>
@@ -505,19 +503,20 @@
             </div>
         </div>
         <div class="row">
-            //foreach ($all_blog as $key => $blog)
-            <div class="col-lg-4 col-md-6 col-12">
-                <!-- Start Single Blog  -->
-                <div class="shop-single-blog">
-                    <img style="margin: auto; max-width: 330px; max-height: 300px; width: auto; height: auto;" src="{{URL::to('public/images_upload/blog/'.$blog->Image)}}" alt="#">
-                    <div class="content" style="text-align: justify; text-decoration:none;">
-                        <a class="title">{{$blog->Title}}</a>
-                        <a href="{{URL::to('/blog-detail/'.$blog->BlogId)}}" class="more-btn">Đọc tiếp</a>
+            @foreach (var item in @ViewBag.Blog)
+            {
+                <div class="col-lg-4 col-md-6 col-12">
+                    <!-- Start Single Blog  -->
+                    <div class="shop-single-blog">
+                        <img style="margin: auto; max-width: 330px; max-height: 300px; width: auto; height: auto;" src="~/public/images_upload/blog/@item.GetType().GetProperty("Image").GetValue(item, null)" alt="#">
+                        <div class="content" style="text-align: justify; text-decoration:none;">
+                            <a class="title">@item.GetType().GetProperty("Title").GetValue(item, null)</a>
+                            <a href="/Blog/blog-detail/@item.GetType().GetProperty("BlogId").GetValue(item, null)" class="more-btn">Đọc tiếp</a>
+                        </div>
                     </div>
+                    <!-- End Single Blog  -->
                 </div>
-                <!-- End Single Blog  -->
-            </div>
-            //endforeach
+            }
 
         </div>
     </div>
