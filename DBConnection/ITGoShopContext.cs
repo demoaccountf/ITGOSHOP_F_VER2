@@ -649,6 +649,40 @@ namespace ITGoShop_F_Ver2.Models
             return products;
         }
 
+        public List<object> getLTProduct()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'LT000' ;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            CategoryName = reader["CategoryName"].ToString(),
+                            BrandName = reader["BrandName"].ToString(),
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            Price = Convert.ToInt32(reader["Price"]),
+                            Status = Convert.ToInt32(reader["Status"]),
+                            ProductImage = reader["ProductImage"].ToString()
+                        };
+                        list.Add(obj);
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
+
         public void updateProductStatus(int productId, int status)
         {
             using (MySqlConnection conn = GetConnection())
