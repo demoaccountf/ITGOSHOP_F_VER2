@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace ITGoShop_F_Ver2.Controllers
             this.createdAt = createdAt;
             this.updatedAt = updatedAt;
         }
-
+        [Key]
         public int GallaryId { get => gallaryId; set => gallaryId = value; }
         public string GallaryImage { get => gallaryImage; set => gallaryImage = value; }
         public int ProductId { get => productId; set => productId = value; }
