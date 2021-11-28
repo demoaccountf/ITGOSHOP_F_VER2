@@ -25,13 +25,18 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllCategory = context.getAllCategory();
             ViewBag.AllBrand = context.getAllBrand();
             ViewBag.AllSubBrand = context.getAllSubBrand();
-            ViewBag.AllBlog = context.getAllBlog();
 
             ViewBag.AllBlog = context.getAllBlog();
             return View();
         }
-        public IActionResult blog_detail(int ProductId)
+        public IActionResult blog_detail(int blogId)
         {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.AllCategory = context.getAllCategory();
+            ViewBag.AllBrand = context.getAllBrand();
+            ViewBag.AllSubBrand = context.getAllSubBrand();
+
+            ViewBag.BlogDetail = context.getBlogDetail(blogId);
             return View();
         }
     }

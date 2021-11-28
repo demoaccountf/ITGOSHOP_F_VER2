@@ -511,7 +511,7 @@
                         <img style="margin: auto; max-width: 330px; max-height: 300px; width: auto; height: auto;" src="~/public/images_upload/blog/@item.GetType().GetProperty("Image").GetValue(item, null)" alt="#">
                         <div class="content" style="text-align: justify; text-decoration:none;">
                             <a class="title">@item.GetType().GetProperty("Title").GetValue(item, null)</a>
-                            <a href="/Blog/blog-detail/@item.GetType().GetProperty("BlogId").GetValue(item, null)" class="more-btn">Đọc tiếp</a>
+                            <a href="/Blog/blog_detail?blogId=@item.GetType().GetProperty("BlogId").GetValue(item, null)" class="more-btn">Đọc tiếp</a>
                         </div>
                     </div>
                     <!-- End Single Blog  -->

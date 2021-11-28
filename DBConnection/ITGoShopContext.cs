@@ -526,7 +526,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "select * from blog ORDER BY DateCreate DESC LIMIT 3";
+                string str = "select * from blog ORDER BY DatePost DESC LIMIT 3";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -538,7 +538,8 @@ namespace ITGoShop_F_Ver2.Models
                             Author = reader["Author"].ToString(),
                             Title = reader["Title"].ToString(),
                             Summary = reader["Summary"].ToString(),
-                            Content = reader["Summary"].ToString(),
+                            Content = reader["Content"].ToString(),
+                            DatePost = (DateTime)reader["DatePost"],
                             Image = reader["Image"].ToString(),
                         });
                     }
@@ -935,6 +936,35 @@ namespace ITGoShop_F_Ver2.Models
                 }
             }
             return list;
+        }
+
+        public Blog getBlogDetail(int blogId)
+        {
+            Blog Info = new Blog();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT * FROM Blog " +
+                    "where BlogId = @blogId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("BlogId", blogId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                            Info.BlogId = Convert.ToInt32(reader["BlogId"]);
+                            Info.Author = reader["Author"].ToString();
+                            Info.Title = reader["Title"].ToString();
+                            Info.Summary = reader["Summary"].ToString();
+                            Info.Content = reader["Content"].ToString();
+                            Info.DatePost = (DateTime)reader["DatePost"];
+                            Info.Image = reader["Image"].ToString();
+                    }
+                    else
+                        return null;
+                }
+            }
+            return Info;
         }
 
     }

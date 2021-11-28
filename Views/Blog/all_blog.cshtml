@@ -28,7 +28,7 @@
                         <div class="ps-post">
                             <div class="ps-post__thumbnail"><a class="ps-post__overlay"></a><img src="~/public/images_upload/blog/@item.GetType().GetProperty("Image").GetValue(item, null)" alt=""></div>
                             <div class="ps-post__content">
-                                <a class="ps-post__title" href="/blog-detail/@item.GetType().GetProperty("BlogId").GetValue(item, null)">Title</a>
+                                <a class="ps-post__title" href="/Blog/blog_detail?blogId=@item.GetType().GetProperty("BlogId").GetValue(item, null)">Title</a>
                                 <p class="ps-post__meta"><span>By:<a class="mr-5">@item.GetType().GetProperty("Author").GetValue(item, null)</a></span>-<span class="ml-3">@item.GetType().GetProperty("DateCreate").GetValue(item, null)</span></p>
                                 <p>@item.GetType().GetProperty("Summary").GetValue(item, null)</p><a class="ps-morelink" href="/Blog/blog_detail/@item.GetType().GetProperty("BlogId").GetValue(item, null)">Đọc tiếp<i class="fa fa-long-arrow-right"></i></a>
                             </div>
