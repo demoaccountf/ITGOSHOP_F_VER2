@@ -10,7 +10,7 @@ namespace ITGoShop_F_Ver2.Models
         private int blogId;
         private string author;
         private DateTime dateCreate, datePost;
-        private string title, summary;
+        private string title, summary, content;
         private int status;
         private string image;
         private int view;
@@ -19,7 +19,7 @@ namespace ITGoShop_F_Ver2.Models
         {
         }
 
-        public Blog(int blogId, string author, DateTime dateCreate, DateTime datePost, string title, string summary, int status, string image, int view)
+        public Blog(int blogId, string author, DateTime dateCreate, DateTime datePost, string title, string summary, string content, int status, string image, int view)
         {
             this.blogId = blogId;
             this.author = author;
@@ -27,9 +27,11 @@ namespace ITGoShop_F_Ver2.Models
             this.datePost = datePost;
             this.title = title;
             this.summary = summary;
+            this.content = content;
             this.status = status;
             this.image = image;
             this.view = view;
+            
         }
 
         public int BlogId { get => blogId; set => blogId = value; }
@@ -38,6 +40,7 @@ namespace ITGoShop_F_Ver2.Models
         public DateTime DatePost { get => datePost; set => datePost = value; }
         public string Title { get => title; set => title = value; }
         public string Summary { get => summary; set => summary = value; }
+        public string Content { get => content; set => content = value; }
         public int Status { get => status; set => status = value; }
         public string Image { get => image; set => image = value; }
         public int View { get => view; set => view = value; }

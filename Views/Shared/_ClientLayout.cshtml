@@ -1,7 +1,7 @@
-﻿@using Microsoft.AspNetCore.Http
+﻿@using System.Globalization;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
-    
+
 
 
 }
@@ -69,70 +69,82 @@
         <nav class="navigation">
             <div class="container-fluid">
                 <div class="navigation__column left">
-                    <div class="header__logo pl-40"><a class="ps-logo" href="//home')}}"><img src="~/public/client/Images/logo.png" alt=""></a></div>
+                    <div class="header__logo pl-40"><a class="ps-logo" href="/Home/Index')}}"><img src="~/public/client/Images/logo.png" alt=""></a></div>
                     <input type="text" id="input-customer-id" value="get('CustomerId')" hidden><!--Đừng xóa cái này  -->
                     <input type="text" id="input-admin-id" value="('CustomerId')" hidden>
                 </div>
                 <div class="navigation__column center">
-
                     <ul class="main-menu menu">
-                        <!--//foreach ($product_category_list as $key => $category)
-                        //if ($category->CategoryId == "LT000")-->
-                        <li class="menu-item menu-item-has-children has-mega-menu">
-                            <a href="/Product/product_listing2/category-CategoryId">Laptop</a>
-                            <div class="mega-menu">
-                                <div class="mega-wrap">
-                                    //foreach ($main_brand_list as $key => $main_brand)
-                                    //if ($main_brand->CategoryId == "LT000")
-                                    <div class="mega-column">
-                                        <a href="/Product/product_listing/main_brand->BrandId"> <h4 class="mega-heading">{{$main_brand->BrandName}}</h4> </a>
-                                        //foreach ($sub_brand_list as $key => $SubBrand)
-                                        //if ($SubBrand->BrandId == $main_brand->BrandId)
-                                        <ul class="mega-item">
-                                            <li><a href="/Product/product_listing3/SubBrand->SubBrandId">{{$SubBrand->SubBrandName}}</a></li>
-                                        </ul>
-                                        //endif
-                                        //endforeach
+                        @foreach (var item in @ViewBag.AllCategory)
+                        {
+                            @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "LT000")
+                            {
+                                <li class="menu-item menu-item-has-children has-mega-menu">
+                                    <a href="/Product/product_listing2/@item.GetType().GetProperty("CategoryId").GetValue(item, null)">Laptop</a>
+                                    <div class="mega-menu">
+                                        <div class="mega-wrap">
+                                            @foreach (var brand in @ViewBag.AllBrand)
+                                            {
+                                                @if (brand.GetType().GetProperty("CategoryId").GetValue(brand, null) == "LT000")
+                                                {
+                                                    <div class="mega-column">
+                                                        <a href="/Product/product_listing/@brand.GetType().GetProperty("BrandId").GetValue(brand, null)"> <h4 class="mega-heading">@brand.GetType().GetProperty("BrandName").GetValue(brand, null)</h4> </a>
+                                                        @foreach (var subbrand in @ViewBag.AllSubBrand)
+                                                        {
+                                                            @if (subbrand.GetType().GetProperty("BrandId").GetValue(subbrand, null) == brand.GetType().GetProperty("BrandId").GetValue(brand, null))
+                                                            {
+                                                                <ul class="mega-item">
+                                                                    <li><a href="/Product/product_listing3/@subbrand.GetType().GetProperty("SubBrandId").GetValue(subbrand, null)">@subbrand.GetType().GetProperty("SubBrandName").GetValue(subbrand, null)</a></li>
+                                                                </ul>
+                                                            }
+                                                        }
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
                                     </div>
-                                    //endif
-                                    //endforeach
+                                </li>
+                            }
+                        }
 
-                                </div>
-                            </div>
-                        </li>
-                        <!--//endif
-                        //endforeach
-                        //foreach ($product_category_list as $key => $category)
-                        //if ($category->CategoryId == "PC000")-->
-                        <li class="menu-item menu-item-has-children has-mega-menu">
-                            <a href="/Product/product_listing2/category-CategoryId">PC</a>
-                            <div class="mega-menu">
-                                <div class="mega-wrap">
-                                    //foreach ($main_brand_list as $key => $main_brand)
-                                    //if ($main_brand->CategoryId == "PC000")
-                                    <div class="mega-column">
-                                        <a href="/Product/product_listing/main_brand->BrandId"><h4 class="mega-heading">{{$main_brand->BrandName}}</h4></a>
-                                        //foreach ($sub_brand_list as $key => $SubBrand)
-                                        //if ($SubBrand->BrandId == $main_brand->BrandId)
-                                        <ul class="mega-item">
-                                            <li><a href="/Product/product_listing3/SubBrand->SubBrandId">{{$SubBrand->SubBrandName}}</a></li>
-
-                                        </ul>
-                                        //endif
-                                        //endforeach
+                        @foreach (var item in @ViewBag.AllCategory)
+                        {
+                            @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "PC000")
+                            {
+                                <li class="menu-item menu-item-has-children has-mega-menu">
+                                    <a href="/Product/product_listing2/@item.GetType().GetProperty("CategoryId").GetValue(item, null)">PC</a>
+                                    <div class="mega-menu">
+                                        <div class="mega-wrap">
+                                            @foreach (var brand in @ViewBag.AllBrand)
+                                            {
+                                                @if (brand.GetType().GetProperty("CategoryId").GetValue(brand, null) == "PC000")
+                                                {
+                                                    <div class="mega-column">
+                                                        <a href="/Product/product_listing/@brand.GetType().GetProperty("BrandId").GetValue(brand, null)"> <h4 class="mega-heading">@brand.GetType().GetProperty("BrandName").GetValue(brand, null)</h4> </a>
+                                                        @foreach (var subbrand in @ViewBag.AllSubBrand)
+                                                        {
+                                                            @if (subbrand.GetType().GetProperty("BrandId").GetValue(subbrand, null) == brand.GetType().GetProperty("BrandId").GetValue(brand, null))
+                                                            {
+                                                                <ul class="mega-item">
+                                                                    <li><a href="/Product/product_listing3/@subbrand.GetType().GetProperty("SubBrandId").GetValue(subbrand, null)">@subbrand.GetType().GetProperty("SubBrandName").GetValue(subbrand, null)</a></li>
+                                                                </ul>
+                                                            }
+                                                        }
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
                                     </div>
-                                    //endif
-                                    //endforeach
-                                </div>
-                            </div>
-                        </li>
-                        <!--//endif
-                        //endforeach
-                        //foreach ($product_category_list as $key => $category)
-                        //if ($category->CategoryId == "PK000")-->
-                        <li class="menu-item"><a href="/Product/product_listing2/category-CategoryId">Phụ Kiện</a></li>
-                        <!--//endif
-                        //endforeach-->
+                                </li>
+                            }
+                        }
+                        @foreach (var item in @ViewBag.AllCategory)
+                        {
+                            @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "PK000")
+                            {
+                                <li class="menu-item"><a href="/Product/product_listing2/@item.GetType().GetProperty("CategoryId").GetValue(item, null)">Phụ Kiện</a></li>
+                            }
+                        }
                         <li class="menu-item"><a href="/Blog/all_blog">Tin Tức</a></li>
                     </ul>
                 </div>
