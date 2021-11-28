@@ -508,7 +508,7 @@ namespace ITGoShop_F_Ver2.Models
                             Author = reader["Author"].ToString(),
                             Title = reader["Title"].ToString(),
                             Summary = reader["Summary"].ToString(),
-                            Content = reader["Summary"].ToString(),
+                            Content = reader["Content"].ToString(),
                             Image = reader["Image"].ToString(),
                         });
                     }
