@@ -379,13 +379,13 @@
                     <div class="col-10" style="height: 70px;">
                         <div class="shop-section-title">
 
-                            <?php $now_month = date('m') ?>
+                            <!--<?php $now_month = date('m') ?> -->
                             <h1 style="text-transform:none">Top sản phẩm bán chạy nhất<p style="font-size:18px;margin-top: 10px">Tháng {{$now_month}}<p></h1>
 
                         </div>
                     </div>
                     <div class="col-2" style="height: 70px; padding:0px">
-                        <img style="height:60px" src="{{URL::to('public/client/Images/top.png')}}" alt="">
+                        <img style="height:60px" src="~/public/client/Images/top.png" alt="">
                     </div>
                 </div>
                 <!-- Start Single List  -->
@@ -420,26 +420,31 @@
                     </div>
                 </div>
                 <!-- Start Single List  -->
-                //foreach ($top_view as $key => $product)
+                @foreach (var item in @ViewBag.Top3ProductView)
+                {
                 <div class="single-list">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="list-image overlay" style="width: 230px; height: 200px;">
-                                <img style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="{{URL::to('public/images_upload/product/'.$product->ProductImage)}}" alt="#">
+                                <img style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                 <a href="javascript:void(0)" class="buy add-to-cart-a-tag"><i class="fa fa-shopping-bag"></i></a>
-                                <input type="text" value="{{$product->ProductId}}" hidden>
+                                <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-12 no-padding">
                             <div class="content">
-                                <h5 class="title"><a style="text-decoration:none" href="{{URL::to('/product-detail/'.$product->ProductId)}}">{{$product->ProductName}}</a></h5>
-                                <p class="price with-discount">{{number_format($product->Price * ((100- $product->Discount)/100)).' '.'₫'}}</p>
-                                <h5 class="title"><a>Lượt xem: {{$product->View}} <i class=" ti-eye"></i></a> </h5>
+                                <h5 class="title"><a style="text-decoration:none" href="/Product/product-detail/@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
+                                @{
+                                    double dc = @item.GetType().GetProperty("Price").GetValue(item, null) * (100 - (@item.GetType().GetProperty("Discount").GetValue(item, null)));
+
+                                    <p class="price with-discount">@dc.ToString("#,###", cul.NumberFormat) ₫</p>
+                                }
+                                <h5 class="title"><a>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null) <i class=" ti-eye"></i></a> </h5>
                             </div>
                         </div>
                     </div>
                 </div>
-                //endforeach
+                }
             </div>
         </div>
     </div>

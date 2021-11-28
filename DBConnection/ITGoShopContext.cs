@@ -597,7 +597,7 @@ namespace ITGoShop_F_Ver2.Models
                     "AND ORDERDATE BETWEEN @startdate AND @enddate " +
                     "GROUP BY ProductName, ProductImage, P.ProductId, StartsAt, Quantity, Cost, Price " +
                     "ORDER BY SUM(OrderQuantity) DESC " +
-                    "LIMIT 5;";
+                    "LIMIT 3;";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 cmd.Parameters.AddWithValue("startdate", startDate.ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("enddate", endDate.ToString("yyyy-MM-dd"));
