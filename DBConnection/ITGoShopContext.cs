@@ -520,13 +520,46 @@ namespace ITGoShop_F_Ver2.Models
             }
             return list;
         }
+        public List<Blog> getListBlog()
+        {
+            List<Blog> list = new List<Blog>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select * from blog " +
+                             "where Status = 1 " +
+                             "ORDER BY DatePost DESC ";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Blog()
+                        {
+                            BlogId = Convert.ToInt32(reader["BlogId"]),
+                            Author = reader["Author"].ToString(),
+                            Title = reader["Title"].ToString(),
+                            Summary = reader["Summary"].ToString(),
+                            Content = reader["Content"].ToString(),
+                            DateCreate = (DateTime)reader["DateCreate"],
+                            Image = reader["Image"].ToString(),
+                        });
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
         public List<Blog> getBlog()
         {
             List<Blog> list = new List<Blog>();
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "select * from blog ORDER BY DatePost DESC LIMIT 3";
+                string str = "select * from blog where Status = 1 ORDER BY DatePost DESC LIMIT 3";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -848,6 +881,7 @@ namespace ITGoShop_F_Ver2.Models
                 conn.Open();
                 var str = "SELECT * FROM (Product P JOIN category C ON P.CategoryId = C.CategoryId) " +
                     "JOIN brand B ON B.BrandId = P.BrandId " +
+                    "JOIN subbrand S ON S.SubBrandId = P.SubBrandId " +
                     "where ProductId = @productId";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 cmd.Parameters.AddWithValue("ProductId", productId);
@@ -872,6 +906,47 @@ namespace ITGoShop_F_Ver2.Models
                     else
                         return null;
                 }
+            }
+            return productInfo;
+        }
+        public Object getProductDetail(int productId)
+        {
+            Object productInfo = new object();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT * FROM (Product P JOIN category C ON P.CategoryId = C.CategoryId) " +
+                    "JOIN brand B ON B.BrandId = P.BrandId " +
+                    "JOIN subbrand S ON S.SubBrandId = P.SubBrandId " +
+                    "where ProductId = @productId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("ProductId", productId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        productInfo = new
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            Sold = Convert.ToInt32(reader["Sold"]),
+                            Price = Convert.ToInt32(reader["Price"]),
+                            Status = Convert.ToInt32(reader["Status"]),
+                            Discount = Convert.ToInt32(reader["Discount"]),
+                            CategoryId = reader["CategoryId"].ToString(),
+                            SubBrandId = reader["SubBrandId"].ToString(),
+                            BrandId = Convert.ToInt32(reader["BrandId"]),
+                            Content = reader["Content"].ToString(),
+                        };
+
+                    }
+                    reader.Close();
+
+                }
+                conn.Close();
+
             }
             return productInfo;
         }
@@ -999,6 +1074,38 @@ namespace ITGoShop_F_Ver2.Models
                 }
             }
             return Info;
+        }
+        public List<Blog> getBlogRelate(int blogId)
+        {
+            List<Blog> list = new List<Blog>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select * from blog where Status = 1 and BlogId <> @blogId  ORDER BY DatePost DESC LIMIT 5";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("BlogId", blogId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Blog()
+                        {
+                            BlogId = Convert.ToInt32(reader["BlogId"]),
+                            Author = reader["Author"].ToString(),
+                            Title = reader["Title"].ToString(),
+                            Summary = reader["Summary"].ToString(),
+                            Content = reader["Content"].ToString(),
+                            DatePost = (DateTime)reader["DatePost"],
+                            Image = reader["Image"].ToString(),
+                        });
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
         }
 
 

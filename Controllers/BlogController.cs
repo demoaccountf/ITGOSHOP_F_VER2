@@ -26,7 +26,7 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllBrand = context.getAllBrand();
             ViewBag.AllSubBrand = context.getAllSubBrand();
 
-            ViewBag.AllBlog = context.getAllBlog();
+            ViewBag.AllBlog = context.getListBlog();
             return View();
         }
         public IActionResult blog_detail(int blogId)
@@ -37,6 +37,7 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllSubBrand = context.getAllSubBrand();
 
             ViewBag.BlogDetail = context.getBlogDetail(blogId);
+            ViewBag.BlogRelated = context.getBlogRelate(blogId);
             return View();
         }
     }

@@ -10,8 +10,14 @@ namespace ITGoShop_F_Ver2.Controllers
 {
     public class ProductController : Controller
     {
-        public IActionResult product_detail ()
+        public IActionResult product_detail (int productId)
         {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.AllCategory = context.getAllCategory();
+            ViewBag.AllBrand = context.getAllBrand();
+            ViewBag.AllSubBrand = context.getAllSubBrand();
+
+            ViewBag.ProductDetail = context.getProductDetail(productId);
             return View();
         }
         public IActionResult product_listing()
