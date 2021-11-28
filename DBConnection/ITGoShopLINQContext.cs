@@ -178,5 +178,14 @@ namespace ITGoShop_F_Ver2.Models
                 SaveChanges();
             }
         }
+        public List<Product> getGiamGiaSoc()
+        {
+            return Product.Where(p => p.Status == 1 && p.Discount != 0).OrderByDescending(b => b.Discount).Take(6).ToList();
+        }
+        //public List<Product> getSliderForHomePage()
+        //{
+        //    return Product.Where(p => p.Status == 1 && p.Discount != 0).OrderByDescending(b => b.Discount).Take(6).ToList();
+        //}
+
     }
 }

@@ -10,19 +10,21 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="slideshow-container" style="max-height:300px; box-shadow: 2px 2px 6px 0px rgb(0 0 0 / 10%); align-items: center;">
-                    //foreach ($slider_list as $key => $slider)
-                    <div class="mySlides">
-                        <a href="{{URL::to('/blog-detail/'.$slider->BlogId)}}">
-                            <img src="{{URL::to('public/images_upload/banner-slider/'.$slider->SliderImage)}}" style="width:100%;">
-                        </a>
-                    </div>
-                    //endforeach
+                    @foreach (var item in @ViewBag.SliderForHomePage)
+                    {
+                        <div class="mySlides">
+                            <a href="~/blog-detail/@item.GetType().GetProperty("BlogId").GetValue(item, null)">
+                                <img src="~/public/images_upload/banner-slider/@item.GetType().GetProperty("SliderImage").GetValue(item, null)" style="width:100%;">
+                            </a>
+                        </div>
+                    }
                     <a class="prev" style="color: white;" onclick="plusSlides(-1)">&#10094;</a>
                     <a class="next" style="color: white;" onclick="plusSlides(1)">&#10095;</a>
                     <div style="text-align:center; margin:10px">
-                        <?php for ($x = 1; $x <= count($slider_list); $x+=1){ ?>
-                        <span class="dot" onclick="currentSlide({{$x}})"></span>
-                        <?php }?>
+                        @for (int i = 1; i <= @ViewBag.SliderForHomePage.Count; i++)
+                        { 
+                        <span class="dot" onclick="currentSlide(@i)"></span>
+                        }
                     </div>
                 </div>
             </div>
@@ -30,12 +32,12 @@
                 //foreach ($latestnew as $key => $new)
                 <div class="card" style="margin-top:50px; border-radius:  10px 10px 0px 0px;background-color:#ccf2f4; border-left: 6px solid #A2D2FF; border-bottom: 6px solid #A2D2FF;">
                     <div class="card-body">
-                        <a style="color:#333; font-size:17px;" href="{{URL::to('/blog-detail/'.$new->BlogId)}}"><b>{{$new->Title}}</b></a>
+                        <a style="color:#333; font-size:17px;" href="~//blog-detail/'.$new->BlogId)}}"><b>{{$new->Title}}</b></a>
                     </div>
                 </div>
                 //endforeach
                 <div style="margin: 20px 0px;">
-                    <h3><a href="{{URL::to('/all_blog')}}" style="text-decoration:none;  "><b>Tất cả tin tức <i class="fa fa-angle-right" style="color:#A2D2FF;" aria-hidden="true"></i></b></a></h3>
+                    <h3><a href="~//all_blog" style="text-decoration:none;  "><b>Tất cả tin tức <i class="fa fa-angle-right" style="color:#A2D2FF;" aria-hidden="true"></i></b></a></h3>
                 </div>
 
             </div>
@@ -76,11 +78,11 @@
             //foreach ($new_product as $key => $product)
             <!--<div class="col-lg-4 col-md-6">
                 <div class="single-banner" style="width: 350px; height: 185.25px; ">
-                    <img src="{{URL::to('public/images_upload/banner-slider/'.$product->SliderImage)}}" alt="#" style="border-radius: 10px;margin: auto; width: 350px; height: 185.25px;">
+                    <img src="~/public/images_upload/banner-slider/'.$product->SliderImage)}}" alt="#" style="border-radius: 10px;margin: auto; width: 350px; height: 185.25px;">
                     <div class="content">
                         <p>{{$product->CategoryName}}</p>
                         <h3>{{$product->ProductName}}</h3>
-                        <a href="{{URL::to('/product-detail/'.$product->ProductId)}}">Xem Chi Tiết</a>
+                        <a href="~//product-detail/'.$product->ProductId)}}">Xem Chi Tiết</a>
                     </div>
                 </div>
             </div>-->
@@ -91,14 +93,14 @@
                     <div class="content">
                         <p>Logitech Collectons</p>
                         <h3>Tai nghe Gaming <br> Logitech G335</h3>
-                        <a href="{{URL::to('/product-detail2/')}}">Xem Chi Tiết</a>
+                        <a href="~//product-detail2/">Xem Chi Tiết</a>
                     </div>
                 </div>
             </div>
             //foreach ($list_campaign as $key => $campaign)
             <div class="col-lg-4">
                 <div class="single-banner tab-height" style="width: 350px; height: 185.25px;">
-                    <a href="{{URL::to('/campaign/'.$campaign->CampaignId)}}" style="border-radius: 10px;margin: auto; width: 350px; height: 185.25px;"><img href="{{URL::to('/campaign/'.$campaign->CampaignId)}}" src="{{URL::to('public/images_upload/campaign/'.$campaign->CampaignImage)}}" alt="#" style="border-radius: 10px;"></a>
+                    <a href="~//campaign/'.$campaign->CampaignId)}}" style="border-radius: 10px;margin: auto; width: 350px; height: 185.25px;"><img href="~//campaign/'.$campaign->CampaignId)}}" src="~/public/images_upload/campaign/'.$campaign->CampaignImage)}}" alt="#" style="border-radius: 10px;"></a>
 
                 </div>
             </div>
@@ -113,8 +115,8 @@
             <div class="col-12">
                 <div class="section-title" style="margin-bottom: 0px;">
                     <h2 style="text-transform:none;">
-                        <img style="height:45px" src="{{URL::to('public/client/Images/fire.gif')}}" alt="">Giảm giá sốc
-                        <img style="height:45px" src="{{URL::to('public/client/Images/fire.gif')}}" alt="">
+                        <img style="height:45px" src="~/public/client/Images/fire.gif" alt="">Giảm giá sốc
+                        <img style="height:45px" src="~/public/client/Images/fire.gif" alt="">
                     </h2>
                 </div>
             </div>
@@ -122,41 +124,43 @@
         <div class="row">
             <div class="col-12" style="background-color: white;border-radius: 30px">
                 <div class="owl-carousel popular-slider">
-                    //foreach ($giam_gia_soc as $key => $product)
-                    <div class="single-product">
-                        <div class="product-img" style="width: 250px; height: 200px;">
-                            <a href="{{URL::to('/product-detail/'.$product->ProductId)}}">
-                                <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="{{URL::to('public/images_upload/product/'.$product->ProductImage)}}" alt="#">
-                                <img class="hover-img" src="{{URL::to('/product-detail/'.$product->ProductId)}}" alt="">
-                                <span class="out-of-stock">GIẢM {{$product->Discount}}%</span>
-                                <?php $so_ngay_da_moban = (strtotime(date("d-m-Y")) - strtotime(date("d-m-Y", strtotime($product->StartsAt))))/ 86400 ?>
-                                //if ($so_ngay_da_moban < 14)
+                    @foreach (var item in @ViewBag.GiamGiaSoc)
+                    {
+                <div class="single-product">
+                    <div class="product-img" style="width: 250px; height: 200px;">
+                        <a href="~/product-detail/@item.ProductId">
+                            <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.ProductImage" alt="#">
+                            <img class="hover-img" src="~/product-detail/@item.ProductId" alt="">
+                            <span class="out-of-stock">GIẢM @item.Discount %</span>
+                            @{double so_ngay_da_moban = (DateTime.Now - item.StartsAt).TotalDays;}
+                            @if (@so_ngay_da_moban < 14)
+                             {
                                 <span class="new">New</span>
-                                //endif
-                            </a>
-                            <div class="button-head">
-                                <div class="product-action">
-                                    <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Lượt xem: {{$product->View}}</span></a>
-                                    <a title="Wishlist" href="javascript:void(0)"><i class=" ti-heart "></i><span>Yêu thích</span></a>
-                                    <input type="text" class="ProductId" value="{{$product->ProductId}}" hidden>
-                                </div>
-                                <div class="product-action-2">
-                                    <a title="Add to cart" class="add-to-cart-a-tag" href="javascript:void(0)">Thêm vào giỏ hàng</a>
-                                    <input type="text" value="{{$product->ProductId}}" hidden>
-                                </div>
+                             }
+                        </a>
+                        <div class="button-head">
+                            <div class="product-action">
+                                <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Lượt xem: @item.View</span></a>
+                                <a title="Wishlist" href="javascript:void(0)"><i class=" ti-heart "></i><span>Yêu thích</span></a>
+                                <input type="text" class="ProductId" value="@item.ProductId" hidden>
                             </div>
-                        </div>
-                        <div class="product-content">
-                            <h3><a style="text-decoration:none" href="{{URL::to('/product-detail/'.$product->ProductId)}}"><b style="font-size:17px">{{$product->ProductName}}</b></a></h3>
-                            <div class="product-price">
-                                <span style="color:red; font-size:17px"><b>{{number_format($product->Price).' '.'₫'}}</b></span>
-                                <br>
-                                <span class="old">{{number_format($product->Price + ($product->Price * ($product->Discount)/100)).' '.'₫'}}</span>
+                            <div class="product-action-2">
+                                <a title="Add to cart" class="add-to-cart-a-tag" href="javascript:void(0)">Thêm vào giỏ hàng</a>
+                                <input type="text" value="@item.ProductId" hidden>
                             </div>
                         </div>
                     </div>
-                    <!-- End Single Product -->
-                    //endforeach
+                    <div class="product-content">
+                        <h3><a style="text-decoration:none" href="~/product-detail/@item.ProductId"><b style="font-size:17px">@item.ProductName</b></a></h3>
+                        <div class="product-price">
+                            <span style="color:red; font-size:17px"><b>@item.Price.ToString("#,###", cul.NumberFormat) ₫</b></span>
+                            <br>
+                            <span class="old">@((@item.Price + @item.Price * ((@item.Discount)/100)).ToString("#,###", cul.NumberFormat)) ₫</span>
+                        </div>
+                    </div>
+                </div>}
+
+
                 </div>
             </div>
         </div>
@@ -197,12 +201,13 @@
                                             <div class="single-product">
                                                 <div class="product-img" style="width: 250px; height: 200px;">
                                                     <a href="/Product/product_detail/'.$product->ProductId)}}">
-                                                        <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; "  src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
+                                                        <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                                         <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
-                                                        <!--?php $so_ngay_da_moban = (strtotime(date("d-m-Y")) - strtotime(date("d-m-Y", strtotime($product->StartsAt))))/ 86400 ?>
-                                                        //if ($so_ngay_da_moban <= 14)
-                                                        <span class="new">New</span>
-                                                        //endif-->
+                                                        @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
+                                                        @if (@so_ngay_da_moban < 14)
+                                                        {
+                                                            <span class="new">New</span>
+                                                        }
                                                     </a>
                                                     <div class="button-head">
                                                         <div class="product-action">
@@ -275,12 +280,13 @@
                                             <div class="single-product">
                                                 <div class="product-img" style="width: 250px; height: 200px;">
                                                     <a href="/Product/product_detail/'.$product->ProductId)}}">
-                                                        <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; "  src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
+                                                        <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                                         <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
-                                                        <!--?php $so_ngay_da_moban = (strtotime(date("d-m-Y")) - strtotime(date("d-m-Y", strtotime($product->StartsAt))))/ 86400 ?>
-                                                        //if ($so_ngay_da_moban <= 14)
-                                                        <span class="new">New</span>
-                                                        //endif-->
+                                                        @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
+                                                        @if (@so_ngay_da_moban < 14)
+                                                        {
+                                                            <span class="new">New</span>
+                                                        }
                                                     </a>
                                                     <div class="button-head">
                                                         <div class="product-action">
@@ -324,12 +330,13 @@
                                             <div class="single-product">
                                                 <div class="product-img" style="width: 250px; height: 200px;">
                                                     <a href="/Product/product_detail/'.$product->ProductId)}}">
-                                                        <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; "  src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
+                                                        <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                                         <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
-                                                        <!--?php $so_ngay_da_moban = (strtotime(date("d-m-Y")) - strtotime(date("d-m-Y", strtotime($product->StartsAt))))/ 86400 ?>
-                                                        //if ($so_ngay_da_moban <= 14)
-                                                        <span class="new">New</span>
-                                                        //endif-->
+                                                        @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
+                                                        @if (@so_ngay_da_moban < 14)
+                                                        {
+                                                            <span class="new">New</span>
+                                                        }
                                                     </a>
                                                     <div class="button-head">
                                                         <div class="product-action">
@@ -394,14 +401,14 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="list-image overlay" style="width: 230px; height: 200px;">
-                                <img style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="{{URL::to('public/images_upload/product/'.$product->ProductImage)}}" alt="#">
+                                <img style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/'.$product->ProductImage)}}" alt="#">
                                 <a href="javascript:void(0)" class="buy add-to-cart-a-tag"><i class="fa fa-shopping-bag"></i></a>
                                 <input type="text" value="{{$product->ProductId}}" hidden>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-12 no-padding">
                             <div class="content">
-                                <h5 class="title"><a style="text-decoration:none" href="{{URL::to('/product-detail/'.$product->ProductId)}}">{{$product->ProductName}}</a></h5>
+                                <h5 class="title"><a style="text-decoration:none" href="~//product-detail/'.$product->ProductId)}}">{{$product->ProductName}}</a></h5>
                                 <p class="price with-discount">{{number_format($product->Price).' '.'₫'}}</p>
                                 <h5 class="title"><a>Đã bán: {{$product->number_solded}} sản phẩm </a> </h5>
                             </div>
@@ -509,10 +516,10 @@
             <div class="col-lg-4 col-md-6 col-12">
                 <!-- Start Single Blog  -->
                 <div class="shop-single-blog">
-                    <img style="margin: auto; max-width: 330px; max-height: 300px; width: auto; height: auto;" src="{{URL::to('public/images_upload/blog/'.$blog->Image)}}" alt="#">
+                    <img style="margin: auto; max-width: 330px; max-height: 300px; width: auto; height: auto;" src="~/public/images_upload/blog/'.$blog->Image)}}" alt="#">
                     <div class="content" style="text-align: justify; text-decoration:none;">
                         <a class="title">{{$blog->Title}}</a>
-                        <a href="{{URL::to('/blog-detail/'.$blog->BlogId)}}" class="more-btn">Đọc tiếp</a>
+                        <a href="~//blog-detail/'.$blog->BlogId)}}" class="more-btn">Đọc tiếp</a>
                     </div>
                 </div>
                 <!-- End Single Blog  -->
@@ -599,4 +606,4 @@
     }
 </script>
 <!-- <p id="o-test"></p> -->
-<!-- <a href="{{URL::to('/add-product-to-withlist')}}">Hi</a> -->
+<!-- <a href="~//add-product-to-withlist">Hi</a> -->

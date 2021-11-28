@@ -671,7 +671,8 @@ namespace ITGoShop_F_Ver2.Models
                             Status = Convert.ToInt32(reader["Status"]),
                             ProductImage = reader["ProductImage"].ToString(),
                             View = Convert.ToInt32(reader["View"]),
-                            Discount = Convert.ToDouble(reader["Discount"])
+                            Discount = Convert.ToDouble(reader["Discount"]),
+                            StartsAt = (DateTime)reader["StartsAt"],
                         };
                         list.Add(obj);
                     }
@@ -706,7 +707,8 @@ namespace ITGoShop_F_Ver2.Models
                             Status = Convert.ToInt32(reader["Status"]),
                             ProductImage = reader["ProductImage"].ToString(),
                             View = Convert.ToInt32(reader["View"]),
-                            Discount = Convert.ToDouble(reader["Discount"])
+                            Discount = Convert.ToDouble(reader["Discount"]),
+                            StartsAt = (DateTime)reader["StartsAt"],
                         };
                         list.Add(obj);
                     }
@@ -741,7 +743,8 @@ namespace ITGoShop_F_Ver2.Models
                             Status = Convert.ToInt32(reader["Status"]),
                             ProductImage = reader["ProductImage"].ToString(),
                             View = Convert.ToInt32(reader["View"]),
-                            Discount = Convert.ToDouble(reader["Discount"])
+                            Discount = Convert.ToDouble(reader["Discount"]),
+                            StartsAt = (DateTime)reader["StartsAt"],
                         };
                         list.Add(obj);
                     }
@@ -902,6 +905,37 @@ namespace ITGoShop_F_Ver2.Models
                         list.Add(obj);
                     }
                 }
+            }
+            return list;
+        }
+
+        public List<object> getSliderForHomePage()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "SELECT * FROM bannerslider BS JOIN BLOG B ON BS.BlogId = B.BlogId WHERE SliderStatus = 1 ORDER BY CreatedAt ASC LIMIT 8";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        System.Diagnostics.Debug.WriteLine("bid: " + Convert.ToInt32(reader["BlogId"]));
+                        var obj = new
+                        {
+                            SliderId = Convert.ToInt32(reader["SliderId"]),
+                            SliderName = reader["SliderName"].ToString(),
+                            SliderImage = reader["SliderImage"].ToString(),
+                            BlogId = Convert.ToInt32(reader["BlogId"]),
+                        };
+                        list.Add(obj);
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
             }
             return list;
         }

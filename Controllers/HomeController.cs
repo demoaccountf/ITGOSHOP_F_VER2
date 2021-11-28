@@ -31,6 +31,11 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.LTProduct = context.getLTProduct();
             ViewBag.PCProduct = context.getPCProduct();
             ViewBag.PKProduct = context.getPKProduct();
+
+            ViewBag.SliderForHomePage = context.getSliderForHomePage();
+
+            var linqContext = new ITGoShopLINQContext();
+            ViewBag.GiamGiaSoc = linqContext.getGiamGiaSoc();
             return View();
         }
 
