@@ -30,7 +30,7 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllBlog = context.getAllBlog();
             return View();
         }
-        public IActionResult blog_detail()
+        public IActionResult blog_detail(int ProductId)
         {
             return View();
         }
