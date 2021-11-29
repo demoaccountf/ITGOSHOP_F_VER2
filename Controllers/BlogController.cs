@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-
+using PagedList;
+using PagedList.Mvc;
 
 namespace ITGoShop_F_Ver2.Controllers
 {

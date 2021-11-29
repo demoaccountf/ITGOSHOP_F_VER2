@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ITGoShop_F_Ver2.Models;
-
+using PagedList;
+using PagedList.Mvc;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
@@ -21,22 +22,27 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.BrandProduct = context.getBrandProduct(brandId);
             return View();
         }
-        public IActionResult product_listing2(string categoryId)
+        public IActionResult product_listing2(int? page,string categoryId)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
             ViewBag.AllBrand = context.getAllBrand();
             ViewBag.AllSubBrand = context.getAllSubBrand();
-            ViewBag.CateProduct = context.getCateProduct(categoryId);
+            ViewBag.CateProduct = context.getCateProduct(categoryId).ToPagedList(page ?? 1, 10);
             ViewBag.Cate = context.getCate(categoryId);
             return View();
         }
-        public IActionResult product_listing3()
+        public IActionResult product_listing3(string subbrandId)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
             ViewBag.AllBrand = context.getAllBrand();
             ViewBag.AllSubBrand = context.getAllSubBrand();
+            ViewBag.SubProduct = context.getSubProduct(subbrandId);
+
+            
+            ViewBag.Brand = context.getSub(subbrandId);
+
             return View();
         }
     }

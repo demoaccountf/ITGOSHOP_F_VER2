@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using PagedList;
+using PagedList.Mvc;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
@@ -29,6 +31,7 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.Top3ProductView = context.getTop3ProductView();
             ViewBag.Top3Product = context.get3Product();
             ViewBag.Blog = context.getBlog();
+            ViewBag.New = context.get2Blog();
             ViewBag.LTProduct = context.getLTProduct();
             ViewBag.PCProduct = context.getPCProduct();
             ViewBag.PKProduct = context.getPKProduct();
