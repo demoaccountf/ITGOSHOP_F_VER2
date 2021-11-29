@@ -12,9 +12,9 @@ namespace ITGoShop_F_Ver2.Controllers
         public IActionResult Index(int productId)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            //ViewBag.AllCategory = context.getAllCategory();
-            //ViewBag.AllBrand = context.getAllBrand();
-            //ViewBag.AllSubBrand = context.getAllSubBrand();
+            ViewBag.AllCategory = context.getAllCategory();
+            ViewBag.AllBrand = context.getAllBrand();
+            ViewBag.AllSubBrand = context.getAllSubBrand();
 
             ViewBag.ProductDetail = context.getProductInfo(productId);
             return View("product_detail");
