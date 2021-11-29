@@ -940,6 +940,7 @@ namespace ITGoShop_F_Ver2.Models
                     {
                         var obj = new
                         {
+                            BrandId = Convert.ToInt32(reader["BrandId"]),
                             ProductId = Convert.ToInt32(reader["ProductId"]),
                             ProductName = reader["ProductName"].ToString(),
                             CategoryName = reader["CategoryName"].ToString(),
@@ -952,6 +953,77 @@ namespace ITGoShop_F_Ver2.Models
                             StartsAt = (DateTime)reader["StartsAt"],
                         };
                         list.Add(obj);
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
+
+        public List<object> getSubProduct(string subbrandId)
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "SELECT * FROM (Product P JOIN category C ON P.CategoryId = C.CategoryId) " +
+                    "JOIN brand B ON B.BrandId = P.BrandId " +
+                    "JOIN subbrand S ON S.SubBrandId = P.SubBrandId " +
+                    "where P.subbrandId = @subbrandId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("SubbrandId", subbrandId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            CategoryName = reader["CategoryName"].ToString(),
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            Price = Convert.ToInt32(reader["Price"]),
+                            Status = Convert.ToInt32(reader["Status"]),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            View = Convert.ToInt32(reader["View"]),
+                            Discount = Convert.ToDouble(reader["Discount"]),
+                            StartsAt = (DateTime)reader["StartsAt"],
+                        };
+                        list.Add(obj);
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
+        public List<Brand> getSub(string subbrandId)
+        {
+            List<Brand> list = new List<Brand>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select * from Brand B JOIN subbrand S ON S.BrandId = B.BrandId  where S.SubBrandId = @subbrandId LIMIT 1";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("SubBrandId", subbrandId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        list.Add(new Brand()
+                        {
+                            BrandId = Convert.ToInt32(reader["BrandId"]),
+                            BrandName = reader["BrandName"].ToString(),
+                            Description = reader["Description"].ToString(),
+                            CategoryId = reader["CategoryId"].ToString(),
+                            Status = Convert.ToInt32(reader["Status"]),
+                            BrandLogo = reader["BrandLogo"].ToString(),
+                        });
                     }
                     reader.Close();
                 }
