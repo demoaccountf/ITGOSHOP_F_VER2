@@ -1,10 +1,11 @@
 ﻿@using System.Globalization;
+@using PagedList;
+@using PagedList.Mvc;
 @{
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
     CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 }
-@model List<object>
-
+@model IPagedList<object>
 @foreach (var item in @ViewBag.Cate)
 {
     <div class="breadcrumbs">
@@ -32,7 +33,7 @@
             @foreach (var item in @ViewBag.CateProduct)
             {
                 <div class="ps-product__column" style="width: 250px; height: 350px; margin-right: 15px; ">
-                    <div class="single-product"  >
+                    <div class="single-product">
                         <div class="product-img" style="width: 250px; height: 200px; ">
                             <a href="/Product/product_detail/@item.GetType().GetProperty("ProductId").GetValue(item, null)">
                                 <img class="default-img" style="margin: auto; width: 250px; height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
@@ -60,7 +61,7 @@
                 </div>
             }
         </div>
-        {{ $all_product->links() }}
+        @Html.Page
     </div>
     <div class="ps-sidebar" data-mh="product-listing">
         <aside class="ps-widget--sidebar ps-widget--category">
