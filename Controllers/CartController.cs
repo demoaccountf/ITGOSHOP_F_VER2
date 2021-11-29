@@ -62,7 +62,21 @@ namespace ITGoShop_F_Ver2.Controllers
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
         }
+        public void remove_item(int id)
+        {
+            List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
+            int index = isExist(id);
+            cart.RemoveAt(index);
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+        }
 
+        public void update_quantity(int ProductId, int newQuantity)
+        {
+            List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
+            int index = isExist(ProductId);
+            cart[index].Quantity = newQuantity;
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+        }
         //================Code thầy Hùng=============//
         //public IActionResult Buy(int id)
         //{
@@ -91,15 +105,7 @@ namespace ITGoShop_F_Ver2.Controllers
         //    return RedirectToAction("Index");
         //}
 
-        [Route("remove/{id}")]
-        public IActionResult remove_item(int id)
-        {
-            List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
-            int index = isExist(id);
-            cart.RemoveAt(index);
-            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-            return RedirectToAction("Index");
-        }
+
 
         private int isExist(int id)
         {

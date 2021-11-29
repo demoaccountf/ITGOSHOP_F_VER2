@@ -12,7 +12,7 @@
                 <div class="bread-inner">
                     <ul class="bread-list">
                         <li><a href="product-detail.html">Trang chủ<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="{{URL::to('/show-cart')}}">Giỏ hàng</a></li>
+                        <li class="active"><a href="~/show-cart">Giỏ hàng</a></li>
                     </ul>
                 </div>
             </div>
@@ -21,15 +21,10 @@
 </div>
 <!-- End Breadcrumbs -->
 <!-- Shopping Cart -->
-<div class="shopping-cart section">
+<div class="shopping-cart section pb-80" style=" min-height: 400px; ">
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-9">
-                <!-- Shopping Summery -->
-                <?php
-                $content = Cart::content();
-                $number_product = Cart::count();
-                ?>
                 <table class="table shopping-summery">
                     <thead>
                         <tr class="main-hading">
@@ -55,7 +50,9 @@
                             @foreach (var item in ViewBag.cart)
                             {
                                 <tr>
-                                    <td class="image" data-title="No" style="width: 60px; height: 60px;"><img style="margin: auto; max-width: 60px; max-height: 60px; width: auto; height: auto; " src="~/public/images_upload/product/@item.Product.ProductImage" alt="#"></td>
+                                    <td class="image" data-title="No" style="width: 60px; height: 60px;">
+                                        <img style="margin: auto; max-width: 60px; max-height: 60px; width: auto; height: auto; " src="~/public/images_upload/product/@item.Product.ProductImage" alt="#">
+                                    </td>
                                     <td class="product-des" data-title="Description">
                                         <p class="product-name"><a href="/Product/product-detail/@item.Product.ProductId">@item.Product.ProductName</a></p>
                                     </td>
@@ -81,16 +78,20 @@
 
                                     <td class="total-amount" data-title="Total">
                                         @{ long subtotal = item.Product.Price * (long)item.Quantity; }
-                                        <span class="thanh-tien" data-value="@subtotal">@subtotal.ToString("#,###", cul.NumberFormat) ₫</span>
+                                        <span class="thanh-tien" data-value="@subtotal">@subtotal.ToString("#,###", cul.NumberFormat) ₫ </span>
                                     </td>
+
+                                    <!-- <td class="action" data-title="Remove">
+                                        <a href="~//remove-item/'.$item->rowId)}}"><i class="ti-trash remove-icon"></i></a>
+                                    </td> -->
+                                    <!-- //onClick="removeItem(this.id) -->
                                     <td class="action" data-title="Remove">
                                         <button id="@item.Product.ProductId" class="delete-button"><i class="ti-trash remove-icon"></i></button>
                                     </td>
-
                                 </tr>
-                             }
+                            }
                         }
-                                </tbody>
+                    </tbody>
                 </table>
                 <!--/ End Shopping Summery -->
             </div>
@@ -106,85 +107,17 @@
                         </ul>
                         <div class="button5">
                             <a href="javascript:void(0)" class="btn btn-thanh-toan">Thanh Toán</a>
-                            <a href="~/Home/Index" class="btn">Tiếp tục mua hàng</a>
+                            <a href="~//" class="btn">Tiếp tục mua hàng</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <!-- Total Amount -->
-                <div class="total-amount">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-5 col-12">
-                            <div class="left">
-                                <div class="coupon">
-                                    <form action="#" target="_blank">
-                                        <input name="Coupon" placeholder="Enter Your Coupon">
-                                        <button class="btn">Apply</button>
-                                    </form>
-                                </div>
-                                <div class="checkbox">
-                                    <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox"> Shipping (+10$)</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-7 col-12">
-                            <div class="right" style="height:200px">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ End Total Amount -->
-            </div>
-        </div>
+
     </div>
 </div>
 <!--/ End Shopping Cart -->
 <!-- Start Shop Services Area -->
-<section class="shop-services section home">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-12">
-                <!-- Start Single Service -->
-                <div class="single-service">
-                    <i class="ti-rocket"></i>
-                    <h4>Miễn phí vận chuyển</h4>
-                    <p>Đơn đặt hàng trên 1.000.000VND</p>
-                </div>
-                <!-- End Single Service -->
-            </div>
-            <div class="col-lg-3 col-md-6 col-12">
-                <!-- Start Single Service -->
-                <div class="single-service">
-                    <i class="ti-reload"></i>
-                    <h4>Miễn phí đổi trả</h4>
-                    <p>Trong vòng 30 ngày</p>
-                </div>
-                <!-- End Single Service -->
-            </div>
-            <div class="col-lg-3 col-md-6 col-12">
-                <!-- Start Single Service -->
-                <div class="single-service">
-                    <i class="ti-lock"></i>
-                    <h4>Bảo mật tuyệt đối</h4>
-                    <p>100% thanh toán an toàn</p>
-                </div>
-                <!-- End Single Service -->
-            </div>
-            <div class="col-lg-3 col-md-6 col-12">
-                <!-- Start Single Service -->
-                <div class="single-service">
-                    <i class="ti-tag"></i>
-                    <h4>Giá tốt nhất</h4>
-                    <p>Quà tặng và ưu đãi hấp dẫn</p>
-                </div>
-                <!-- End Single Service -->
-            </div>
-        </div>
-    </div>
-</section>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -298,7 +231,6 @@
 </div>
 <!-- Modal end -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <script>
     function numberWithCommas(x) // Hàm để format tiền
     {
@@ -314,8 +246,8 @@
                 methed: "GET",
                 data: { id: ProductId },
                 success: function (data) {
-                    load_cart();
-                    $('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) - numberProduct);
+                    //load_cart();
+                    //$('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) - numberProduct);
                     swal({
                         title: "Thông báo",
                         text: "Đã xóa sản phẩm khỏi giỏ hàng!",
@@ -327,7 +259,7 @@
                     alert('Lỗi');
                 }
             });
-             //Tính lại tổng tiền
+            // Tính lại tổng tiền
             var sum = 0;
             $('.thanh-tien').each(function () {
                 sum += Number($(this).attr("data-value"));
@@ -336,135 +268,135 @@
             $("#tam-tinh").text(sum + ' ₫');
             $("#tong-cong").text(sum + ' ₫');
         });
-        $("button[data-type='plus'], button[data-type='minus']").click(function () {
-            var $parent = $(this).parents('tr');
-            var thisButtonType = $(this).attr('data-type');
-            var newQuantity = $parent.find('.input-number').val();
-            var ProductId = $parent.find('.input-number').attr('id');
-            //alert(newQuantity);
-            $.ajax({
-                url: '/Cart/update_quantity',
-                methed: "GET",
-                data: { ProductId: ProductId, newQuantity: newQuantity },
-                //success: function (data) {
-                //    alert('Thành công');
-                //},
-                error: function (data) {
-                    alert('Lỗi');
-                }
-            });
-            var dongia = $parent.find('.price').attr('data-value');
-            var thanhtien = numberWithCommas(newQuantity * dongia) + ' ₫';
-            $parent.find('.thanh-tien').attr("data-value", newQuantity * dongia);
-            $parent.find('.thanh-tien').html(thanhtien);
-        });
-        $('body').on('DOMSubtreeModified', '.thanh-tien', function () {
-            var sum = 0;
-            $('.thanh-tien').each(function () {
-                //alert($(this).text().replace(' ₫', '').replace('.', ''));
-                sum += Number($(this).attr("data-value"));
-            });
-            sum = numberWithCommas(sum);
-            $("#tam-tinh").text(sum + ' ₫');
-            $("#tong-cong").text(sum + ' ₫');
-        });
-        $(".input-number").on('input', function () {
-            var newQuantity = $(this).val();
-            var ProductId = $(this).attr('id');
-            if (newQuantity != 0) {
+        //$("button[data-type='plus'], button[data-type='minus']").click(function () {
+        //    var $parent = $(this).parents('tr');
+        //    var thisButtonType = $(this).attr('data-type');
+        //    var newQuantity = $parent.find('.input-number').val();
+        //    var ProductId = $parent.find('.input-number').attr('id');
+        //    alert(newQuantity);
+        //    $.ajax({
+        //        url: '/Cart/update_quantity',
+        //        methed: "GET",
+        //        data: { ProductId: ProductId, newQuantity: newQuantity },
+        //        //success: function (data) {
+        //        //    alert('Thành công');
+        //        //},
+        //        error: function (data) {
+        //            alert('Lỗi');
+        //        }
+        //    });
+        //    var dongia = $parent.find('.price').attr('data-value');
+        //    var thanhtien = numberWithCommas(newQuantity * dongia) + ' ₫';
+        //    $parent.find('.thanh-tien').attr("data-value", newQuantity * dongia);
+        //    $parent.find('.thanh-tien').html(thanhtien);
+        //});
+        //$('body').on('DOMSubtreeModified', '.thanh-tien', function () {
+        //    var sum = 0;
+        //    $('.thanh-tien').each(function () {
+        //        //alert($(this).text().replace(' ₫', '').replace('.', ''));
+        //        sum += Number($(this).attr("data-value"));
+        //    });
+        //    sum = numberWithCommas(sum);
+        //    $("#tam-tinh").text(sum + ' ₫');
+        //    $("#tong-cong").text(sum + ' ₫');
+        //});
+        //$(".input-number").on('input', function () {
+        //    var newQuantity = $(this).val();
+        //    var ProductId = $(this).attr('id');
+        //    if (newQuantity != 0) {
 
-                $.ajax({
-                    url: '/Cart/update_quantity',
-                    methed: "GET",
-                    data: { ProductId: ProductId, newQuantity: newQuantity },
-                    // success:funtion(data)
-                    // {
-                    // 	load_cart();
-                    // },
-                    error: function (data) {
-                        alert('Lỗi nhập');
-                    }
-                });
-            }
-            var $parent = $(this).parents('tr');
-            var soluong = $(this).val();
-            var dongia = $parent.find('.price').attr('data-value');
-            var thanhtien = numberWithCommas(soluong * dongia) + ' đ';
-            $parent.find('.thanh-tien').html(thanhtien);
-        });
+        //        $.ajax({
+        //            url: '/Cart/update_quantity',
+        //            methed: "GET",
+        //            data: { ProductId: ProductId, newQuantity: newQuantity },
+        //            // success:funtion(data)
+        //            // {
+        //            // 	load_cart();
+        //            // },
+        //            error: function (data) {
+        //                alert('Lỗi nhập');
+        //            }
+        //        });
+        //    }
+        //    var $parent = $(this).parents('tr');
+        //    var soluong = $(this).val();
+        //    var dongia = $parent.find('.price').attr('data-value');
+        //    var thanhtien = numberWithCommas(soluong * dongia) + ' đ';
+        //    $parent.find('.thanh-tien').html(thanhtien);
+        //});
     });
 </script>
 
 <script type="text/javascript">
-		$('.btn-number').click(function(e){
-			e.preventDefault();
+    $('.btn-number').click(function (e) {
+        e.preventDefault();
 
-			fieldName = $(this).attr('data-field');
-			type      = $(this).attr('data-type');
-			var input = $("input[name='"+fieldName+"']");
-			var currentVal = parseInt(input.val());
-			if (!isNaN(currentVal)) {
-				if(type == 'minus') {
+        fieldName = $(this).attr('data-field');
+        type = $(this).attr('data-type');
+        var input = $("input[name='" + fieldName + "']");
+        var currentVal = parseInt(input.val());
+        if (!isNaN(currentVal)) {
+            if (type == 'minus') {
 
-					if(currentVal > input.attr('data-min')) {
-						input.val(currentVal - 0).change();
-					}
-					// if(parseInt(input.val()) == input.attr('data-min')) {
-					// 	$(this).attr('disabled', true);
-					// }
+                if (currentVal > input.attr('data-min')) {
+                    input.val(currentVal - 1).change();
+                }
+                // if(parseInt(input.val()) == input.attr('data-min')) {
+                // 	$(this).attr('disabled', true);
+                // }
 
-				} else if(type == 'plus') {
+            } else if (type == 'plus') {
 
-					if(currentVal < input.attr('data-max')) {
-						input.val(currentVal + 0).change();
-					}
-					// if(parseInt(input.val()) == input.attr('data-max')) {
-					// 	$(this).attr('disabled', true);
-					// }
+                if (currentVal < input.attr('data-max')) {
+                    input.val(currentVal + 1).change();
+                }
+                // if(parseInt(input.val()) == input.attr('data-max')) {
+                // 	$(this).attr('disabled', true);
+                // }
 
-				}
-			} else {
-				input.val(0);
-			}
-		});
-		$('.input-number').focusin(function(){
-		$(this).data('oldValue', $(this).val());
-		});
-		//$('.input-number').change(function() {
+            }
+        } else {
+            input.val(0);
+        }
+    });
+    $('.input-number').focusin(function () {
+        $(this).data('oldValue', $(this).val());
+    });
+    $('.input-number').change(function () {
 
-		//	minValue =  parseInt($(this).attr('data-min'));
-		//	maxValue =  parseInt($(this).attr('data-max'));
-		//	valueCurrent = parseInt($(this).val());
+        minValue = parseInt($(this).attr('data-min'));
+        maxValue = parseInt($(this).attr('data-max'));
+        valueCurrent = parseInt($(this).val());
 
-		//	name = $(this).attr('name');
-		//	if(valueCurrent >= minValue) {
-		//		$(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
-		//	} else {
-		//		alert('Sorry, the minimum value was reached');
-		//		$(this).val($(this).data('oldValue'));
-		//	}
-		//	if(valueCurrent <= maxValue) {
-		//		$(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
-		//	} else {
-		//		alert('Sorry, the maximum value was reached');
-		//		$(this).val($(this).data('oldValue'));
-		//	}
+        name = $(this).attr('name');
+        if (valueCurrent >= minValue) {
+            $(".btn-number[data-type='minus'][data-field='" + name + "']").removeAttr('disabled')
+        } else {
+            alert('Sorry, the minimum value was reached');
+            $(this).val($(this).data('oldValue'));
+        }
+        if (valueCurrent <= maxValue) {
+            $(".btn-number[data-type='plus'][data-field='" + name + "']").removeAttr('disabled')
+        } else {
+            alert('Sorry, the maximum value was reached');
+            $(this).val($(this).data('oldValue'));
+        }
 
 
-		//});
-		$(".input-number").keydown(function (e) {
-				// Allow: backspace, delete, tab, escape, enter and .
-				if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
-					// Allow: Ctrl+A
-					(e.keyCode == 65 && e.ctrlKey === true) ||
-					// Allow: home, end, left, right
-					(e.keyCode >= 35 && e.keyCode <= 39)) {
-						// let it happen, don't do anything
-						return;
-				}
-				// Ensure that it is a number and stop the keypress
-				if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-					e.preventDefault();
-				}
-			});
+    });
+    $(".input-number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+            // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
 </script>
