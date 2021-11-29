@@ -879,10 +879,11 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                var str = "SELECT * FROM (Product P JOIN category C ON P.CategoryId = C.CategoryId) " +
-                    "JOIN brand B ON B.BrandId = P.BrandId " +
-                    "JOIN subbrand S ON S.SubBrandId = P.SubBrandId " +
-                    "where ProductId = @productId";
+                var str = "SELECT * FROM PRODUCT WHERE ProductId = @productId";
+                    //"SELECT * FROM (Product P JOIN category C ON P.CategoryId = C.CategoryId) " +
+                    //"JOIN brand B ON B.BrandId = P.BrandId " +
+                    //"JOIN subbrand S ON S.SubBrandId = P.SubBrandId " +
+                    //"where ProductId = @productId";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 cmd.Parameters.AddWithValue("ProductId", productId);
                 using (var reader = cmd.ExecuteReader())
@@ -900,7 +901,8 @@ namespace ITGoShop_F_Ver2.Models
                         productInfo.Discount = Convert.ToInt32(reader["Discount"]);
                         productInfo.CategoryId = reader["CategoryId"].ToString();
                         productInfo.SubBrandId = reader["SubBrandId"].ToString();
-                        productInfo.BrandId = Convert.ToInt32(reader["BrandId"]);
+                        if (reader["BrandId"] != DBNull.Value)
+                            productInfo.BrandId = Convert.ToInt32(reader["BrandId"]);
                         productInfo.Content = reader["Content"].ToString();
                     }
                     else
@@ -1135,26 +1137,26 @@ namespace ITGoShop_F_Ver2.Models
             return list;
         }
 
-        //public Product findProduct(int Id)
-        //{
-        //    Product pro = new Product();
-        //    using (MySqlConnection conn = GetConnection())
-        //    {
-        //        conn.Open();
-        //        var str = "select * from Product where ProductId=@ma";
-        //        MySqlCommand cmd = new MySqlCommand(str, conn);
-        //        cmd.Parameters.AddWithValue("ma", Id);
-        //        using (var reader = cmd.ExecuteReader())
-        //        {
-        //            reader.Read();
-        //            pro.ProductId = Convert.ToInt32(reader["ProductId"]);
-        //            pro.ProductName = reader["ProductName"].ToString();
-        //            pro.Price = Convert.ToInt32(reader["Price"].ToString());
-        //            pro.ProductImage = reader["ProductImage"].ToString();
-        //        }
-        //    }
-        //    return (pro);
-        //}
+        public Product findProduct(int Id)
+        {
+            Product pro = new Product();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "select * from Product where ProductId=@ma";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("ma", Id);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+                    pro.ProductId = Convert.ToInt32(reader["ProductId"]);
+                    pro.ProductName = reader["ProductName"].ToString();
+                    pro.Price = Convert.ToInt32(reader["Price"].ToString());
+                    pro.ProductImage = reader["ProductImage"].ToString();
+                }
+            }
+            return (pro);
+        }
         /*================Hết code thầy Hùng =================*/
     }
 }

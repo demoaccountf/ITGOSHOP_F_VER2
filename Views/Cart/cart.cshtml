@@ -21,7 +21,7 @@
 </div>
 <!-- End Breadcrumbs -->
 <!-- Shopping Cart -->
-<div class="shopping-cart section pb-80">
+<div class="shopping-cart section pb-80" style=" min-height: 400px; ">
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-9">
@@ -54,9 +54,9 @@
                                         <img style="margin: auto; max-width: 60px; max-height: 60px; width: auto; height: auto; " src="~/public/images_upload/product/@item.Product.ProductImage" alt="#">
                                     </td>
                                     <td class="product-des" data-title="Description">
-                                        <p class="product-name"><a href="/Product/product-detail/@item.Product.ProductId">@item.Product.ProductId</a></p>
+                                        <p class="product-name"><a href="/Product/product-detail/@item.Product.ProductId">@item.Product.ProductName</a></p>
                                     </td>
-                                    <td class="price" data-title="Price" data-value="@item.Product.Price"><span>@item.Product.Price</span></td>
+                                    <td class="price" data-title="Price" data-value="@item.Product.Price"><span>@item.Product.Price.ToString("#,###", cul.NumberFormat) ₫</span></td>
                                     <td class="qty" data-title="Qty">
                                         <!-- Input Order -->
                                         <div class="input-group">
@@ -65,7 +65,7 @@
                                                     <i class="ti-minus"></i>
                                                 </button>
                                             </div>
-                                            <input type="text" name="quant[@item.Product.ProductId]" id="{{$item->rowId}}" class="input-number" data-min="1" data-max="100" value="@item.Product.Quantity">
+                                            <input type="text" name="quant[@item.Product.ProductId]" id="{{$item->rowId}}" class="input-number" data-min="1" data-max="100" value="@item.Quantity">
                                             <div class="button plus">
                                                 <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[@item.Product.ProductId]">
                                                     <i class="ti-plus"></i>
@@ -77,8 +77,8 @@
 
 
                                     <td class="total-amount" data-title="Total">
-                                        @{ int subtotal = item.Product.Price * item.Product.Quantity; }
-                                        <span class="thanh-tien" data-value="@subtotal">@subtotal </span>
+                                        @{ long subtotal = item.Product.Price * (long)item.Quantity; }
+                                        <span class="thanh-tien" data-value="@subtotal">@subtotal.ToString("#,###", cul.NumberFormat) ₫ </span>
                                     </td>
 
                                     <!-- <td class="action" data-title="Remove">
@@ -100,10 +100,10 @@
                 <div class="total-amount">
                     <div class="right" style="padding: 20px; width: 280px; background-color: white; position: absolute; top:0px">
                         <ul>
-                            <li>Tạm tính<span id="tam-tinh">@ViewBag.total</span></li>
+                            <li>Tạm tính<span id="tam-tinh">@ViewBag.total.ToString("#,###", cul.NumberFormat) ₫</span></li>
 
                             <li>Giảm giá<span>0 ₫</span></li>
-                            <li class="last">Tổng cộng<span id="tong-cong">@ViewBag.total</span></li>
+                            <li class="last">Tổng cộng<span id="tong-cong">@ViewBag.total.ToString("#,###", cul.NumberFormat) ₫</span></li>
                         </ul>
                         <div class="button5">
                             <a href="javascript:void(0)" class="btn btn-thanh-toan">Thanh Toán</a>
@@ -242,22 +242,18 @@
             var ItemId = $(this).attr('id');
             var numberProduct = $(this).parents('tr').find('.input-number').val();
             $.ajax({
-                url: '~/remove-item',
+                url: '/Cart/remove_item',
                 methed: "GET",
                 data: { id: ItemId },
                 success: function (data) {
-                    load_cart();
-                    $('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) - numberProduct);
+                    //load_cart();
+                    //$('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) - numberProduct);
                     swal({
                         title: "Thông báo",
                         text: "Đã xóa sản phẩm khỏi giỏ hàng!",
                         icon: "success",
                         buttons: "OK",
                     })
-                    // if($('tr').length == 0)
-                    // {
-                    // 	$('#table-card').append('<tr><td colspan="6"><img style="display: block; width: auto; height: 250px; margin-left: auto; margin-right: auto; " src="~/public/client/Images/empty-cart.png"></td></tr>');
-                    // }
                 },
                 error: function (data) {
                     alert('Lỗi');

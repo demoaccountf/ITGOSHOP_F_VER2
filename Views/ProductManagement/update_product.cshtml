@@ -78,6 +78,10 @@
                                                         <option value="@item.BrandId">ID: @item.BrandId - @item.BrandName (Mã Danh Mục: @item.CategoryId)</option>
                                                     }
                                                 }
+                                                @if (@ViewBag.ProductInfo.BrandId == null)
+                                                {
+                                                    <option selected value=""></option>
+                                                }
                                             </select>
                                         </div>
                                     </div>

@@ -186,6 +186,33 @@ namespace ITGoShop_F_Ver2.Models
         //{
         //    return Product.Where(p => p.Status == 1 && p.Discount != 0).OrderByDescending(b => b.Discount).Take(6).ToList();
         //}
+        public List<ProductGallary> getProductGallary(int productId)
+        {
+            return ProductGallary.Where(p => p.ProductId == productId).ToList();
+        }
 
+        public void updateProductGallaryStatus(int GallaryId, int status)
+        {
+            var productGallary = ProductGallary.Where(p => p.GallaryId == GallaryId).FirstOrDefault();
+            productGallary.GallaryStatus = status;
+            SaveChanges();
+        }
+
+        public void deleteProductGallary(int GallaryId)
+        {
+            var productGallary = ProductGallary.Where(p => p.GallaryId == GallaryId).FirstOrDefault();
+
+            if (productGallary != null)
+            {
+                Remove(productGallary);
+                SaveChanges();
+            }
+        }
+
+        public void saveProductGallary(ProductGallary productGallary)
+        {
+            ProductGallary.Add(productGallary);
+            SaveChanges();
+        }
     }
 }

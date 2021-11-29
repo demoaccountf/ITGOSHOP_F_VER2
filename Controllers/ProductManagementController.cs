@@ -112,5 +112,52 @@ namespace ITGoShop_F_Ver2.Controllers
             return RedirectToAction("view_product");
 
         }
+        public IActionResult view_productgallary(int productId)
+        {
+            var context = new ITGoShopLINQContext();
+            ViewBag.ProductGallary = context.getProductGallary(productId);
+            ViewBag.ProductId = productId;
+            return View();
+        }
+
+        public void update_productgallery_status(int GallaryId, int Status)
+        {
+            var context = new ITGoShopLINQContext();
+            context.updateProductGallaryStatus(GallaryId, Status);
+        }
+
+        public void delete_productgallery(int GallaryId)
+        {
+            var context = new ITGoShopLINQContext();
+            context.deleteProductGallary(GallaryId);
+        }
+
+        [Obsolete]
+        public IActionResult add_productgallery(int productId, List<IFormFile> ProductGallary)
+        {
+            var context = new ITGoShopLINQContext();
+
+            string path = Path.Combine(this.Environment.WebRootPath, "public/images_upload/product-gallary");
+            foreach (IFormFile postedFile in ProductGallary)
+            {
+                ProductGallary productGallary = new ProductGallary()
+                {
+                    GallaryImage = DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName,
+                    GallaryStatus = 1,
+                    UserId = (int)HttpContext.Session.GetInt32("adminId"),
+                    ProductId = productId,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                context.saveProductGallary(productGallary);
+                // Lưu file vào project
+                string fileName = Path.GetFileName(DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName);
+                using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+            }
+            return RedirectToAction("view_productgallary", new { productId = productId });
+        }
     }
 }

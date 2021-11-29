@@ -36,12 +36,15 @@ namespace ITGoShop_F_Ver2.Controllers
 
         public void add_to_cart(int ProductId, int Quantity)
         {
+            System.Diagnostics.Debug.WriteLine("h: " + ProductId+" " + Quantity);
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
 
             if (SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart") == null)
             {
                 List<CartItem> cart = new List<CartItem>(); //mảng các item
-                cart.Add(new CartItem { Product = context.getProductInfo(ProductId), Quantity = Quantity });
+                CartItem newCartItem = new CartItem { Product = context.getProductInfo(ProductId), Quantity = Quantity };
+                System.Diagnostics.Debug.WriteLine("nh: " + newCartItem.Product.ProductId + " " + newCartItem.Product.Quantity);
+                cart.Add(newCartItem);
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
             else
@@ -89,7 +92,7 @@ namespace ITGoShop_F_Ver2.Controllers
         //}
 
         [Route("remove/{id}")]
-        public IActionResult Remove(int id)
+        public IActionResult remove_item(int id)
         {
             List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
             int index = isExist(id);
