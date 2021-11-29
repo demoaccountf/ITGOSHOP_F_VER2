@@ -1,5 +1,6 @@
 ﻿@using System.Globalization;
 @{
+    ViewData["Title"] = "ITGoShop - Hệ thống Máy tính và Phụ kiện";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
     CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 }
@@ -351,7 +352,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="product-content">
-                                                    <h3><a style="text-decoration:none" href="/Product/product_detail/@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
+                                                    <h3><a style="text-decoration:none" href="/ProductDetail/Index?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
                                                     <div class="product-price">
                                                         <span style="color:black; font-size:17px"><b>@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</b></span>
                                                         @if (@item.GetType().GetProperty("Discount").GetValue(item, null) > 0)

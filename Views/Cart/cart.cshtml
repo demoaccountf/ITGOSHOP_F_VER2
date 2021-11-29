@@ -314,8 +314,8 @@
                 methed: "GET",
                 data: { id: ProductId },
                 success: function (data) {
-                    load_cart();
-                    $('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) - numberProduct);
+                    //load_cart();
+                   // $('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) - numberProduct);
                     swal({
                         title: "Thông báo",
                         text: "Đã xóa sản phẩm khỏi giỏ hàng!",
@@ -409,18 +409,18 @@
 					if(currentVal > input.attr('data-min')) {
 						input.val(currentVal - 0).change();
 					}
-					// if(parseInt(input.val()) == input.attr('data-min')) {
-					// 	$(this).attr('disabled', true);
-					// }
+					 //if(parseInt(input.val()) == input.attr('data-min')) {
+					 //	$(this).attr('disabled', true);
+					 //}
 
 				} else if(type == 'plus') {
 
 					if(currentVal < input.attr('data-max')) {
 						input.val(currentVal + 0).change();
 					}
-					// if(parseInt(input.val()) == input.attr('data-max')) {
-					// 	$(this).attr('disabled', true);
-					// }
+					 //if(parseInt(input.val()) == input.attr('data-max')) {
+					 //	$(this).attr('disabled', true);
+					 //}
 
 				}
 			} else {
@@ -430,28 +430,26 @@
 		$('.input-number').focusin(function(){
 		$(this).data('oldValue', $(this).val());
 		});
-		//$('.input-number').change(function() {
+		$('.input-number').change(function() {
 
-		//	minValue =  parseInt($(this).attr('data-min'));
-		//	maxValue =  parseInt($(this).attr('data-max'));
-		//	valueCurrent = parseInt($(this).val());
+			minValue =  parseInt($(this).attr('data-min'));
+			maxValue =  parseInt($(this).attr('data-max'));
+			valueCurrent = parseInt($(this).val());
 
-		//	name = $(this).attr('name');
-		//	if(valueCurrent >= minValue) {
-		//		$(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
-		//	} else {
-		//		alert('Sorry, the minimum value was reached');
-		//		$(this).val($(this).data('oldValue'));
-		//	}
-		//	if(valueCurrent <= maxValue) {
-		//		$(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
-		//	} else {
-		//		alert('Sorry, the maximum value was reached');
-		//		$(this).val($(this).data('oldValue'));
-		//	}
-
-
-		//});
+			name = $(this).attr('name');
+			if(valueCurrent >= minValue) {
+				$(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+			} else {
+				alert('Sorry, the minimum value was reached');
+				$(this).val($(this).data('oldValue'));
+			}
+			if(valueCurrent <= maxValue) {
+				$(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+			} else {
+				alert('Sorry, the maximum value was reached');
+				$(this).val($(this).data('oldValue'));
+			}
+		});
 		$(".input-number").keydown(function (e) {
 				// Allow: backspace, delete, tab, escape, enter and .
 				if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||

@@ -1,5 +1,6 @@
 ﻿@using System.Globalization;
 @{
+    ViewData["Title"] = "Tên sản phẩm";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
     CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 }
@@ -13,9 +14,9 @@
                 <div class="bread-inner">
                     <ul class="bread-list">
                         <li><a href="index.html">Trang chủ<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="#">@ViewBag.GetType().GetProperty("CategoryName").GetValue(ViewBag, null) </a></li>
+                        @*<li class="active"><a href="#">@ViewBag.GetType().GetProperty("CategoryName").GetValue(ViewBag, null) </a></li>*@
                         <li class="active"><i class="ti-arrow-right"></i></li>
-                        <li class="active"><a href="#">@ViewBag.GetType().GetProperty("BrandName").GetValue(ViewBag, null) </a></li>
+                        @*<li class="active"><a href="#">@ViewBag.GetType().GetProperty("BrandName").GetValue(ViewBag, null) </a></li>*@
                     </ul>
                 </div>
             </div>

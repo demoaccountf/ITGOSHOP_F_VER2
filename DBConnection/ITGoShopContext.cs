@@ -1108,6 +1108,7 @@ namespace ITGoShop_F_Ver2.Models
                             SubBrandId = reader["SubBrandId"].ToString(),
                             BrandId = Convert.ToInt32(reader["BrandId"]),
                             Content = reader["Content"].ToString(),
+                            CategoryName = reader["CategoryId"].ToString()
                         };
 
                     }
