@@ -13,7 +13,7 @@
                     @foreach (var item in @ViewBag.SliderForHomePage)
                     {
                         <div class="mySlides">
-                            <a href="~/blog-detail/@item.GetType().GetProperty("BlogId").GetValue(item, null)">
+                            <a href="/Blog/blog_detail/@item.GetType().GetProperty("BlogId").GetValue(item, null)">
                                 <img src="~/public/images_upload/banner-slider/@item.GetType().GetProperty("SliderImage").GetValue(item, null)" style="width:100%;">
                             </a>
                         </div>

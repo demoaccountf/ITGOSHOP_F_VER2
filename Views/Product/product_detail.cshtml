@@ -5,7 +5,7 @@
 }
 
 <!-- Breadcrumbs -->
-@Model
+@model IEnumerable<object>
 <div class="breadcrumbs">
     <div class="container">
         <div class="row">
@@ -13,9 +13,9 @@
                 <div class="bread-inner">
                     <ul class="bread-list">
                         <li><a href="index.html">Trang chủ<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="#">@ViewBag.ProductDetail.CategoryName </a></li>
+                        <li class="active"><a href="#">@ViewBag.GetType().GetProperty("CategoryName").GetValue(ViewBag, null) </a></li>
                         <li class="active"><i class="ti-arrow-right"></i></li>
-                        <li class="active"><a href="#">@ViewBag.ProductDetail.BrandName </a></li>
+                        <li class="active"><a href="#">@ViewBag.GetType().GetProperty("BrandName").GetValue(ViewBag, null) </a></li>
                     </ul>
                 </div>
             </div>
@@ -34,14 +34,14 @@
                             <div class="ps-product__thumbnail" style="height: 350px; width: 500px;">
                                 <div class="ps-product__preview">
                                     <div class="ps-product__variants">
-                                        <div class="item"><img src="~/public/images_upload/product/@ViewBag.ProductDetail.ProductImage" alt=""></div>
+                                        <div class="item"><img src="~/public/images_upload/product/@ViewBag.GetType().GetProperty("ProductImage").GetValue(ViewBag, null)" alt=""></div>
                                         //foreach ($product_gallary as $key => $item)
                                         <div class="item"><img src="{{URL::to('/public/images_upload/product-gallary/'.$item->GallaryImage)}}" alt=""></div>
                                         //endforeach
                                     </div>
                                 </div>
                                 <div class="ps-product__image" style="max-height: 350px; max-width: 350px; width: auto; height: auto;">
-                                    <div class="item"><img class="zoom" src="~/public/images_upload/product/@ViewBag.ProductDetail.ProductImage" alt="" data-zoom-image="~/public/images_upload/product/@ViewBag.ProductDetail.ProductImage"></div>
+                                    <div class="item"><img class="zoom" src="~/public/images_upload/product/@ViewBag.GetType().GetProperty("ProductImage").GetValue(ViewBag, null)" alt="" data-zoom-image="~/public/images_upload/product/@ViewBag.GetType().GetProperty("ProductImage").GetValue(ViewBag, null)"></div>
                                     //foreach ($product_gallary as $key => $item)
                                     <div class="item"><img class="zoom" src="{{URL::to('/public/images_upload/product-gallary/'.$item->GallaryImage)}}" alt=""></div>
                                     //endforeach
@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                             <div class="ps-product__thumbnail--mobile">
-                                <div class="ps-product__main-img"><img src="~/public/images_upload/product/@ViewBag.ProductDetail.ProductImage" alt=""></div>
+                                <div class="ps-product__main-img"><img src="~/public/images_upload/product/@ViewBag.GetType().GetProperty("ProductImage").GetValue(ViewBag, null)" alt=""></div>
                                 <div class="ps-product__preview owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="3" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="3" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on">
                                     //foreach ($product_gallary as $key => $item)
                                     <img src="{{URL::to('/public/images_upload/product-gallary/'.$item->GallaryImage)}}" alt="">
@@ -61,7 +61,7 @@
                             <div class="ps-product__info" style="padding-left: 0px;">
                                 <form action="/save-cart" method="POST" style="max-width:620px;">
 
-                                    <h2 class="blog-title">@ViewBag.ProductDetail.ProductName</h2>
+                                    <h2 class="blog-title">@ViewBag.GetType().GetProperty("ProductName").GetValue(ViewBag, null)</h2>
 
                                     <div class="blog-meta" style="padding-top:30px">
                                         <span class="author">
@@ -76,23 +76,26 @@
                                                 product->Rating</a>
                                             endif-->
                                             <a><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>Chưa có đánh giá</a>
-                                            <a><i class="fa fa-shopping-cart"></i>Đã bán @ViewBag.ProductDetail.Sold</a>
-                                            //if ($product_detail->Quantity < 10)
-                                            <a><i class="fa fa-archive"></i>Chỉ còn lại @ViewBag.ProductDetail.Quantity sản phẩm</a>
-                                            //else
-                                            <a><i class="fa fa-archive"></i>Còn @ViewBag.ProductDetail.Quantity sản phẩm</a>
-                                            //endif
+                                            <a><i class="fa fa-shopping-cart"></i>Đã bán @ViewBag.GetType().GetProperty("Sold").GetValue(ViewBag, null)</a>
+                                            @if (ViewBag.GetType().GetProperty("Quantity").GetValue(ViewBag, null) < 10)
+                                            {
+                                                <a><i class="fa fa-archive"></i>Chỉ còn lại @ViewBag.GetType().GetProperty("Quantity").GetValue(ViewBag, null) sản phẩm</a> 
+                                            }
+                                            else
+                                            { 
+                                                <a><i class="fa fa-archive"></i>Còn @ViewBag.GetType().GetProperty("Quantity").GetValue(ViewBag, null) sản phẩm</a>
+                                            }
                                         </span>
                                     </div>
                                     <div class="content">
                                         <div class="blog-meta">
                                             <h1 style="color:red; background-color:#FAFAFA;padding: 25px;font-weight: bold; ">
                                                 <!-- Gía sản phẩm -->
-                                                @ViewBag.ProductDetail.Price.ToString("#,###", cul.NumberFormat) ₫
+                                                @ViewBag.GetType().GetProperty("Price").GetValue(ViewBag, null).ToString("#,###", cul.NumberFormat) ₫
                                                 <sub style="color:black; font-size:15px ">
                                                     <!--  Phần giảm giá -->
-                                                    <del>@((@ViewBag.ProductDetail.Price + @ViewBag.ProductDetail.Price * ((@ViewBag.ProductDetail.Discount)/100)).ToString("#,###", cul.NumberFormat)) ₫</del>
-                                                    <span class="o-giam-gia">-@ViewBag.ProductDetail.Discount% </span>
+                                                    <del>@((@ViewBag.GetType().GetProperty("Price").GetValue(ViewBag, null) + @ViewBag.GetType().GetProperty("Price").GetValue(ViewBag, null) * ((@ViewBag.GetType().GetProperty("Discount").GetValue(ViewBag, null))/100)).ToString("#,###", cul.NumberFormat)) ₫</del>
+                                                    <span class="o-giam-gia">- @ViewBag.GetType().GetProperty("Discount").GetValue(ViewBag, null)% </span>
                                                 </sub>
                                             </h1>
                                         </div>
@@ -105,7 +108,7 @@
                                                     </button>
                                                 </div>
 
-                                                <input name="ProductId" type="hidden" class="input_product_id" value="@ViewBag.ProductDetail.ProductId">
+                                                <input name="ProductId" type="hidden" class="input_product_id" value="@ViewBag.GetType().GetProperty("ProductId").GetValue(ViewBag, null)">
                                             </div>
                                         </div>
                                     </div>
@@ -126,8 +129,8 @@
                             <div class="content">
                                 <!-- Nội dung sản phẩm -->
                                 <div class="blog-meta">
-
-                                    <p>@ViewBag.ProductDetail.Content</p> <!-- Thêm !! để dataa ko bị lỗi nếu data đã được styling-->
+                                     
+                                    <p>@ViewBag.GetType().GetProperty("Content").GetValue(ViewBag, null)</p> <!-- Thêm !! để dataa ko bị lỗi nếu data đã được styling-->
                                 </div>
                                 <!-- End Nội dung sản phẩm -->
 
