@@ -5,7 +5,8 @@
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
     CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 }
-@model IPagedList<object>
+@model List<object>
+
 @foreach (var item in @ViewBag.Cate)
 {
     <div class="breadcrumbs">
@@ -61,7 +62,7 @@
                 </div>
             }
         </div>
-        @*@Html.Page*@
+        {{ $all_product->links() }}
     </div>
     <div class="ps-sidebar" data-mh="product-listing">
         <aside class="ps-widget--sidebar ps-widget--category">

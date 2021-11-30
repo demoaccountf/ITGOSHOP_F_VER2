@@ -19,7 +19,7 @@
                                         <span class="author"><a><i class="fa fa-user"></i>@ViewBag.BlogDetail.Author</a><a><i class="fa fa-calendar"></i>@ViewBag.BlogDetail.DatePost</a><a><i class="ti-eye"></i>@ViewBag.BlogDetail.View</a></span>
                                     </div>
                                     <div class="content">
-                                        <p>!!@ViewBag.BlogDetail.Content!!</p>
+                                        <p>@Html.Raw(@ViewBag.BlogDetail.GetType().GetProperty("Content").GetValue(ViewBag.BlogDetail, null))</p>
                                     </div>
                                 </div>
                             </div>
