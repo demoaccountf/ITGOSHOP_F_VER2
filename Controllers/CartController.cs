@@ -38,14 +38,13 @@ namespace ITGoShop_F_Ver2.Controllers
 
         public void add_to_cart(int ProductId, int Quantity)
         {
-            System.Diagnostics.Debug.WriteLine("h: " + ProductId+" " + Quantity);
+            //System.Diagnostics.Debug.WriteLine("h: " + ProductId+" " + Quantity);
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
 
             if (SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart") == null)
             {
                 List<CartItem> cart = new List<CartItem>(); //mảng các item
                 CartItem newCartItem = new CartItem { Product = context.getProductInfo(ProductId), Quantity = Quantity };
-                System.Diagnostics.Debug.WriteLine("nh: " + newCartItem.Product.ProductId + " " + newCartItem.Product.Quantity);
                 cart.Add(newCartItem);
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
@@ -79,36 +78,7 @@ namespace ITGoShop_F_Ver2.Controllers
             cart[index].Quantity = newQuantity;
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
         }
-        //================Code thầy Hùng=============//
-        //public IActionResult Buy(int id)
-        //{
-        //    ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-
-        //    if (SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart") == null)
-        //    {
-        //        List<CartItem> cart = new List<CartItem>(); //mảng các item
-        //        cart.Add(new CartItem { Product = context.find(id), Quantity = 1 });
-        //        SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-        //    }
-        //    else
-        //    {
-        //        List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
-        //        int index = isExist(id);
-        //        if (index != -1)
-        //        {
-        //            cart[index].Quantity++;
-        //        }
-        //        else
-        //        {
-        //            cart.Add(new CartItem { Product = context.find(id), Quantity = 1 });
-        //        }
-        //        SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-        //    }
-        //    return RedirectToAction("Index");
-        //}
-
-
-
+       
         private int isExist(int id)
         {
             List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
@@ -121,6 +91,5 @@ namespace ITGoShop_F_Ver2.Controllers
             }
             return -1;
         }
-        //============================================
     }
 }
