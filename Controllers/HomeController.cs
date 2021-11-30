@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PagedList;
 using PagedList.Mvc;
+using MyCardSession.Helpers;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
@@ -56,6 +57,16 @@ namespace ITGoShop_F_Ver2.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public int load_cart_quantity()
+        {
+            if (SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart") == null)
+            {
+                return 0;
+            }
+            List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
+            return cart.Sum(item => item.Quantity);
         }
     }
 }

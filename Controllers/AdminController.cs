@@ -46,7 +46,7 @@ namespace ITGoShop_F_Ver2.Controllers
         public IActionResult check_password(User userInput)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            User userInfo = context.getUserInfo(userInput.Email, userInput.Password);
+            User userInfo = context.getUserInfo(userInput.Email, userInput.Password, 1);
             if (userInfo != null)
             {
                 //System.Diagnostics.Debug.WriteLine("Admin: " + userInfo.UserId);

@@ -158,7 +158,7 @@
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         </a>
                         <div class="ps-cart__listing">
-                            <div id="load_card"></div>
+                            <div id="load_cart"></div>
                         </div>
                     </div>
                     <div class="menu-toggle"><span></span></div>
@@ -363,17 +363,14 @@
     <script src="~/public/admin/js/plugin/sweetalert/sweetalert.min.js"></script>
     
     <script>
-        //$(document).ready(function(){
-        //	load_cart();
-        //	load_cart_quantity();
-        //	setInterval(load_cart_quantity, 2000);
-        //});
+        $(document).ready(function(){
+        	//load_cart();
+        	load_cart_quantity();
+        	setInterval(load_cart_quantity, 2000);
+        });
         function load_cart_quantity() {
-            var _token = $('input[name="_token"]').val();
             $.ajax({
-                url: "/load-cart-quantity",
-                method: "POST",
-                data: { _token: _token },
+                url: "/Home/load_cart_quantity",
                 success: function (data) {
                     $('#so-luong-sp-gio-hang').html(data);
                 },
@@ -383,13 +380,10 @@
             });
         }
         function load_cart() {
-            var _token = $('input[name="_token"]').val();
             $.ajax({
-                url: "/load-cart",
-                method: "POST",
-                data: { _token: _token },
+                url: "/Home/load_cart",
                 success: function (data) {
-                    $('#load_card').html(data);
+                    $('#load_cart').html(data);
                 },
                 error: function (data) {
                     alert("Lỗi");
@@ -456,7 +450,7 @@
                 });
             }
             else {
-                window.location.href = '/checkout';
+                window.location.href = '/Checkout/Index';
             }
         });
     </script>

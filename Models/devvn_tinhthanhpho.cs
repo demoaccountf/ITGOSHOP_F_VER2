@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace ITGoShop_F_Ver2.Controllers
             this.type = type;
             this.slug = slug;
         }
-
+        [Key]
         public string Matp { get => matp; set => matp = value; }
         public string Name { get => name; set => name = value; }
         public string Type { get => type; set => type = value; }

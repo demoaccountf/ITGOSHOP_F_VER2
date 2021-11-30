@@ -27,6 +27,10 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<ShipMethod> ShipMethod { set; get; }
         public DbSet<ProductGallary> ProductGallary { set; get; }
         public DbSet<Comment> Comment { set; get; }
+        public DbSet<devvn_quanhuyen> devvn_quanhuyen { set; get; }
+        public DbSet<devvn_tinhthanhpho> devvn_tinhthanhpho { set; get; }
+        public DbSet<devvn_xaphuongthitran> devvn_xaphuongthitran { set; get; }
+        public DbSet<ShippingAddress> ShippingAddress { set; get; }
         public void saveProduct(Product newProduct)
         {
             newProduct.StartsAt = DateTime.Now;
@@ -92,6 +96,25 @@ namespace ITGoShop_F_Ver2.Models
         {
             return ShipMethod.ToList();
         }
+        public List<ShipMethod> getShipMethodToCheckout()
+        {
+            return ShipMethod.Where(s => s.Status == 1).ToList();
+        }
+
+        public List<devvn_tinhthanhpho> getAllThanhPho()
+        {
+            return devvn_tinhthanhpho.ToList();
+        }
+
+        public List<devvn_quanhuyen> getAllQuanHuyen()
+        {
+            return devvn_quanhuyen.ToList();
+        }
+        public List<devvn_xaphuongthitran> getAllXaPhuong()
+        {
+            return devvn_xaphuongthitran.ToList();
+        }
+
         //1 bảng
         //public List<Comment> getAllComments()
         //{
@@ -117,7 +140,7 @@ namespace ITGoShop_F_Ver2.Models
         //                 };
         //    return commentList;
         //}
-       
+
 
         public void updateSliderStatus(int sliderId, int status)
         {
@@ -182,10 +205,7 @@ namespace ITGoShop_F_Ver2.Models
         {
             return Product.Where(p => p.Status == 1 && p.Discount != 0).OrderByDescending(b => b.Discount).Take(6).ToList();
         }
-        //public List<Product> getSliderForHomePage()
-        //{
-        //    return Product.Where(p => p.Status == 1 && p.Discount != 0).OrderByDescending(b => b.Discount).Take(6).ToList();
-        //}
+        
         public List<ProductGallary> getProductGallary(int productId)
         {
             return ProductGallary.Where(p => p.ProductId == productId).ToList();

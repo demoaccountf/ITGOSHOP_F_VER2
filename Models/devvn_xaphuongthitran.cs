@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,6 +22,7 @@ namespace ITGoShop_F_Ver2.Controllers
             this.maqh = maqh;
         }
 
+        [Key]
         public string Xaid { get => xaid; set => xaid = value; }
         public string Name { get => name; set => name = value; }
         public string Type { get => type; set => type = value; }
