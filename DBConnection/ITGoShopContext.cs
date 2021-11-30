@@ -15,6 +15,11 @@ namespace ITGoShop_F_Ver2.Models
         {
             this.ConnectionString = connectionString;
         }
+
+        public ITGoShopContext()
+        {
+        }
+
         private MySqlConnection GetConnection()
         {
             return new MySqlConnection(ConnectionString);
