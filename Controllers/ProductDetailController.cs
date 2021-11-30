@@ -13,12 +13,16 @@ namespace ITGoShop_F_Ver2.Controllers
     {
         public IActionResult Index(int productId)
         {
+            System.Diagnostics.Debug.WriteLine("Chạy product detail");
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
             ViewBag.AllBrand = context.getAllBrand();
             ViewBag.AllSubBrand = context.getAllSubBrand();
 
-            ViewBag.ProductDetail = context.getProductInfo(productId);
+            ViewBag.ProductDetail = context.getProductDetail(productId);
+            
+            var linqContext = new ITGoShopLINQContext();
+            ViewBag.ProductGallary = linqContext.getProductGallary(productId);
             return View("product_detail");
         }
     }

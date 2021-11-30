@@ -159,7 +159,7 @@
                     <div class="product-img" style="width: 250px; height: 200px;">
                         <a href="/ProductDetail/Index?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">
                             <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.ProductImage" alt="#">
-                            <img class="hover-img" src="/ProductDetail/Index?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)" alt="">
+                            <img class="hover-img" src="~/public/images_upload/product/@item.ProductImage" alt="">
                             <span class="out-of-stock">GIẢM @item.Discount %</span>
                             @{double so_ngay_da_moban = (DateTime.Now - item.StartsAt).TotalDays;}
                             @if (@so_ngay_da_moban < 14)

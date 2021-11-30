@@ -1197,6 +1197,7 @@ namespace ITGoShop_F_Ver2.Models
                 {
                     if (reader.Read())
                     {
+                        System.Diagnostics.Debug.WriteLine("hI: " + reader["CategoryName"].ToString());
                         productInfo = new
                         {
                             ProductId = Convert.ToInt32(reader["ProductId"]),
@@ -1215,7 +1216,7 @@ namespace ITGoShop_F_Ver2.Models
                             BrandName = reader["BrandName"].ToString(),
                             SubBrandName = reader["SubBrandName"].ToString()
                         };
-
+                        
                     }
                     reader.Close();
 
@@ -1303,7 +1304,7 @@ namespace ITGoShop_F_Ver2.Models
                 {
                     while (reader.Read())
                     {
-                        System.Diagnostics.Debug.WriteLine("bid: " + Convert.ToInt32(reader["BlogId"]));
+                        //System.Diagnostics.Debug.WriteLine("bid: " + Convert.ToInt32(reader["BlogId"]));
                         var obj = new
                         {
                             SliderId = Convert.ToInt32(reader["SliderId"]),

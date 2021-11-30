@@ -6,7 +6,7 @@
 }
 
 <!-- Breadcrumbs -->
-@model IEnumerable<object>
+@*@model IEnumerable<object>*@
 <div class="breadcrumbs">
     <div class="container">
         <div class="row">
@@ -36,16 +36,18 @@
                                 <div class="ps-product__preview">
                                     <div class="ps-product__variants">
                                         <div class="item"><img src="~/public/images_upload/product/@ViewBag.ProductDetail.GetType().GetProperty("ProductImage").GetValue(ViewBag.ProductDetail, null)" alt=""></div>
-                                        //foreach ($product_gallary as $key => $item)
-                                        <div class="item"><img src="{{URL::to('/public/images_upload/product-gallary/'.$item->GallaryImage)}}" alt=""></div>
-                                        //endforeach
+                                        @foreach (var item in @ViewBag.ProductGallary)
+                                        {
+                                            <div class="item"><img src="~/public/images_upload/product-gallary/@item.GallaryImage" alt=""></div>
+                                        }
                                     </div>
                                 </div>
                                 <div class="ps-product__image" style="max-height: 350px; max-width: 350px; width: auto; height: auto;">
                                     <div class="item"><img class="zoom" src="~/public/images_upload/product/@ViewBag.ProductDetail.GetType().GetProperty("ProductImage").GetValue(ViewBag.ProductDetail, null)" alt="" data-zoom-image="~/public/images_upload/product/@ViewBag.ProductDetail.GetType().GetProperty("ProductImage").GetValue(ViewBag.ProductDetail, null)"></div>
-                                    //foreach ($product_gallary as $key => $item)
-                                    <div class="item"><img class="zoom" src="{{URL::to('/public/images_upload/product-gallary/'.$item->GallaryImage)}}" alt=""></div>
-                                    //endforeach
+                                    @foreach (var item in @ViewBag.ProductGallary)
+                                    {
+                                        <div class="item"><img class="zoom" src="~/public/images_upload/product-gallary/@item.GallaryImage" alt=""></div>
+                                    }
                                     <!-- <div class="item"><img class="zoom" src="{{URL::to('/public/client/Images/shoe-detail/2.jpg')}}" alt="" data-zoom-image="{{URL::to('/public/client/Images/shoe-detail/2.jpg')}}"></div> -->
                                     <!-- <div class="item"><img class="zoom" src="{{URL::to('/public/client/Images/shoe-detail/3.jpg')}}" alt="" data-zoom-image="{{URL::to('/public/client/Images/shoe-detail/3.jpg')}}"></div> -->
                                 </div>
@@ -53,10 +55,10 @@
                             <div class="ps-product__thumbnail--mobile">
                                 <div class="ps-product__main-img"><img src="~/public/images_upload/product/@ViewBag.ProductDetail.GetType().GetProperty("ProductImage").GetValue(ViewBag.ProductDetail, null)" alt=""></div>
                                 <div class="ps-product__preview owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="3" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="3" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on">
-                                    //foreach ($product_gallary as $key => $item)
-                                    <img src="{{URL::to('/public/images_upload/product-gallary/'.$item->GallaryImage)}}" alt="">
-                                    //endforeach
-
+                                    @foreach (var item in @ViewBag.ProductGallary)
+                                    {
+                                        <img src="~/public/images_upload/product-gallary/@item.GallaryImage" alt="">
+                                    }
                                 </div>
                             </div>
                             <div class="ps-product__info" style="padding-left: 0px;">
@@ -80,10 +82,10 @@
                                             <a><i class="fa fa-shopping-cart"></i>Đã bán @ViewBag.ProductDetail.GetType().GetProperty("Sold").GetValue(ViewBag.ProductDetail, null)</a>
                                             @if (ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) < 10)
                                             {
-                                                <a><i class="fa fa-archive"></i>Chỉ còn lại @ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) sản phẩm</a> 
+                                                <a><i class="fa fa-archive"></i>Chỉ còn lại @ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) sản phẩm</a>
                                             }
                                             else
-                                            { 
+                                            {
                                                 <a><i class="fa fa-archive"></i>Còn @ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) sản phẩm</a>
                                             }
                                         </span>
@@ -108,7 +110,6 @@
                                                         Thêm vào giỏ hàng
                                                     </button>
                                                 </div>
-
                                                 <input name="ProductId" type="hidden" class="input_product_id" value="@ViewBag.ProductDetail.GetType().GetProperty("ProductId").GetValue(ViewBag.ProductDetail, null)">
                                             </div>
                                         </div>
@@ -184,7 +185,7 @@
                 <!-- </div> -->
 
                 <form>
-                    <input name="ProductId" type="hidden" class="input_product_id" value="{{$product_detail->ProductId}}">
+                    <input name="ProductId" type="hidden" class="input_product_id" value="@ViewBag.ProductDetail.GetType().GetProperty("ProductId").GetValue(ViewBag.ProductDetail, null)">
                     <div id="show_comment"></div>
                 </form>
             </div>
@@ -209,7 +210,7 @@
                                 <div class="product-img" style="width: 250px; height: 200px;">
                                     <a href="{{URL::to('/product-detail/'.$product_detail->ProductId)}}">
                                         <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="{{URL::to('public/images_upload/product/'.$product_detail->ProductImage)}}" alt="#">
-                                        <img class="hover-img" src="{{URL::to('/product-detail/'.$product_detail->ProductId)}}" alt="">
+                                        <img class="hover-img" src="" alt="">
 
                                     </a>
                                     <div class="button-head">
