@@ -1,5 +1,6 @@
-﻿@{
+﻿@{ 
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
+    ViewData["Title"] = "Địa chỉ giao hàng - ITGoShop";
 }
 
 <div class="breadcrumbs">
@@ -8,10 +9,10 @@
             <div class="col-12">
                 <div class="bread-inner">
                     <ul class="bread-list">
-                        <li><a href="{{URL::to('/')}}">Trang chủ<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="{{URL::to('/show-cart')}}">Giỏ hàng<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="{{URL::to('/checkout')}}">Thanh toán<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="{{URL::to('/show-shipping-address')}}">Địa chỉ giao hàng</a></li>
+                        <li><a href="/">Trang chủ<i class="ti-arrow-right"></i></a></li>
+                        <li class="active"><a href="/Cart/show_cart">Giỏ hàng<i class="ti-arrow-right"></i></a></li>
+                        <li class="active"><a href="Checkout/Index">Thanh toán<i class="ti-arrow-right"></i></a></li>
+                        <li class="active"><a href="/show_shipping_address">Địa chỉ giao hàng</a></li>
                     </ul>
                 </div>
             </div>
@@ -30,38 +31,39 @@
                         <div class="panel panel-default">
                             <div class="panel-body" style="border: 1px dashed; font-size: 14px">
                                 <p style="float:right; color: red;"><i>Mặc định</i></p>
-                                <h4 style="line-height: 1.8; "><b>{{$default_shipping_address->ReceiverName}}</b></h4>
-                                <p>Địa chỉ: {{$default_shipping_address->Address. ", " .$default_shipping_address->xaphuongthitran. ", " .$default_shipping_address->quanhuyen. ", " .$default_shipping_address->tinhthanhpho}}</p>
-                                <p class="shippingPhone">Điện thoại: {{$default_shipping_address->Phone}}</p>
+                                <h4 style="line-height: 1.8; "><b>@ViewBag.DefaultShippingAddress.GetType().GetProperty("ReceiverName").GetValue(@ViewBag.DefaultShippingAddress, null)</b></h4>
+                                <p>Địa chỉ: @ViewBag.DefaultShippingAddress.GetType().GetProperty("Address").GetValue(@ViewBag.DefaultShippingAddress, null), @ViewBag.DefaultShippingAddress.GetType().GetProperty("XaPhuong").GetValue(@ViewBag.DefaultShippingAddress, null), @ViewBag.DefaultShippingAddress.GetType().GetProperty("QuanHuyen").GetValue(@ViewBag.DefaultShippingAddress, null), @ViewBag.DefaultShippingAddress.GetType().GetProperty("ThanhPho").GetValue(@ViewBag.DefaultShippingAddress, null)</p>
+                                <p class="shippingPhone">Điện thoại: @ViewBag.DefaultShippingAddress.GetType().GetProperty("Phone").GetValue(@ViewBag.DefaultShippingAddress, null)</p>
                                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="margin-top: 4px;">
                                     <div class="btn-group mr-2" role="group" aria-label="First group">
-                                        <button type="button" style="padding: 15px; background-color: #333333; color: white;"><a href="{{URL::to('/change-default-shipping-address/'.$default_shipping_address->ShippingAddressId)}}" style="text-decoration:none; color:white;">Giao đến địa chỉ này</a></button>
+                                        <button type="button" style="padding: 15px; background-color: #333333; color: white;"><a href="/change-default-shipping-address/'.$default_shipping_address->ShippingAddressId)}}" style="text-decoration:none; color:white;">Giao đến địa chỉ này</a></button>
                                     </div>
                                     <div class="btn-group mr-2" role="group" aria-label="Second group">
                                         <button type="button" class="button-sua-dia-chi" style="padding: 15px; background-color: white;">Sửa</button>
                                         <!-- Phần chứa data -->
-                                        <input type="text" class="ShippingAddressId" value="{{$default_shipping_address->ShippingAddressId}}" hidden>
-                                        <input type="text" class="Phone" value="{{$default_shipping_address->Phone}}" hidden>
-                                        <input type="text" class="receiverName" value="{{$default_shipping_address->ReceiverName}}" hidden>
-                                        <input type="text" class="tinhThanhPho" value="{{$default_shipping_address->tinhthanhpho}}" hidden>
-                                        <input type="text" class="quanHuyen" value="{{$default_shipping_address->quanhuyen}}" hidden>
-                                        <input type="text" class="xaPhuongThiTran" value="{{$default_shipping_address->xaphuongthitran}}" hidden>
-                                        <input type="text" class="diaChi" value="{{$default_shipping_address->Address}}" hidden>
-                                        <input type="text" class="addressType" value="{{$default_shipping_address->ShippingAddressType}}" hidden>
+                                        <input type="text" class="ShippingAddressId" value="@ViewBag.DefaultShippingAddress.GetType().GetProperty("ShippingAddressId").GetValue(@ViewBag.DefaultShippingAddress, null)" hidden>
+                                        <input type="text" class="Phone" value="@ViewBag.DefaultShippingAddress.GetType().GetProperty("Phone").GetValue(@ViewBag.DefaultShippingAddress, null)" hidden>
+                                        <input type="text" class="receiverName" value="@ViewBag.DefaultShippingAddress.GetType().GetProperty("ReceiverName").GetValue(@ViewBag.DefaultShippingAddress, null)" hidden>
+                                        <input type="text" class="tinhThanhPho" value="@ViewBag.DefaultShippingAddress.GetType().GetProperty("ThanhPho").GetValue(@ViewBag.DefaultShippingAddress, null)" hidden>
+                                        <input type="text" class="quanHuyen" value="@ViewBag.DefaultShippingAddress.GetType().GetProperty("QuanHuyen").GetValue(@ViewBag.DefaultShippingAddress, null)" hidden>
+                                        <input type="text" class="xaPhuongThiTran" value="@ViewBag.DefaultShippingAddress.GetType().GetProperty("XaPhuong").GetValue(@ViewBag.DefaultShippingAddress, null)" hidden>
+                                        <input type="text" class="diaChi" value="@ViewBag.DefaultShippingAddress.GetType().GetProperty("Address").GetValue(@ViewBag.DefaultShippingAddress, null)" hidden>
+                                        <input type="text" class="addressType" value="@ViewBag.DefaultShippingAddress.GetType().GetProperty("ShippingAddressType").GetValue(@ViewBag.DefaultShippingAddress, null)" hidden>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        //foreach ($shipping_address_list as $shipping_address)
+                        @foreach (var item in ViewBag.ShippingAddressList)
+                        {
                         <div class="panel panel-default">
                             <div class="panel-body" style="font-size: 14px">
-                                <h4 style="line-height: 1.8;"><b>{{$shipping_address->ReceiverName}}</b></h4>
-                                <p>Địa chỉ: {{$shipping_address->Address. ", " .$shipping_address->xaphuongthitran. ", " .$shipping_address->quanhuyen. ", " .$shipping_address->tinhthanhpho}}</p>
-                                <p>Điện thoại: {{$shipping_address->Phone}}</p>
+                                <h4 style="line-height: 1.8;"><b>@item.GetType().GetProperty("ReceiverName").GetValue(item, null)</b></h4>
+                                <p>Địa chỉ: @item.GetType().GetProperty("Address").GetValue(item, null), @item.GetType().GetProperty("XaPhuong").GetValue(item, null), @item.GetType().GetProperty("QuanHuyen").GetValue(item, null), @item.GetType().GetProperty("ThanhPho").GetValue(item, null)</p>
+                                <p>Điện thoại: @item.GetType().GetProperty("Phone").GetValue(item, null)</p>
                                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="margin-top: 4px;">
                                     <div class="btn-group mr-2" role="group" aria-label="First group">
-                                        <button type="button" style="padding: 15px; background-color: #333333; color: white;"><a href="{{URL::to('/change-default-shipping-address/'.$shipping_address->ShippingAddressId)}}" style="text-decoration:none; color:white;">Giao đến địa chỉ này</a></button>
+                                        <button type="button" style="padding: 15px; background-color: #333333; color: white;"><a href="/change-default-shipping-address/'.$shipping_address->ShippingAddressId)}}" style="text-decoration:none; color:white;">Giao đến địa chỉ này</a></button>
                                     </div>
                                     <div class="btn-group mr-2" role="group" aria-label="Second group">
                                         <button type="button" class="button-sua-dia-chi" style="padding: 15px; background-color: white;">Sửa</button>
@@ -70,27 +72,26 @@
                                     <div class="btn-group" role="group" aria-label="Third group">
                                         <button type="button" class="button-xoa-dia-chi" style="padding: 15px; background-color: white;">Xóa</button>
                                         <!-- Phần chứa data -->
-                                        <input type="text" class="ShippingAddressId" value="{{$shipping_address->ShippingAddressId}}" hidden>
-                                        <input type="text" class="Phone" value="{{$shipping_address->Phone}}" hidden>
-                                        <input type="text" class="receiverName" value="{{$shipping_address->ReceiverName}}" hidden>
-                                        <input type="text" class="tinhThanhPho" value="{{$shipping_address->tinhthanhpho}}" hidden>
-                                        <input type="text" class="quanHuyen" value="{{$shipping_address->quanhuyen}}" hidden>
-                                        <input type="text" class="xaPhuongThiTran" value="{{$shipping_address->xaphuongthitran}}" hidden>
-                                        <input type="text" class="diaChi" value="{{$shipping_address->Address}}" hidden>
-                                        <input type="text" class="addressType" value="{{$shipping_address->ShippingAddressType}}" hidden>
+                                        <input type="text" class="ShippingAddressId" value="@item.GetType().GetProperty("ShippingAddressId").GetValue(item, null)" hidden>
+                                        <input type="text" class="Phone" value="@item.GetType().GetProperty("Phone").GetValue(item, null)" hidden>
+                                        <input type="text" class="receiverName" value="@item.GetType().GetProperty("ReceiverName").GetValue(item, null)" hidden>
+                                        <input type="text" class="tinhThanhPho" value="@item.GetType().GetProperty("ThanhPho").GetValue(item, null)" hidden>
+                                        <input type="text" class="quanHuyen" value="@item.GetType().GetProperty("QuanHuyen").GetValue(item, null)" hidden>
+                                        <input type="text" class="xaPhuongThiTran" value="@item.GetType().GetProperty("XaPhuong").GetValue(item, null)" hidden>
+                                        <input type="text" class="diaChi" value="@item.GetType().GetProperty("Address").GetValue(item, null)" hidden>
+                                        <input type="text" class="addressType" value="@item.GetType().GetProperty("ShippingAddressType").GetValue(item, null)" hidden>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        //endforeach
+                        }
                     </div>
                 </div>
                 <!-- Form thêm địa chỉ mới -->
                 <p style="padding: 20px 0px;">Bạn muốn giao hàng đến địa chỉ khác? <a href="javascript:void(0)" class="them-dia-chi-moi" style="color: #77ACF1;">Thêm địa chỉ giao hàng mới</a></p>
                 <div class="panel panel-default" id="form-dia-chi-moi">
                     <div class="panel-heading" style="background-color: #77ACF1;"><h4 style="color: white;"><b>Thêm địa chỉ giao hàng</b></h4></div>
-                    <form action="{{URL::to('/add-shipping-address')}}" method="post">
-                        {{ csrf_field() }}
+                    <form action="/Checkout/add_shipping_address" method="post">
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-sm-5">
@@ -119,9 +120,10 @@
                                             <p><b>Tỉnh/Thành phố</b></p>
                                             <select class="form-control select-tinhthanhpho" name="tinhthanhpho" style="height:35px">
                                                 <option>--- Chọn Tỉnh/Thành phố ---</option>
-                                                //foreach ($all_tinhthanhpho as $key => $tinhthanhpho)
-                                                <option value="{{$tinhthanhpho->matp}}">{{$tinhthanhpho->name}}</option>
-                                                //endforeach
+                                                @foreach (var item in ViewBag.AllThanhPho)
+                                                {
+                                                    <option value="@item.Matp">@item.Name</option>
+                                                }
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -164,7 +166,6 @@
                 <div class="panel panel-default" id="form-sua-dia-chi">
                     <div class="panel-heading" style="background-color: #77ACF1;"><h4 style="color: white;"><b>Cập nhật địa chỉ giao hàng</b></h4></div>
                     <form class="sua-dia-chi" action="#" method="post">
-                        {{ csrf_field() }}
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-sm-5">
@@ -190,9 +191,10 @@
                                             <p><b>Tỉnh/Thành phố</b></p>
                                             <select class="form-control select-tinhthanhpho" id="sua-tinhthanhpho" name="tinhthanhpho" style="height:35px">
                                                 <option>--- Chọn Tỉnh/Thành phố ---</option>
-                                                //foreach ($all_tinhthanhpho as $key => $tinhthanhpho)
-                                                    <option value="{{$tinhthanhpho->matp}}">{{$tinhthanhpho->name}}</option>
-                                                //endforeach
+                                                @foreach (var item in ViewBag.AllThanhPho)
+                                                {
+                                                    <option value="@item.Matp">@item.Name</option>
+                                                }
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -235,10 +237,8 @@
             </div>
         </div>
     </div>
-    </div>
-    </div>
 </section>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#form-dia-chi-moi").slideUp();
@@ -263,7 +263,7 @@
 			var tinhThanhPho = parent.find('.tinhThanhPho').val();
 			var quanHuyen = parent.find('.quanHuyen').val();
 
-			// alert("{{URL::to('/update-shipping-address/'." + ShippingAddressId+ ")}}");
+			// alert("/update-shipping-address/'." + ShippingAddressId+ ")}}");
 			// // Set up ShippingAddressId  cho form
 			// $(".sua-dia-chi").attr('action', );
 
@@ -291,7 +291,7 @@
             });
 
 			$.ajax({
-				url: '{{URL::to('/load-quanhuyen-dropdownbox')}}',
+				url: '/load-quanhuyen-dropdownbox',
 				method:"GET",
 				data:{matp: matp},
 				success:function(data)
@@ -331,7 +331,7 @@
 				if (willDelete) {
 					$(this).parent().parent().parent().parent().slideUp();
 					$.ajax({
-						url: '{{URL::to('/delete-shipping-address')}}',
+						url: '/delete-shipping-address',
 						methed:"GET",
 						data:{ShippingAddressId: ShippingAddressId},
 
@@ -361,7 +361,7 @@
 		// 	// var Address = $("#input-dia-chi").val();
 		// 	// var AddressType = $("input[name='addressType']:checked").val();
 		// 	// $.ajax({
-		// 	// 	url: '{{URL::to('/update-shipping-address')}}',
+		// 	// 	url: '/update-shipping-address',
 		// 	// 	methed:"GET",
 		// 	// 	data:{ShippingAddressId:ShippingAddressId, ReceiverName:ReceiverName, Phone:Phone, Address:Address, AddressType:AddressType},
 

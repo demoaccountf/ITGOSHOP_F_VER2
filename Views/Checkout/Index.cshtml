@@ -12,7 +12,7 @@
                     <ul class="bread-list">
                         <li><a href="/">Trang chủ<i class="ti-arrow-right"></i></a></li>
                         <li><a href="/Cart/show_cart">Giỏ hàng<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="/Checkout/Index')}}">Thanh toán</a></li>
+                        <li class="active"><a href="/Checkout/Index">Thanh toán</a></li>
                     </ul>
                 </div>
             </div>
@@ -49,11 +49,11 @@
                                             <img src="~/public/client/Images/thanh-toan-khi-nhan-hang.PNG" alt="#" hidden>@item.ShipMethodName
                                             @if (@item.EstimatedDeliveryTime <= 24)
                                             {
-                                                <i>(Thời gian giao hàng dự kiến: khoảng @DateTime.Now.AddHours(@item.EstimatedDeliveryTime))</i>
+                                                <i>(Thời gian giao hàng dự kiến: khoảng @DateTime.Now.AddHours(@item.EstimatedDeliveryTime).ToString("HH:mm dd-MM-yyyy")</i>
                                             }
                                             else
                                             {
-                                                <i>(Thời gian giao hàng dự kiến: @DateTime.Now.AddHours(@item.EstimatedDeliveryTime) hours)</i>
+                                                <i>(Thời gian giao hàng dự kiến: @DateTime.Now.AddHours(@item.EstimatedDeliveryTime).ToString("dd-MM-yyyy"))</i>
                                             }
                                         </label>
                                         <input type="text" class="ShipFee" value="@item.ShipFee" hidden>
@@ -76,14 +76,14 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach(var item in ViewBag.cart)
-                                         { 
+                                        @foreach (var item in ViewBag.cart)
+                                        {
                                         <tr style="font-size: 14px;">
                                             <td style=" height:80px">
                                                 <img style="margin: auto; max-width: 60px; max-height: 60px; width: auto; height: auto; " src="~/public/images_upload/product/@item.Product.ProductImage" alt="">
                                             </td>
                                             <td><a href="/Product/product-detail/@item.Product.ProductId" style="text-decoration:none">@item.Product.ProductName</a></td>
-                                            <td>@item.Product.Price</td>
+                                            <td>@item.Product.Price.ToString("#,###", cul.NumberFormat) ₫</td>
                                             <td style="text-align:center">x@(@item.Quantity)</td>
                                             <td>@(@item.Quantity * @item.Product.Price)</td>
                                         </tr>
@@ -118,7 +118,7 @@
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <button type="button" style="float:right; padding: 6px; background-color: white;"><a href="/show-shipping-address" style="font-size:11px">Sửa</a></button>
+                                <button type="button" style="float:right; padding: 6px; background-color: white;"><a href="/Checkout/show_shipping_address" style="font-size:11px">Sửa</a></button>
                                 <h4><div style="margin-bottom:20px;"> <i class="fa fa-map-marker" aria-hidden="true"></i> <b>Địa chỉ giao hàng </b>  </div></h4>
                                 <div></div>
                                 <hr>
@@ -129,24 +129,24 @@
                             </div>
                         </div>
 
-                        @*<div class="panel panel-default">
+                        <div class="panel panel-default">
                             <div class="panel-body">
                                 <button type="button" style="float:right; padding: 6px; background-color: white;"><a href="/Cart/show_cart" style="font-size:11px">Sửa</a></button>
                                 <h4><b>Đơn hàng </b></h4>
-                                <p><i>{{$number_product}} sản phẩm</i></p>
+                                <p><i>@ViewBag.numberItem sản phẩm</i></p>
                                 <hr>
-                                <p style="float:right">{{(Cart::subtotal(0, ',', '.')).' ₫'}}</p>
+                                <p style="float:right">@ViewBag.total.ToString("#,###", cul.NumberFormat) ₫</p>
                                 <p>Tạm tính: </p>
                                 <p style="float:right" id="ShipFee">0 ₫</p>
                                 <p>Phí vận chuyển: </p>
                                 <p style="float:right; color: red;">- 0 ₫</p>
                                 <p>Giảm giá: </p>
-                                <p style="float:right; color: red; font-size: 20px" id="TotalFee">{{(Cart::total(0, ',', '.')).' ₫'}}</p>
-                                <input type="text" id="TotalFee-hidden" value="{{Cart::total(0, ',', '')}}" hidden>
+                                <p style="float:right; color: red; font-size: 20px" id="TotalFee">@ViewBag.total.ToString("#,###", cul.NumberFormat) ₫</p>
+                                <input type="text" id="TotalFee-hidden" value="@ViewBag.total" hidden>
                                 <p><b style="color:black">Thành tiền: </b> </p>
                                 <p style="float:right;"><i>(Đã bao gồm VAT nếu có)</i></p>
                             </div>
-                        </div>*@
+                        </div>
                     </div>
                 </div>
             </form>
@@ -187,7 +187,7 @@
                                                 <select class="form-control select-tinhthanhpho" style="height:35px" name="tinhthanhpho">
                                                     <option>--- Chọn Tỉnh/Thành phố ---</option>
                                                    @foreach (var item in ViewBag.AllThanhPho) { 
-                                                    <option value="@item.matp">@item.name</option>
+                                                    <option value="@item.Matp">@item.Name</option>
                                                     }
                                                 </select>
                                             </div>
@@ -226,70 +226,34 @@
                             </div>
                     </form>
                 </div>
-            </div>}
+            </div>
+            }
     </div>
 </section>
 <script>
-			$(document).ready(function(){
-				function numberWithCommas(x) // Hàm để format tiền
-				{
-					return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-				}
-				$('input[type=radio][name=vanchuyen]').change(function() {
-					var ShipFee = $(this).parent().find('.ShipFee').val();
-					$('#ShipFee').text(numberWithCommas(ShipFee) + ' ₫');
-					var TotalFee = $('#TotalFee-hidden').val();
-					$('#TotalFee').text(numberWithCommas(Number(TotalFee) + Number(ShipFee))+ ' ₫');
-				});
-				$('.btn-dat-mua').click(function(){
-					if($('input[name="vanchuyen"]:checked').length > 0)
-					{
-						swal("Đặt hàng hàng công! Cảm ơn quý khách.", {
-							icon: "success",
-							});
-					}
-					else{
+    $(document).ready(function () {
+        function numberWithCommas(x) // Hàm để format tiền
+        {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        $('input[type=radio][name=vanchuyen]').change(function () {
+            var ShipFee = $(this).parent().find('.ShipFee').val();
+            $('#ShipFee').text(numberWithCommas(ShipFee) + ' ₫');
+            var TotalFee = $('#TotalFee-hidden').val();
+            $('#TotalFee').text(numberWithCommas(Number(TotalFee) + Number(ShipFee)) + ' ₫');
+        });
+        $('.btn-dat-mua').click(function () {
+            if ($('input[name="vanchuyen"]:checked').length > 0) {
+                swal("Đặt hàng hàng công! Cảm ơn quý khách.", {
+                    icon: "success",
+                });
+            }
+            else {
+                swal("Vui lòng chọn phương thức giao hàng", {
+                    icon: "info",
+                });
+            }
+        });
 
-							swal("Vui lòng chọn phương thức giao hàng", {
-							icon: "info",
-							});
-					}
-
-				// 	swal({
-				// 	title: "Xác nhận",
-				// 	text: "Bạn chắc chắn muốn đặt hàng chứ?",
-				// 	icon: "info",
-				// 	buttons: true,
-				// 	dangerMode: true,
-				// })
-				// .then((willDelete) => {
-				// if (willDelete) {
-				// 	var ShippingAddressId = $('#ShippingAddressId').val();
-				// 	$.ajax({
-				// 		url: '{{URL::to('/create-order')}}',
-				// 		methed:"POST",
-				// 		data:{ShippingAddressId: ShippingAddressId},
-				// 		success:function(data)
-				// 		{
-				// 			swal("Đặt hàng hàng công! Cảm ơn quý khách.", {
-				// 			icon: "success",
-				// 			});
-				// 			// var url = "{{URL::to('/show-order-detail/data')}}";
-				// 			// alert(url);
-				// 			// window.location.href = "{{URL::to('/show-order-detail/" + data + "')}}";
-				// 			window.location.href = "{{URL::to('/my-orders')}}";
-				// 		},
-				// 		error:function(data)
-				// 		{
-				// 			alert('Lỗi');
-				// 		}
-				// 	});
-
-				// } else {
-				// 	swal("Your imaginary file is safe!");
-				// }
-				// });
-				});
-
-			});
+    });
 </script>

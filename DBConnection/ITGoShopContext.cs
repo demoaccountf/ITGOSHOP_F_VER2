@@ -1396,7 +1396,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                var str = @"SELECT ShippingAddressId, Address, Phone, TT.name, QH.name, XP.name, ReceiverName
+                var str = @"SELECT ShippingAddressId, Address, Phone, TT.name, QH.name, XP.name, ReceiverName, ShippingAddressType
                         FROM shippingaddress SA, devvn_quanhuyen QH, devvn_tinhthanhpho TT, devvn_xaphuongthitran XP
                         WHERE SA.matp = TT.matp
                         AND SA.maqh = QH.maqh
@@ -1409,7 +1409,7 @@ namespace ITGoShop_F_Ver2.Models
                 {
                     if (reader.Read())
                     {
-                        //System.Diagnostics.Debug.WriteLine("hI: " + reader["CategoryName"].ToString());
+                        System.Diagnostics.Debug.WriteLine("Khách có địa chỉ");
                         item = new
                         {
                             ShippingAddressId = Convert.ToInt32(reader[0].ToString()),
@@ -1419,42 +1419,56 @@ namespace ITGoShop_F_Ver2.Models
                             QuanHuyen = reader[4].ToString(),
                             XaPhuong = reader[5].ToString(),
                             ReceiverName = reader[6].ToString(),
+                            ShippingAddressType = reader[7].ToString(),
                         };
-
+                        return item;
                     }
                     reader.Close();
                 }
                 conn.Close();
             }
-            return item;
+            return null;
+        }
+
+        public List<object> getShippingAddressOfCustomer(int userId)
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT ShippingAddressId, Address, Phone, TT.name, QH.name, XP.name, ReceiverName, ShippingAddressType
+                        FROM shippingaddress SA, devvn_quanhuyen QH, devvn_tinhthanhpho TT, devvn_xaphuongthitran XP
+                        WHERE SA.matp = TT.matp
+                        AND SA.maqh = QH.maqh
+                        AND SA.xaid = XP.xaid
+                        AND UserId = @UserId;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("UserId", userId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        //System.Diagnostics.Debug.WriteLine("hI: " + reader["CategoryName"].ToString());
+                        var obj = new
+                        {
+                            ShippingAddressId = Convert.ToInt32(reader[0].ToString()),
+                            Address = reader[1].ToString(),
+                            Phone = reader[2].ToString(),
+                            ThanhPho = reader[3].ToString(),
+                            QuanHuyen = reader[4].ToString(),
+                            XaPhuong = reader[5].ToString(),
+                            ReceiverName = reader[6].ToString(),
+                            ShippingAddressType = reader[7].ToString(),
+                        };
+                        list.Add(obj);
+                    }
+                    reader.Close();
+                }
+            }
+            return list;
         }
 
         /*================Code thầy Hùng =================*/
-        //public List<Product> findAll()
-        //{
-        //    List<Product> list = new List<Product>();
-        //    using (MySqlConnection conn = GetConnection())
-        //    {
-        //        conn.Open();
-        //        MySqlCommand cmd = new MySqlCommand("select * from Product", conn);
-        //        using (var reader = cmd.ExecuteReader())
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                list.Add(new Product()
-        //                {
-        //                    ProductId = Convert.ToInt32(reader["ProductId"]),
-        //                    ProductName = reader["ProductName"].ToString(),
-        //                    Price = Convert.ToInt32(reader["Price"].ToString()),
-        //                    ProductImage = reader["ProductImage"].ToString(),
-        //                });
-        //            }
-        //        }
-
-        //    }
-        //    return list;
-        //}
-
         public Product findProduct(int Id)
         {
             Product pro = new Product();
