@@ -16,5 +16,9 @@ namespace ITGoShop_F_Ver2.Controllers
         {
             return View();
         }
+        public IActionResult update_product_category()
+        {
+            return View();
+        }
     }
 }
