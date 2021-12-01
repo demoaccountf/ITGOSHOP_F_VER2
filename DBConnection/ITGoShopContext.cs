@@ -1111,6 +1111,18 @@ namespace ITGoShop_F_Ver2.Models
             }
         }
 
+        public void updateCateStatus(string categoryId, int status)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "UPDATE PRODUCT SET Status = @status WHERE CategoryId = @categoryId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("status", status);
+                cmd.Parameters.AddWithValue("categoryId", categoryId);
+                cmd.ExecuteNonQuery();
+            }
+        }
         public void deleteProduct(int productId)
         {
             using (MySqlConnection conn = GetConnection())

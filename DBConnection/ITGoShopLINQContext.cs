@@ -82,6 +82,19 @@ namespace ITGoShop_F_Ver2.Models
             }
         }
 
+        public void deleteCategory(string categoryId)
+        {
+            var cate = (from p in Category
+                           where (p.CategoryId == categoryId)
+                           select p).FirstOrDefault();
+
+            if (cate != null)
+            {
+                Remove(cate);
+                SaveChanges();
+            }
+        }
+
         public List<BannerSlider> getAllBannerSliders()
         {
             return BannerSlider.OrderByDescending(b => b.CreatedAt).ToList();
