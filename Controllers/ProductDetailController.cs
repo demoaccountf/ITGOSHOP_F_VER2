@@ -29,7 +29,18 @@ namespace ITGoShop_F_Ver2.Controllers
             return View("product_detail");
         }
 
-        
+        public IActionResult product_detail2()
+        {
+            //System.Diagnostics.Debug.WriteLine("Chạy product detail");
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.AllCategory = context.getAllCategory();
+            ViewBag.AllBrand = context.getAllBrand();
+            ViewBag.AllSubBrand = context.getAllSubBrand();
+
+            
+            return View();
+        }
+
         public IActionResult save_cart(int productId, int quantity)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;

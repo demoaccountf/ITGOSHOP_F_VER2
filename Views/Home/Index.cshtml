@@ -180,7 +180,7 @@
                         </div>
                     </div>
                     <div class="product-content">
-                        <h3><a style="text-decoration:none" href="/ProductDetail/Index?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)"><b style="font-size:17px">@item.ProductName</b></a></h3>
+                        <h3><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)"><b style="font-size:17px">@item.ProductName</b></a></h3>
                         <div class="product-price">
                             <span style="color:red; font-size:17px"><b>@item.Price.ToString("#,###", cul.NumberFormat) ₫</b></span>
                             <br>
@@ -435,7 +435,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-12 no-padding">
                                 <div class="content">
-                                    <h5 class="title"><a style="text-decoration:none" href="/ProductDetail/Index?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
+                                    <h5 class="title"><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
                                     <p class="price with-discount">@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</p>
                                     <h5 class="title"><a>Đã bán: @item.GetType().GetProperty("NumberSolded").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫  sản phẩm </a> </h5>
                                 </div>
@@ -467,7 +467,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-12 no-padding">
                             <div class="content">
-                                <h5 class="title"><a style="text-decoration:none" href="/ProductDetail/Index?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
+                                <h5 class="title"><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
                                 <p class="price with-discount">@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</p>
                                 
                                 <h5 class="title"><a>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null) <i class=" ti-eye"></i></a> </h5>
