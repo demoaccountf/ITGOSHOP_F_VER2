@@ -1,0 +1,8 @@
+﻿@using System.Globalization;
+@{ ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    DateTime firstDateOfThisMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+
+    // Cái này để format tiền
+    CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN"); 
+}

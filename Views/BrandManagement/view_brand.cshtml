@@ -1,4 +1,4 @@
-﻿@using System.Globalization;
+@using System.Globalization;
 @{ ViewData["Title"] = "Thêm sản phẩm";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
@@ -134,7 +134,7 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            @*@foreach ($all_brand as $key => $brand)*@
+                                            //foreach ($all_brand as $key => $brand)
                                 <tr>
                                     <td>{{$brand->BrandId}}</td>
                                     <td>{{$brand->BrandName}}</td>
@@ -170,7 +170,7 @@
                                     </td>
 
                                 </tr>
-                                            @*@endforeach*@
+                                            //endforeach
                                         </tbody>
                                     </table>
 
