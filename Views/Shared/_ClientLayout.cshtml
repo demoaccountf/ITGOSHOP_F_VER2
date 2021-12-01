@@ -16,13 +16,14 @@
     <!-- Title Tag  -->
     <title>ITGo Shop</title>
     <!--File css của Huy  -->
+    
     <link rel="stylesheet" href="~/public/client/css/huy.css">
     <!-- Favicon -->
     <link rel="icon" href="~/public/client/images/favi.png" />
     <!-- Fonts-->
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">	<!-- StyleSheet -->
     <link rel="stylesheet" href="~/public/client/plugins/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/public/client/plugins/ps-icon/style.css">
+    <link rel="stylesheet" href="~/public/plugins/ps-icon/style.css">
     <!-- CSS Library-->
     <link rel="stylesheet" href="~/public/client/plugins/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/public/client/plugins/owl-carousel/assets/owl.carousel.css">
@@ -49,13 +50,17 @@
     <!-- Themify Icons -->
     <link rel="stylesheet" href="~/public/client/css/themify-icons.css">
     <!-- Nice Select CSS -->
-    <link rel="stylesheet" href="~/public/client/css/niceselect.css">
+    <!-- <link rel="stylesheet" href="~/public/client/css/niceselect.css"> -->
     <!-- Animate CSS -->
     <link rel="stylesheet" href="~/public/client/css/animate.css">
     <!-- Flex Slider CSS -->
     <link rel="stylesheet" href="~/public/client/css/flex-slider.min.css">
     <!-- Owl Carousel -->
     <link rel="stylesheet" href="~/public/client/css/owl-carousel.css">
+    <!-- Slicknav -->
+    <link rel="stylesheet" href="~/public/client/css/slicknav.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Slicknav -->
     <link rel="stylesheet" href="~/public/client/css/slicknav.min.css">
 
@@ -343,8 +348,7 @@
         .slider-area .active, .dot:hover {
             background-color: #717171;
         }
-    </style>
-    <style>
+
         .ps-search--header > input {
             padding: 0 20px;
             border: none;
@@ -359,14 +363,13 @@
         }
     </style>
     <!-- /End Footer Area -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="~/public/admin/js/plugin/sweetalert/sweetalert.min.js"></script>
-    
+
     <script>
-        $(document).ready(function(){
-        	//load_cart();
-        	load_cart_quantity();
-        	setInterval(load_cart_quantity, 2000);
+        $(document).ready(function () {
+            //load_cart();
+            load_cart_quantity();
+            setInterval(load_cart_quantity, 2000);
         });
         function load_cart_quantity() {
             $.ajax({
@@ -523,7 +526,7 @@
         });
     </script>
     <!-- Jquery -->
-    <script src="~/public/client/js/jquery.min.js" ></script>
+    <script src="~/public/client/js/jquery.min.js"></script>
     <script src="~/public/client/js/jquery-migrate-3.0.0.js"></script>
     <script src="~/public/client/js/jquery-ui.min.js"></script>
     <!-- Popper JS -->
@@ -542,8 +545,8 @@
     <script src="~/public/client/js/waypoints.min.js"></script>
     <!-- Countdown JS -->
     <script src="~/public/client/js/finalcountdown.min.js"></script>
-    <!-- Nice Select JS -->
-    <script src="~/public/client/js/nicesellect.js"></script>
+    <!-- Nice Select JS
+    <script src="~/public/client/js/nicesellect.js"></script> -->
     <!-- Flex Slider JS -->
     <script src="~/public/client/js/flex-slider.js"></script>
     <!-- ScrollUp JS -->
@@ -578,7 +581,7 @@
     <script type="text/javascript" src="~/public/client/plugins/revolution/js/extensions/revolution.extension.actions.min.js"></script>
     <script src="~/public/ckeditor/ckeditor/ckeditor.js"></script>
     <!-- Custom scripts-->
-    <script type="text/javascript" src="~/public/client/js/main.js"  asp-append-version="true"></script>
+    <script type="text/javascript" src="~/public/client/js/main.js" asp-append-version="true"></script>
 </body>
 
 </html>
