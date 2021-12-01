@@ -265,12 +265,10 @@ namespace ITGoShop_F_Ver2.Models
 
         public void change_default_shipping_address(int ShippingAddressId, int customerId)
         {
-            System.Diagnostics.Debug.WriteLine("cus=" + customerId + " " + ShippingAddressId);
             // Set các địa chỉ isDefault = 0
             var shippingAddressList = ShippingAddress.Where(s => s.UserId == customerId).ToList();
             foreach(var item in shippingAddressList)
             {
-                System.Diagnostics.Debug.WriteLine("id=" + item.ShippingAddressId);
                 item.IsDefault = 0;
             }
             SaveChanges();
@@ -278,7 +276,6 @@ namespace ITGoShop_F_Ver2.Models
             // Set isDefault = 1 đối với địa chỉ đã chọn
             var shippingAddress = ShippingAddress.Where(s => s.ShippingAddressId == ShippingAddressId).FirstOrDefault();
             shippingAddress.IsDefault = 1;
-            System.Diagnostics.Debug.WriteLine("cus=" + shippingAddress.ReceiverName + shippingAddress.IsDefault);
             SaveChanges();
         }
 
@@ -297,6 +294,22 @@ namespace ITGoShop_F_Ver2.Models
             shippingAddress.CreatedAt = DateTime.Now;
             ShippingAddress.Add(shippingAddress);
             SaveChanges();
+        }
+
+        public void update_shipping_address(ShippingAddress shippingAddress)
+        {
+            var shippingAddressUpdate = ShippingAddress.Where(s => s.ShippingAddressId == shippingAddress.ShippingAddressId).FirstOrDefault();
+            if (shippingAddressUpdate != null)
+            {
+                shippingAddressUpdate.ReceiverName = shippingAddress.ReceiverName;
+                shippingAddressUpdate.ShippingAddressType = shippingAddress.ShippingAddressType;
+                shippingAddressUpdate.Xaid = shippingAddress.Xaid;
+                shippingAddressUpdate.Maqh = shippingAddress.Maqh;
+                shippingAddressUpdate.Matp = shippingAddress.Matp;
+                shippingAddressUpdate.Address = shippingAddress.Address;
+                shippingAddressUpdate.Phone = shippingAddress.Phone;
+                SaveChanges();
+            }
         }
     }
 }

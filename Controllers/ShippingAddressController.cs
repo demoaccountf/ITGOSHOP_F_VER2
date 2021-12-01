@@ -70,11 +70,16 @@ namespace ITGoShop_F_Ver2.Controllers
 
         public IActionResult change_default_shipping_address(int shippingAddressId)
         {
-            System.Diagnostics.Debug.WriteLine("change: " + shippingAddressId);
             int customerId = Convert.ToInt32(HttpContext.Session.GetInt32("customerId"));
             var linqContext = new ITGoShopLINQContext();
             linqContext.change_default_shipping_address(shippingAddressId, customerId);
             return RedirectToAction("Index", "Checkout");
+        }
+        public IActionResult update_shipping_address(ShippingAddress shippingAddress)
+        {
+            var linqContext = new ITGoShopLINQContext();
+            linqContext.update_shipping_address(shippingAddress);
+            return RedirectToAction("show_shipping_address");
         }
     }
 }
