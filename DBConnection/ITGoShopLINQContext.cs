@@ -40,6 +40,11 @@ namespace ITGoShop_F_Ver2.Models
             SaveChanges();
         }
 
+        public void saveCategory(Category newCate)
+        {
+            Category.Add(newCate);
+            SaveChanges();
+        }
         public void saveShipMethod(ShipMethod newShipMethod)
         {
             //newShipMethod.CreatedAt = DateTime.Now; // Câu lệnh này bị lỗi
@@ -252,77 +257,6 @@ namespace ITGoShop_F_Ver2.Models
         {
             var relatedProduct = Product.Where(p => p.ProductId != productId && p.CategoryId == categoryId && p.BrandId == brandId).Take(10);
             return relatedProduct.ToList();
-        }
-
-        public void deleteShippingAddress(int ShippingAddressId)
-        {
-            var shippingAddress = ShippingAddress.Where(p => p.ShippingAddressId == ShippingAddressId).FirstOrDefault();
-
-            if (shippingAddress != null)
-            {
-                Remove(shippingAddress);
-                SaveChanges();
-            }
-        }
-
-        public List<devvn_xaphuongthitran> load_xaphuongthitran_dropdownbox(string maqh)
-        {
-            var xaphuong = devvn_xaphuongthitran.Where(x => x.Maqh == maqh).ToList();
-            return xaphuong;
-        }
-        public List<devvn_quanhuyen> load_quanhuyen_dropdownbox(string matp)
-        {
-            var quanhuyen = devvn_quanhuyen.Where(q => q.Matp == matp).ToList();
-            return quanhuyen;
-        }
-
-        public void change_default_shipping_address(int ShippingAddressId, int customerId)
-        {
-            // Set các địa chỉ isDefault = 0
-            var shippingAddressList = ShippingAddress.Where(s => s.UserId == customerId).ToList();
-            foreach(var item in shippingAddressList)
-            {
-                item.IsDefault = 0;
-            }
-            SaveChanges();
-
-            // Set isDefault = 1 đối với địa chỉ đã chọn
-            var shippingAddress = ShippingAddress.Where(s => s.ShippingAddressId == ShippingAddressId).FirstOrDefault();
-            shippingAddress.IsDefault = 1;
-            SaveChanges();
-        }
-
-        public void saveShippingAddress(ShippingAddress shippingAddress)
-        {
-            // Set các địa chỉ isDefault = 0
-            var shippingAddressList = ShippingAddress.Where(s => s.UserId == shippingAddress.UserId).ToList();
-            foreach (var item in shippingAddressList)
-            {
-                item.IsDefault = 0;
-            }
-            SaveChanges();
-
-            shippingAddress.IsDefault = 1;
-            shippingAddress.UpdatedAt = DateTime.Now;
-            shippingAddress.CreatedAt = DateTime.Now;
-            ShippingAddress.Add(shippingAddress);
-            SaveChanges();
-        }
-
-        public void update_shipping_address(ShippingAddress shippingAddress)
-        {
-            var shippingAddressUpdate = ShippingAddress.Where(s => s.ShippingAddressId == shippingAddress.ShippingAddressId).FirstOrDefault();
-            if (shippingAddressUpdate != null)
-            {
-                shippingAddressUpdate.ReceiverName = shippingAddress.ReceiverName;
-                shippingAddressUpdate.ShippingAddressType = shippingAddress.ShippingAddressType;
-                shippingAddressUpdate.Xaid = shippingAddress.Xaid;
-                shippingAddressUpdate.Maqh = shippingAddress.Maqh;
-                shippingAddressUpdate.Matp = shippingAddress.Matp;
-                shippingAddressUpdate.Address = shippingAddress.Address;
-                shippingAddressUpdate.Phone = shippingAddress.Phone;
-                SaveChanges();
-            }
         }
     }
 }
