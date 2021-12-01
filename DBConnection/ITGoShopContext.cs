@@ -1409,7 +1409,6 @@ namespace ITGoShop_F_Ver2.Models
                 {
                     if (reader.Read())
                     {
-                        System.Diagnostics.Debug.WriteLine("Khách có địa chỉ");
                         item = new
                         {
                             ShippingAddressId = Convert.ToInt32(reader[0].ToString()),
@@ -1441,6 +1440,7 @@ namespace ITGoShop_F_Ver2.Models
                         WHERE SA.matp = TT.matp
                         AND SA.maqh = QH.maqh
                         AND SA.xaid = XP.xaid
+                        AND IsDefault = 0
                         AND UserId = @UserId;";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 cmd.Parameters.AddWithValue("UserId", userId);

@@ -131,7 +131,7 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @foreach ($all_product_category as $key => $pro_category)
+                                       @* @foreach ($all_product_category as $key => $pro_category)*@
                             <tr>
                                 <td>{{$pro_category->CategoryId}}</td>
                                 <td>{{$pro_category->CategoryName}}</td>
@@ -166,7 +166,7 @@
                                 </td>
 
                             </tr>
-                                        @endforeach
+                                        @*@endforeach*@
                                     </tbody>
                                 </table>
                             </div>

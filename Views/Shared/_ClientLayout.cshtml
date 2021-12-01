@@ -456,7 +456,6 @@
     </script>
     <script>
         $('.add-to-cart-a-tag').click(function () {
-
             var productId = $(this).parent().find('input').val();
             var numberOfProduct = Number($('#so-luong-sp-gio-hang').text()) + 1;
             $.ajax({
@@ -488,7 +487,7 @@
         function load_xaphuong_dropdownbox() {
             var maqh = $(".select-quanhuyen").val();
             $.ajax({
-                url: '/load-xaphuongthitran-dropdownbox',
+                url: '/ShippingAddress/load_xaphuongthitran_dropdownbox',
                 method: "GET",
                 data: { maqh: maqh },
                 success: function (data) {
@@ -504,7 +503,7 @@
             $('.select-tinhthanhpho').change(function () {
                 var matp = $(this).val();
                 $.ajax({
-                    url: '/load-quanhuyen-dropdownbox',
+                    url: '/ShippingAddress/load_quanhuyen_dropdownbox',
                     method: "GET",
                     data: { matp: matp },
                     success: function (data) {

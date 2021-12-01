@@ -14,6 +14,7 @@ namespace ITGoShop_F_Ver2.Controllers
         private string shippingAddressType;
         private int userId, isDefault;
         private DateTime updatedAt;
+        private DateTime createdAt;
 
         public ShippingAddress()
         {
@@ -45,5 +46,6 @@ namespace ITGoShop_F_Ver2.Controllers
         public int UserId { get => userId; set => userId = value; }
         public int IsDefault { get => isDefault; set => isDefault = value; }
         public DateTime UpdatedAt { get => updatedAt; set => updatedAt = value; }
+        public DateTime CreatedAt { get => createdAt; set => createdAt = value; }
     }
 }

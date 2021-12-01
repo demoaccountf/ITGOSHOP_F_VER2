@@ -73,32 +73,5 @@ namespace ITGoShop_F_Ver2.Controllers
             }
             return RedirectToAction("login_to_checkout", new { message = "Mật khẩu hoặc tài khoản sai. Xin nhập lại!" });
         }
-
-        public IActionResult show_shipping_address()
-        {
-            int customerId = Convert.ToInt32(HttpContext.Session.GetInt32("customerId"));
-            if (customerId != 0) // Nếu customer đã đăng nhập
-            {
-                /*===Cái này để load layout ===*/
-                ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-                ViewBag.AllCategory = context.getAllCategory();
-                ViewBag.AllBrand = context.getAllBrand();
-                ViewBag.AllSubBrand = context.getAllSubBrand();
-                /*======*/
-
-
-                var linqContext = new ITGoShopLINQContext();
-                ViewBag.DefaultShippingAddress = context.getDefaultShippingAddress(customerId);
-                ViewBag.ShippingAddressList = context.getShippingAddressOfCustomer(customerId);
-                ViewBag.AllThanhPho = linqContext.getAllThanhPho();
-                ViewBag.AllQuanHuyen = linqContext.getAllQuanHuyen();
-                ViewBag.AllXaPhuong = linqContext.getAllXaPhuong();
-            }
-            return View("shipping_address");
-        }
-        public IActionResult add_shipping_address()
-        {
-            return RedirectToAction("shipping_address");
-        }
     }
 }
