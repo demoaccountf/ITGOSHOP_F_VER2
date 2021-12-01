@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
-    public class ProductCategoryController : Controller
+    public class BrandManagementController : Controller
     {
-        public IActionResult add_product_category()
+        public IActionResult add_brand()
         {
             return View();
         }
-        public IActionResult all_product_category()
+        public IActionResult view_brand()
         {
             return View();
         }
-        public IActionResult update_product_category()
+        public IActionResult update_brand()
         {
             return View();
         }
