@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Hosting;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
-using PagedList;
-using PagedList.Mvc;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
