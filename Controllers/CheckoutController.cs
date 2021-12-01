@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ITGoShop_F_Ver2.Models;
-using PagedList;
-using PagedList.Mvc;
 using Microsoft.AspNetCore.Http;
 using MyCardSession.Helpers;
 

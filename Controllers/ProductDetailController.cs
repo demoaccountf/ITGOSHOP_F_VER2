@@ -4,15 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PagedList;
-using PagedList.Mvc;
 using MyCardSession.Helpers;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
     public class ProductDetailController : Controller
     {
-        public IActionResult Index(int productId)
+        public IActionResult product_detail(int productId)
         {
             //System.Diagnostics.Debug.WriteLine("Chạy product detail");
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
@@ -31,6 +29,7 @@ namespace ITGoShop_F_Ver2.Controllers
             return View("product_detail");
         }
 
+        
         public IActionResult save_cart(int productId, int quantity)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;

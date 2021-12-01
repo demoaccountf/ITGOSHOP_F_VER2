@@ -1,6 +1,4 @@
 ﻿@using System.Globalization;
-@using PagedList;
-@using PagedList.Mvc;
 @{
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
     CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
@@ -34,7 +32,7 @@
                 <div class="ps-product__column" style="width: 250px; height: 350px; margin-right: 15px; ">
                     <div class="single-product">
                         <div class="product-img" style="width: 250px; height: 200px; ">
-                            <a href="/Product/product_detail/@item.GetType().GetProperty("ProductId").GetValue(item, null)">
+                            <a href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">
                                 <img class="default-img" style="margin: auto; width: 250px; height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                 <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                             </a>
@@ -51,7 +49,7 @@
                             </div>
                         </div>
                         <div class="product-content">
-                            <h3><a href="/Product/product_detail/@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
+                            <h3><a href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
                             <div class="product-price">
                                 <span>@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</span>
                             </div>

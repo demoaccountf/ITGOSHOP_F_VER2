@@ -5,8 +5,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using PagedList;
-using PagedList.Mvc;
 
 //using System.Collections.Generic;
 //using System.Linq;
