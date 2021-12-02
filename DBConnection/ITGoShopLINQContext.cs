@@ -15,7 +15,11 @@ namespace ITGoShop_F_Ver2.Models
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseMySQL(connectionString);
         }
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Hàm này để set primary key cho Entity Framework
+            modelBuilder.Entity<OrderDetail>().HasKey(od => new {od.OrderId, od.ProductId });
+        }
         public DbSet<User> User { set; get; }   // Bảng User trong DataBase, <User> tên lớp
         public DbSet<Product> Product { set; get; }
         public DbSet<Brand> Brand { set; get; }
@@ -23,6 +27,8 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<BannerSlider> BannerSlider { set; get; }
         public DbSet<Campaign> Campaign { set; get; }
         public DbSet<Order> Order { set; get; }
+        public DbSet<OrderDetail> OrderDetail { set; get; }
+        
         public DbSet<LoginHistory> LoginHistory { set; get; }
         public DbSet<ShipMethod> ShipMethod { set; get; }
         public DbSet<ProductGallary> ProductGallary { set; get; }
@@ -31,6 +37,8 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<devvn_tinhthanhpho> devvn_tinhthanhpho { set; get; }
         public DbSet<devvn_xaphuongthitran> devvn_xaphuongthitran { set; get; }
         public DbSet<ShippingAddress> ShippingAddress { set; get; }
+        public DbSet<Statistic> Statistic { set; get; }
+        
         public void saveProduct(Product newProduct)
         {
             newProduct.StartsAt = DateTime.Now;
@@ -330,6 +338,68 @@ namespace ITGoShop_F_Ver2.Models
                 shippingAddressUpdate.Phone = shippingAddress.Phone;
                 SaveChanges();
             }
+        }
+
+        public int createOrder(Order order)
+        {
+            Order.Add(order);
+            SaveChanges();
+            return order.OrderId;
+        }
+
+        //public ShipMethod getShipMethod(int ShipMethodId)
+        //{
+        //    var shipMethod = ShipMethod.Where(s => s.ShipMethodId == ShipMethodId).FirstOrDefault();
+        //    return shipMethod;
+        //}
+        public void saveOrderDetail(OrderDetail orderDetail)
+        {
+            OrderDetail.Add(orderDetail);
+            SaveChanges();
+        }
+
+        public Order getOrderInfo(int orderId)
+        {
+            var orderInfo = Order.Where(o => o.OrderId == orderId).FirstOrDefault();
+            return orderInfo;
+        }
+
+        public Statistic getStatistic(DateTime statisticDate)
+        {
+            // Chuyển đổi như vầy để set Time = 00:00:00 để so sánh với statisticDate (kiểu Date, ko có Time) trong CSDL
+            DateTime myDate = DateTime.ParseExact(statisticDate.ToString("yyyy-MM-dd"), "yyyy-MM-dd",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+
+            var statistic = Statistic.Where(s => s.StatisticDate == myDate).FirstOrDefault();
+            if(statistic != null)
+                System.Diagnostics.Debug.WriteLine("SD: " + statistic.StatisticDate);
+            return statistic;
+        }
+
+        public void addStatistic(Statistic newStatisticLine)
+        {
+            Statistic.Add(newStatisticLine);
+            SaveChanges();
+        }
+
+        public void updateStatistic(Statistic newData)
+        {
+            // Chuyển đổi như vầy để set Time = 00:00:00 để so sánh với statisticDate (kiểu Date, ko có Time) trong CSDL
+            DateTime myDate = DateTime.ParseExact(newData.StatisticDate.ToString("yyyy-MM-dd"), "yyyy-MM-dd",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+
+            var statistic = Statistic.Where(s => s.StatisticDate == myDate).FirstOrDefault();
+            statistic.Sales += newData.Sales;
+            statistic.Profit += newData.Profit;
+            SaveChanges();
+        }
+
+        public void updateSoldProduct(int productId, int newSold)
+        {
+            var product = Product.Where(p => p.ProductId == productId).FirstOrDefault();
+            product.Sold += newSold;
+            product.Quantity -= newSold;
+            SaveChanges();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@using System.Globalization;
-@{ ViewData["Title"] = "Giỏ hàng - ITGoShop";
+@{ ViewData["Title"] = "Thanh toán - ITGoShop";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 
     // Cái này để format tiền
@@ -44,7 +44,7 @@
                                 {
                                 <div class="form-group">
                                     <div class="ps-radio">
-                                        <input class="form-control" type="radio" id="radio-btn[@item.ShipMethodId]" name="vanchuyen" value="@item.ShipMethodId" required>
+                                        <input class="form-control" type="radio" id="radio-btn[@item.ShipMethodId]" name="ShipMethod" value="@item.ShipMethodName" required>
                                         <label for="radio-btn[@item.ShipMethodId]">
                                             <img src="~/public/client/Images/thanh-toan-khi-nhan-hang.PNG" alt="#" hidden>@item.ShipMethodName
                                             @if (@item.EstimatedDeliveryTime <= 24)
@@ -56,7 +56,8 @@
                                                 <i>(Thời gian giao hàng dự kiến: @DateTime.Now.AddHours(@item.EstimatedDeliveryTime).ToString("dd-MM-yyyy"))</i>
                                             }
                                         </label>
-                                        <input type="text" class="ShipFee" value="@item.ShipFee" hidden>
+                                        <input type="text" class="ShipFee" name="ShipFee" value="@item.ShipFee" hidden>
+                                        <input type="text" class="EstimatedDeliveryTime" name="EstimatedDeliveryTime" value="@DateTime.Now.AddDays(item.EstimatedDeliveryTime)" hidden>
                                     </div>
                                 </div>
                                 }
@@ -98,13 +99,13 @@
                             <div class="panel-body" style="font-size: 14px;">
                                 <div class="form-group cheque">
                                     <div class="ps-radio">
-                                        <input class="form-control" type="radio" id="rdo01" name="payment" value="Thanh toán khi giao hàng" checked>
+                                        <input class="form-control" type="radio" id="rdo01" name="PaymentMethod" value="Thanh toán khi giao hàng" checked>
                                         <label for="rdo01"><img src="~/public/client/Images/thanh-toan-khi-nhan-hang.PNG" alt="#">Thanh toán khi giao hàng</label>
                                     </div>
                                 </div>
                                 <div class="form-group paypal">
                                     <div class="ps-radio ps-radio--inline">
-                                        <input class="form-control" type="radio" name="payment" id="rdo02" value="Thanh toán bằng thẻ">
+                                        <input class="form-control" type="radio" name="PaymentMethod" id="rdo02" value="Thanh toán bằng thẻ">
                                         <label for="rdo02"><img style="max-height: 40px; max-width: 40px; width: auto; height: auto;" src="~/public/client/Images/thanh-toan-online.PNG" alt="#">Thanh toán bằng thẻ</label>
                                     </div>
                                 </div>
@@ -236,14 +237,14 @@
         {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
-        $('input[type=radio][name=vanchuyen]').change(function () {
+        $('input[type=radio][name=ShipMethodName]').change(function () {
             var ShipFee = $(this).parent().find('.ShipFee').val();
             $('#ShipFee').text(numberWithCommas(ShipFee) + ' ₫');
             var TotalFee = $('#TotalFee-hidden').val();
             $('#TotalFee').text(numberWithCommas(Number(TotalFee) + Number(ShipFee)) + ' ₫');
         });
         $('.btn-dat-mua').click(function () {
-            if ($('input[name="vanchuyen"]:checked').length > 0) {
+            if ($('input[name="ShipMethodName"]:checked').length > 0) {
                 swal("Đặt hàng hàng công! Cảm ơn quý khách.", {
                     icon: "success",
                 });

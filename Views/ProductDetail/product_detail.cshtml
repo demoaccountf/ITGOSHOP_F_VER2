@@ -1,6 +1,6 @@
 ﻿@using System.Globalization;
 @{
-    ViewData["Title"] = "Tên sản phẩm";
+    ViewData["Title"] = ViewBag.ProductDetail.GetType().GetProperty("ProductName").GetValue(ViewBag.ProductDetail, null);
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
     CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 }

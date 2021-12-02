@@ -407,7 +407,7 @@
 				if(type == 'minus') {
 
 					if(currentVal > input.attr('data-min')) {
-						input.val(currentVal - 0).change();
+						input.val(currentVal - 1).change();
 					}
 					 //if(parseInt(input.val()) == input.attr('data-min')) {
 					 //	$(this).attr('disabled', true);
@@ -416,7 +416,7 @@
 				} else if(type == 'plus') {
 
 					if(currentVal < input.attr('data-max')) {
-						input.val(currentVal + 0).change();
+						input.val(currentVal + 1).change();
 					}
 					 //if(parseInt(input.val()) == input.attr('data-max')) {
 					 //	$(this).attr('disabled', true);

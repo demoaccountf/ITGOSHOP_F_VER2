@@ -1480,6 +1480,35 @@ namespace ITGoShop_F_Ver2.Models
             return list;
         }
 
+        public List<object> getOrderDetail(int orderId)
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT * 
+                            FROM OrderDetail OD join Product P ON P.ProductId = OD.ProductId 
+                            WHERE OrderId = @orderid";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("orderid", orderId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            ProductImage = reader["ProductImage"].ToString(),
+                            ProductName = reader["ProductName"].ToString(),
+                            UnitPrice = Convert.ToInt32(reader["UnitPrice"]),
+                            OrderQuantity = Convert.ToInt32(reader["OrderQuantity"]),
+                        };
+                        list.Add(obj);
+                    }
+                }
+            }
+            return list;
+        }
+
         /*================Code thầy Hùng =================*/
         public Product findProduct(int Id)
         {
