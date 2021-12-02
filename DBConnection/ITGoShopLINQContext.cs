@@ -108,6 +108,19 @@ namespace ITGoShop_F_Ver2.Models
             }
         }
 
+        public void deleteBrand(int brandId)
+        {
+            var brand = (from p in Brand
+                        where (p.BrandId == brandId)
+                        select p).FirstOrDefault();
+
+            if (brand != null)
+            {
+                Remove(brand);
+                SaveChanges();
+            }
+        }
+
         public List<BannerSlider> getAllBannerSliders()
         {
             return BannerSlider.OrderByDescending(b => b.CreatedAt).ToList();

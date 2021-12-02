@@ -1116,10 +1116,23 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                var str = "UPDATE PRODUCT SET Status = @status WHERE CategoryId = @categoryId";
+                var str = "UPDATE Category SET Status = @status WHERE CategoryId = @categoryId";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 cmd.Parameters.AddWithValue("status", status);
                 cmd.Parameters.AddWithValue("categoryId", categoryId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void updateBrandStatus(int brandId, int status)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "UPDATE Brand SET Status = @status WHERE BrandId = @brandId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("status", status);
+                cmd.Parameters.AddWithValue("brandId", brandId);
                 cmd.ExecuteNonQuery();
             }
         }
