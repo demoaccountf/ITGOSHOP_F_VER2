@@ -55,6 +55,11 @@ namespace ITGoShop_F_Ver2.Models
             Category.Add(newCate);
             SaveChanges();
         }
+        public void saveBrand(Brand newBrand)
+        {
+            Brand.Add(newBrand);
+            SaveChanges();
+        }
         public void saveShipMethod(ShipMethod newShipMethod)
         {
             //newShipMethod.CreatedAt = DateTime.Now; // Câu lệnh này bị lỗi

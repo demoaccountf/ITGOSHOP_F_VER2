@@ -22,6 +22,8 @@ namespace ITGoShop_F_Ver2.Controllers
         }
         public IActionResult add_brand()
         {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.AllCate = context.getAllCategory();
             return View();
         }
         [Obsolete]
@@ -29,8 +31,8 @@ namespace ITGoShop_F_Ver2.Controllers
         {
 
             var context = new ITGoShopLINQContext();
-            
-            return RedirectToAction("add_product_category");
+            context.saveBrand(newBrand);
+            return RedirectToAction("add_brand");
 
         }
         public IActionResult view_brand()

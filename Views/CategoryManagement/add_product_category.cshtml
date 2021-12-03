@@ -36,16 +36,8 @@
                         <div class="card-header">
                             <div class="card-title">Thêm danh mục sản phẩm</div>
                         </div>
-                        <?php
-                        $message = Session::get('message');
-                        if($message)
-                        {
-                        echo '<label>'.$message.'</label>';
-                        Session::put('message', null);
-                        }
-                        ?>
-                        <form role="form" action="{{URL::to('/save-product-category')}}" method="post">
-                            {{ csrf_field() }}
+                        
+                        <form role="form" action="/CategoryManagement/add_product_category" method="post">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6 col-lg-4">
