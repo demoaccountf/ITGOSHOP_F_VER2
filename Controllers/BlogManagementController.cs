@@ -25,10 +25,10 @@ namespace ITGoShop_F_Ver2.Controllers
             return View();
         }
         [Obsolete]
-        public IActionResult SaveContent(Blog newBlog, List<IFormFile> tImage)
+        public IActionResult SaveContent(Blog newBlog, List<IFormFile> Image)
         {
             // Lưu ảnh sản phẩm vào trước
-            string path = Path.Combine(this.Environment.WebRootPath, "public/images_upload/product");
+            string path = Path.Combine(this.Environment.WebRootPath, "public/images_upload/blog");
             foreach (IFormFile postedFile in Image)
             {
                 // Lấy tên file
