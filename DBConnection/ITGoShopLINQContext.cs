@@ -24,6 +24,7 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<User> User { set; get; }   // Bảng User trong DataBase, <User> tên lớp
         public DbSet<Product> Product { set; get; }
         public DbSet<Brand> Brand { set; get; }
+        public DbSet<SubBrand> SubBrand { set; get; }
         public DbSet<Category> Category { set; get; }
         public DbSet<BannerSlider> BannerSlider { set; get; }
         public DbSet<Campaign> Campaign { set; get; }
@@ -58,6 +59,12 @@ namespace ITGoShop_F_Ver2.Models
         public void saveBrand(Brand newBrand)
         {
             Brand.Add(newBrand);
+            SaveChanges();
+        }
+
+        public void saveSubBrand(SubBrand newSubBrand)
+        {
+            SubBrand.Add(newSubBrand);
             SaveChanges();
         }
         public void saveShipMethod(ShipMethod newShipMethod)
