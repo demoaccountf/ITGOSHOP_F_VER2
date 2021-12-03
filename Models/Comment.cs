@@ -9,7 +9,8 @@ namespace ITGoShop_F_Ver2.Controllers
     {
         private int commentId;
         private string commentContent;
-        private int userId, productId, commentStatus, reply, parentComment;
+        private int userId, productId, commentStatus, reply;
+        private int? parentComment;
         private DateTime createdAt, updatedAt;
 
         public Comment()
@@ -35,7 +36,7 @@ namespace ITGoShop_F_Ver2.Controllers
         public int ProductId { get => productId; set => productId = value; }
         public int CommentStatus { get => commentStatus; set => commentStatus = value; }
         public int Reply { get => reply; set => reply = value; }
-        public int ParentComment { get => parentComment; set => parentComment = value; }
+        public int? ParentComment { get => parentComment; set => parentComment = value; }
         public DateTime CreatedAt { get => createdAt; set => createdAt = value; }
         public DateTime UpdatedAt { get => updatedAt; set => updatedAt = value; }
     }

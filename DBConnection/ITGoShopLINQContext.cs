@@ -473,5 +473,18 @@ namespace ITGoShop_F_Ver2.Models
             }
             return 1;
         }
+
+        public void updateCommentStatus(int ParentComment)
+        {
+            var comment = Comment.Where(c => c.CommentId == ParentComment).FirstOrDefault();
+            comment.Reply = 1;
+            SaveChanges();
+        }
+
+        public void addComment(Comment comment)
+        {
+            Comment.Add(comment);
+            SaveChanges();
+        }
     }
 }

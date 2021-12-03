@@ -154,5 +154,38 @@ namespace ITGoShop_F_Ver2.Controllers
             }
             return output;
         }
+        public void send_comment(int ProductId, string CommentContent, int ParentComment)
+        {
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            int customerId = Convert.ToInt32(HttpContext.Session.GetInt32("customerId"));
+            int adminId = Convert.ToInt32(HttpContext.Session.GetInt32("adminId"));
+            if (customerId != 0 || adminId != 0)
+            {
+                Comment comment = new Comment();
+                comment.CommentContent = CommentContent;
+                comment.ProductId = ProductId;
+                
+                comment.CreatedAt = DateTime.Now;
+                comment.UpdatedAt = DateTime.Now;
+                if(customerId != 0)
+                {
+                    comment.UserId = customerId;
+                }  
+                else
+                {
+                    comment.UserId = adminId;
+                    if (ParentComment != 0)
+                    {
+                        linqContext.updateCommentStatus(ParentComment);
+                    }
+                }
+                comment.CommentStatus = 1;
+                if (ParentComment != 0)
+                    comment.ParentComment = ParentComment;
+                else
+                    comment.ParentComment = null;
+                linqContext.addComment(comment);
+            }   
+        }    
     }
 }

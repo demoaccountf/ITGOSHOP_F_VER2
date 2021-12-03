@@ -246,7 +246,6 @@
 					method:"POST",
 					data:{ProductId: product_id},
                     success: function (data) {
-                        alert(data);
 						$('#show_comment').html(data);
 					},
 					error:function(data)
@@ -262,13 +261,12 @@
 				{
 					var ProductId = $('.input_product_id').val();
 					var CommentContent = $('.textarea-commnent-content').val();
-					var _token = $('input[name="_token"]').val();
 					if(CommentContent != '')
 					{
 						$.ajax({
-							url:"{{url('/send-comment')}}",
-							method: "POST",
-							data:{ProductId: ProductId, CommentContent: CommentContent, _token:_token, ParentComment:0},
+							url:"/ProductDetail/send_comment",
+							//method: "POST",
+							data:{ProductId: ProductId, CommentContent: CommentContent, ParentComment:0},
 							success:function(data){
 								load_comment();
 								$('.textarea-commnent-content').val('');
@@ -292,7 +290,7 @@
 						buttons: ["OK", "Đăng nhập"],
 						}).then(function(isConfirm) {
 							if (isConfirm) {
-								window.location = "{{url('/login')}}";
+								window.location = "/Home/login";
 							}
 					})
 				}
@@ -306,14 +304,13 @@
 					var ProductId = $('.input_product_id').val();
 					var CommentContent = $('.textarea-sub-commnent-content').val();
 					var ParentComment = $(this).parents('.o-comment').find('.ParentCommentId').val();
-					var _token = $('input[name="_token"]').val();
 					var add_next_cmt = $(this).parents('.o-comment').find('.single-comment').last();
 					if(CommentContent != '')
 					{
 						$.ajax({
 							url:"{{url('/send-comment')}}",
 							method: "POST",
-							data:{ProductId: ProductId, CommentContent: CommentContent, _token:_token, ParentComment: ParentComment},
+							data:{ProductId: ProductId, CommentContent: CommentContent, ParentComment: ParentComment},
 							success:function(data){
 								load_comment();
 								$('.textarea-commnent-content').val('');
@@ -339,7 +336,7 @@
 						buttons: ["OK", "Đăng nhập"],
 						}).then(function(isConfirm) {
 							if (isConfirm) {
-								window.location = "{{url('/login')}}";
+                                window.location = "/Home/login";
 							}
 					})
 				}
