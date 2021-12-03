@@ -35,6 +35,15 @@ namespace ITGoShop_F_Ver2.Controllers
             return RedirectToAction("add_brand");
 
         }
+
+        public IActionResult SaveSubBrand(SubBrand newSubBrand)
+        {
+
+            var context = new ITGoShopLINQContext();
+            context.saveSubBrand(newSubBrand);
+            return RedirectToAction("add_brand");
+
+        }
         public IActionResult view_brand()
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
