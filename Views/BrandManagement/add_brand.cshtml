@@ -42,20 +42,31 @@
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label for="email2">Thêm thương hiệu sản phẩm</label>
-                                            <input type="text" name="BrandName" class="form-control" id="email2" placeholder="Nhập tên danh mục">
+                                            <input type="text" name="BrandName" class="form-control" id="email2" placeholder="Nhập tên thương hiệu">
                                             <small id="emailHelp2" class="form-text text-muted">Lưu ý: ...</small>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="comment">Mô tả thương hiệu sản phẩm</label>
-                                            <textarea class="form-control" name="description" id="comment" rows="5" placeholder="Mô tả danh mục">
+                                            <textarea class="form-control" name="Description" id="comment" rows="5" placeholder="Mô tả danh mục">
 
 													</textarea>
                                         </div>
+                                        <div class="col-6 col-lg-6">
+                                            <div class="form-group" method="post">
+                                                <label for="exampleFormControlSelect1">Danh mục sản phẩm</label>
+                                                <select class="form-control" name="CategoryId" id="exampleFormControlSelect1">
+                                                    @foreach (var item in @ViewBag.AllCategory)
+                                                    {
+                                                        <option value="@item.CategoryId">@item.CategoryId : @item.CategoryName</option>
+                                                    }
+                                                </select>
 
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Hiển thị thương hiệu sản phẩm</label>
-                                            <select class="form-control" name="status" id="exampleFormControlSelect1">
+                                            <select class="form-control" name="Status" id="exampleFormControlSelect1">
                                                 <option value="1">Hiển thị</option>
                                                 <option value="0">Ẩn</option>
                                             </select>

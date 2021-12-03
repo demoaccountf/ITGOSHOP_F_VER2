@@ -22,6 +22,14 @@ namespace ITGoShop_F_Ver2.Controllers
         }
         public IActionResult add_brand()
         {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.AllCategory = context.getAllCategory();
+            return View();
+        }
+        public IActionResult add_subbrand()
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.AllBrand = context.getAllBrand();
             return View();
         }
         [Obsolete]
@@ -29,8 +37,17 @@ namespace ITGoShop_F_Ver2.Controllers
         {
 
             var context = new ITGoShopLINQContext();
-            
-            return RedirectToAction("add_product_category");
+            context.saveBrand(newBrand);
+            return RedirectToAction("add_brand");
+
+        }
+
+        public IActionResult SaveSubBrand(SubBrand newSubBrand)
+        {
+
+            var context = new ITGoShopLINQContext();
+            context.saveSubBrand(newSubBrand);
+            return RedirectToAction("add_brand");
 
         }
         public IActionResult view_brand()
