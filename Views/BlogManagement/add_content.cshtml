@@ -37,17 +37,8 @@
                         <div class="card-header">
                             <div class="card-title">Nội dung bài viết</div>
                         </div>
-                        <?php
-                        $message = Session::get('message');
-                        if($message)
-                        {
-                        echo '<label>'.$message.'</label>';
-                        Session::put('message', null);
-                        }
-                        ?>
-                        <form role="form" action="{{URL::to('/save-post')}}" method="post" enctype="multipart/form-data">
+                        <form role="form" action="/BlogManagement/SaveContent" method="post" enctype="multipart/form-data">
                             <!-- enctype="multipart/form-data" có cái này mới thêm ảnh đc-->
-                            {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-8 col-lg-12">
@@ -58,8 +49,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleFormControlFile1">Ngày đăng</label>
-                                            <input type="text" name="DatePost" placeholder="30/10/2021" data-date-format="mm/dd/yyyy" id="dp2">
+                                            <span class="btn-label"><i class="fas fa-calendar-alt"></i></span>
+                                            <input type="date" name="DatePost" class="form-control" id="tu-ngay" min="2020-01-01" style="display:inline-block; width: 65%;" required>
                                         </div>
                                         <div class="form-group">
                                             <div class="input-group mb-3">
