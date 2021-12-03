@@ -223,6 +223,12 @@ namespace ITGoShop_F_Ver2.Models
             order.PaymentStatus = PaymentStatus;
             SaveChanges();
         }
+        public void updateOrderStatus(int OrderId, string OrderStatus)
+        {
+            var order = Order.Where(p => p.OrderId == OrderId).FirstOrDefault();
+            order.OrderStatus = OrderStatus;
+            SaveChanges();
+        }
 
         public void updateShipMethodStatus(int shipMethodId, int status)
         {
@@ -413,6 +419,24 @@ namespace ITGoShop_F_Ver2.Models
             product.Sold += newSold;
             product.Quantity -= newSold;
             SaveChanges();
+        }
+
+        public void updateSoldProduct(List<object> orderDetail)
+        {
+            foreach(var item in orderDetail)
+            {
+                int productId = (int)item.GetType().GetProperty("ProductId").GetValue(item, null);
+                var product = Product.Where(p => p.ProductId == productId).FirstOrDefault();
+                product.Sold -= (int)item.GetType().GetProperty("OrderQuantity").GetValue(item, null);
+                product.Quantity += (int)item.GetType().GetProperty("OrderQuantity").GetValue(item, null);
+            }
+            SaveChanges();
+        }
+
+        public List<Order> getOrderListOfCustomer(int userId)
+        {
+            var orderList = Order.Where(o => o.UserId == userId).ToList();
+            return orderList;
         }
     }
 }

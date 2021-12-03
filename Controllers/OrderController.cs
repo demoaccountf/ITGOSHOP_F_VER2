@@ -11,9 +11,23 @@ namespace ITGoShop_F_Ver2.Controllers
 {
     public class OrderController : Controller
     {
-        public IActionResult my_order()
+        public IActionResult my_orders()
         {
-            return View();
+            /*===Cái này để load layout ===*/
+            int customerId = Convert.ToInt32(HttpContext.Session.GetInt32("customerId"));
+            if (customerId != 0) // Nếu customer đã đăng nhập
+            {
+                ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+                ViewBag.AllCategory = context.getAllCategory();
+                ViewBag.AllBrand = context.getAllBrand();
+                ViewBag.AllSubBrand = context.getAllSubBrand();
+                /*======*/
+
+                ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+                ViewBag.OrderList = linqContext.getOrderListOfCustomer(customerId);
+                return View();
+            }
+            return RedirectToAction("login", "Home");
         }
         public IActionResult order_detail(int orderId)
         {
@@ -84,6 +98,16 @@ namespace ITGoShop_F_Ver2.Controllers
                 linqContext.updateSoldProduct(productInfo.ProductId, item.Quantity);
             }
             return RedirectToAction("order_detail", new { orderId = orderId });
+        }
+        public void cancel_order(int orderId)
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            linqContext.updateOrderStatus(orderId, "Đã hủy");
+            List<object> orderDetail = context.getOrderDetail(orderId);
+
+            // Cập nhật số lượng tồn kho và đã bán của các sản phẩm trong đơn hàng
+            linqContext.updateSoldProduct(orderDetail);
         }
     }
 }

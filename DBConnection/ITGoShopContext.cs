@@ -1510,6 +1510,7 @@ namespace ITGoShop_F_Ver2.Models
                     {
                         var obj = new
                         {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
                             ProductImage = reader["ProductImage"].ToString(),
                             ProductName = reader["ProductName"].ToString(),
                             UnitPrice = Convert.ToInt32(reader["UnitPrice"]),

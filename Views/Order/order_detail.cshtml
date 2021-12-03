@@ -2,7 +2,7 @@
 @using System.Globalization;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
-    ViewData["Title"] = "Chi tiết đơn hàng # - ITGoShop";
+    ViewData["Title"] = "Chi tiết đơn hàng #"+ ViewBag.OrderInfo.OrderId + " - ITGoShop";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
     string customerId = HttpContextAccessor.HttpContext.Session.GetString("customerId");
     string customerFirstName = HttpContextAccessor.HttpContext.Session.GetString("customerFirstName");
@@ -28,8 +28,8 @@
                     <ul class="bread-list">
                         <li><a href="/">Trang chủ<i class="ti-arrow-right"></i></a></li>
                         <li class="active"><a href="/">Tài khoản<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="/my_orders">Đơn hàng của tôi<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="my_orders">Chi tiết đơn hàng</a></li>
+                        <li class="active"><a href="/Order/my_orders">Đơn hàng của tôi<i class="ti-arrow-right"></i></a></li>
+                        <li class="active"><a href="/Order/order_detail?orderId=@ViewBag.OrderInfo.OrderId">Chi tiết đơn hàng</a></li>
                     </ul>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                         <i style="font-size: 20px; padding-right: 15px; font-weight:bold;" class="fa fa-user-circle-o" class="fa fa-user-circle-o"></i>
                         <a href="/profile/@customerId" style="color:#333; font-weight:500;">Tài khoản</a>
                     </h4>
-
+                    
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <h4 class="mb-0">
@@ -99,7 +99,7 @@
                     <div class="panel-body" style="height:200px">
                         <p>@ViewBag.OrderInfo.ShipMethod</p>
                         <p>Thời gian giao hàng dự kiến: @ViewBag.OrderInfo.EstimatedDeliveryTime.ToString("dd-MM-yyyy")</p>
-                        <p>Phí vận chuyển: @ViewBag.OrderInfo.ShipFee</p>
+                        <p>Phí vận chuyển: @ViewBag.OrderInfo.ShipFee.ToString("#,###", cul.NumberFormat)  ₫</p>
                         <p>Đơn vị vận chuyển: ITGoFast</p>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                             <td style="text-align: right;">
                                 <p>@((ViewBag.OrderInfo.Total - @ViewBag.OrderInfo.ShipFee).ToString("#,###", cul.NumberFormat)) đ</p>
                                 <p>-0 ₫</p>
-                                <p>@ViewBag.OrderInfo.ShipFee.ToString("#,###", cul.NumberFormat)) ₫</p>
+                                <p>@ViewBag.OrderInfo.ShipFee.ToString("#,###", cul.NumberFormat) ₫</p>
                                 <p style="color: red; font-size: 20px">@ViewBag.OrderInfo.Total.ToString("#,###", cul.NumberFormat) ₫</p>
                             </td>
                         </tr>
@@ -230,7 +230,6 @@
 			});
 		});
 		$('.button-huy-don-hang').click(function(){
-			// alert("Hi");
 			var OrderId = $('.OrderId').val();
 			var thisbutton = $(this);
 			swal({
@@ -247,7 +246,7 @@
 					})
 					.then((value) => {
 						$.ajax({
-							url:"{{url('/cancel-order')}}",
+							url:"/Order/cancel_order",
 							method: "GET",
 							data:{OrderId: OrderId},
 							success:function(data){

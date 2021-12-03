@@ -31,7 +31,7 @@ namespace ITGoShop_F_Ver2.Controllers
                 ViewBag.numberItem = cart.Sum(item => item.Quantity);
                 ViewBag.total = cart.Sum(item => item.Product.Price * item.Quantity);
             }
-            return View("cart");
+            return View("Index");
         }
 
         public void add_to_cart(int ProductId, int Quantity)
