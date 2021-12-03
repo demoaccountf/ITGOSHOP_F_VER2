@@ -1522,6 +1522,36 @@ namespace ITGoShop_F_Ver2.Models
             }
             return list;
         }
+        public List<object> getWishList(int customerId)
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "SELECT * FROM WISHLIST W JOIN PRODUCT P ON P.ProductId = W.ProductId WHERE UserId = @userId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("userId", customerId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            ProductName = reader["ProductName"].ToString(),
+                            Price = Convert.ToInt32(reader["Price"]),
+                        };
+                        list.Add(obj);
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
 
         /*================Code thầy Hùng =================*/
         public Product findProduct(int Id)

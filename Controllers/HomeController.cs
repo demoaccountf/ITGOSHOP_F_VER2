@@ -7,11 +7,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCardSession.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
     public class HomeController : Controller
     {
+        string customerId = "";
+        string customerLastName = "";
+        string customerFirstName = "";
+        string customerImage = "";
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -42,9 +48,32 @@ namespace ITGoShop_F_Ver2.Controllers
             return View();
         }
 
-        public IActionResult login()
+        public IActionResult login(string message)
         {
+            if (!string.IsNullOrEmpty(ViewBag.message))
+            {
+                ViewBag.message = message;
+            }
             return View();
+        }
+        public IActionResult check_password(User userInput)
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            User userInfo = context.getUserInfo(userInput.Email, userInput.Password, 0);
+            if (userInfo != null)
+            {
+                HttpContext.Session.SetInt32("customerId", userInfo.UserId);
+                HttpContext.Session.SetString("customerLastName", userInfo.LastName);
+                HttpContext.Session.SetString("customerFirstName", userInfo.FirstName);
+                HttpContext.Session.SetString("customerImage", userInfo.UserImage);
+                var LINQContext = new ITGoShopLINQContext();
+                LoginHistory login = new LoginHistory(userInfo.UserId, DateTime.Now, DateTime.Now);
+                LINQContext.updateLoginHistory(login);
+                // Update last login
+                context.updateLastLogin(userInfo.UserId);
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("login", new { message = "Mật khẩu hoặc tài khoản sai. Xin nhập lại!" });
         }
 
         public IActionResult search_result()
@@ -66,5 +95,14 @@ namespace ITGoShop_F_Ver2.Controllers
             List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
             return cart.Sum(item => item.Quantity);
         }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove(customerId);
+            HttpContext.Session.Remove(customerLastName);
+            HttpContext.Session.Remove(customerFirstName);
+            HttpContext.Session.Remove(customerImage);
+            return View("Index");
+        }
+
     }
 }

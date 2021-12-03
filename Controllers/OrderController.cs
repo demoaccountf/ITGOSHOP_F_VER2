@@ -13,10 +13,10 @@ namespace ITGoShop_F_Ver2.Controllers
     {
         public IActionResult my_orders()
         {
-            /*===Cái này để load layout ===*/
             int customerId = Convert.ToInt32(HttpContext.Session.GetInt32("customerId"));
             if (customerId != 0) // Nếu customer đã đăng nhập
             {
+                /*===Cái này để load layout ===*/
                 ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
                 ViewBag.AllCategory = context.getAllCategory();
                 ViewBag.AllBrand = context.getAllBrand();

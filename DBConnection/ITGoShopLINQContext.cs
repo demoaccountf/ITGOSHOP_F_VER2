@@ -19,6 +19,7 @@ namespace ITGoShop_F_Ver2.Models
         {
             // Hàm này để set primary key cho Entity Framework
             modelBuilder.Entity<OrderDetail>().HasKey(od => new {od.OrderId, od.ProductId });
+            modelBuilder.Entity<WishList>().HasKey(wl => new { wl.ProductId, wl.UserId });
         }
         public DbSet<User> User { set; get; }   // Bảng User trong DataBase, <User> tên lớp
         public DbSet<Product> Product { set; get; }
@@ -38,7 +39,8 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<devvn_xaphuongthitran> devvn_xaphuongthitran { set; get; }
         public DbSet<ShippingAddress> ShippingAddress { set; get; }
         public DbSet<Statistic> Statistic { set; get; }
-        
+        public DbSet<WishList> WishList { set; get; }
+
         public void saveProduct(Product newProduct)
         {
             newProduct.StartsAt = DateTime.Now;
@@ -437,6 +439,39 @@ namespace ITGoShop_F_Ver2.Models
         {
             var orderList = Order.Where(o => o.UserId == userId).ToList();
             return orderList;
+        }
+
+        public void remove_product_from_wishlist(int userId, int productId)
+        {
+            var wishlist = WishList.Where(p => p.UserId == userId && p.ProductId == productId).FirstOrDefault();
+
+            if (wishlist != null)
+            {
+                Remove(wishlist);
+                SaveChanges();
+            }
+        }
+        public void add_product_to_wishlist(int userId, int productId)
+        {
+            WishList newItem = new WishList()
+            {
+                UserId = userId,
+                ProductId = productId,
+                CreatedAt = DateTime.Now
+            };
+            WishList.Add(newItem);
+            SaveChanges();
+        }
+        public int isProductExistInWishlist(int userId, int productId)
+        {
+            var wishlist = WishList.Where(p => p.UserId == userId && p.ProductId == productId).FirstOrDefault();
+
+            if (wishlist != null)
+            {
+                System.Diagnostics.Debug.WriteLine("Wish list: " + wishlist.UserId +" " +wishlist.ProductId);
+                return 0; //Sản phẩm đã tồn tại trong wishlist
+            }
+            return 1;
         }
     }
 }

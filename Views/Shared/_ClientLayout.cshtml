@@ -1,6 +1,16 @@
 ﻿@using System.Globalization;
+@using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{ 
+    string adminId = HttpContextAccessor.HttpContext.Session.GetString("adminId");
+    string customerId = HttpContextAccessor.HttpContext.Session.GetString("customerId");
+    string customerFirstName = HttpContextAccessor.HttpContext.Session.GetString("customerFirstName");
+    string customerLastName = HttpContextAccessor.HttpContext.Session.GetString("customerLastName");
+    string customerImage = HttpContextAccessor.HttpContext.Session.GetString("customerImage");
+    if (string.IsNullOrEmpty(customerImage))
+    {
+        customerImage = "default-user-icon.png";
+    }
 }
 <!DOCTYPE html>
 <html lang="vi">
@@ -71,70 +81,67 @@
             <div class="container-fluid">
                 <div class="navigation__column left">
                     <div class="header__logo pl-40"><a class="ps-logo" href="/Home/Index"><img src="~/public/client/Images/logo.png" alt=""></a></div>
-                    <input type="text" id="input-customer-id" value="get('CustomerId')" hidden><!--Đừng xóa cái này  -->
-                    <input type="text" id="input-admin-id" value="('CustomerId')" hidden>
+                    <input type="text" id="input-customer-id" value="@customerId" hidden><!--Đừng xóa cái này  -->
+                    <input type="text" id="input-admin-id" value="@adminId" hidden>
                 </div>
                 <div class="navigation__column center">
                     <ul class="main-menu menu">
                         @foreach (var item in @ViewBag.AllCategory)
                         {
-            @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "LT000")
-            {
-<li class="menu-item menu-item-has-children has-mega-menu">
-    <a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)">Laptop</a>
-    <div class="mega-menu">
-        <div class="mega-wrap">
-            @foreach (var brand in @ViewBag.AllBrand)
-            {
-@if (brand.GetType().GetProperty("CategoryId").GetValue(brand, null) == "LT000")
-{
-<div class="mega-column">
-    <a href="/ProductListing/product_listing?brandId=@brand.GetType().GetProperty("BrandId").GetValue(brand, null)"> <h4 class="mega-heading">@brand.GetType().GetProperty("BrandName").GetValue(brand, null)</h4> </a>
-    @foreach (var subbrand in @ViewBag.AllSubBrand)
-    {
-@if (subbrand.GetType().GetProperty("BrandId").GetValue(subbrand, null) == brand.GetType().GetProperty("BrandId").GetValue(brand, null))
-{
-<ul class="mega-item">
-    <li><a href="/ProductListing/product_listing3?subbrandId=@subbrand.GetType().GetProperty("SubBrandId").GetValue(subbrand, null)">@subbrand.GetType().GetProperty("SubBrandName").GetValue(subbrand, null)</a></li>
-</ul>}}
-</div>}}
-        </div>
-    </div>
-</li>
-}}
+                    @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "LT000")
+                    {
+                    <li class="menu-item menu-item-has-children has-mega-menu">
+                        <a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)">Laptop</a>
+                        <div class="mega-menu">
+                            <div class="mega-wrap">
+                                @foreach (var brand in @ViewBag.AllBrand)
+                                {
+                    @if (brand.GetType().GetProperty("CategoryId").GetValue(brand, null) == "LT000")
+                    {
+                    <div class="mega-column">
+                        <a href="/ProductListing/product_listing?brandId=@brand.GetType().GetProperty("BrandId").GetValue(brand, null)"> <h4 class="mega-heading">@brand.GetType().GetProperty("BrandName").GetValue(brand, null)</h4> </a>
+                        @foreach (var subbrand in @ViewBag.AllSubBrand)
+                        {
+                    @if (subbrand.GetType().GetProperty("BrandId").GetValue(subbrand, null) == brand.GetType().GetProperty("BrandId").GetValue(brand, null))
+                    {
+                    <ul class="mega-item">
+                        <li><a href="/ProductListing/product_listing3?subbrandId=@subbrand.GetType().GetProperty("SubBrandId").GetValue(subbrand, null)">@subbrand.GetType().GetProperty("SubBrandName").GetValue(subbrand, null)</a></li>
+                    </ul>}}
+                    </div>}}
+                            </div>
+                        </div>
+                    </li>}}
 
                         @foreach (var item in @ViewBag.AllCategory)
                         {
-            @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "PC000")
-            {
-<li class="menu-item menu-item-has-children has-mega-menu">
-    <a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)">PC</a>
-    <div class="mega-menu">
-        <div class="mega-wrap">
-            @foreach (var brand in @ViewBag.AllBrand)
-            {
-@if (brand.GetType().GetProperty("CategoryId").GetValue(brand, null) == "PC000")
-{
-<div class="mega-column">
-    <a href="/ProductListing/product_listing?brandId=@brand.GetType().GetProperty("BrandId").GetValue(brand, null)"> <h4 class="mega-heading">@brand.GetType().GetProperty("BrandName").GetValue(brand, null)</h4> </a>
-    @foreach (var subbrand in @ViewBag.AllSubBrand)
-    {
-@if (subbrand.GetType().GetProperty("BrandId").GetValue(subbrand, null) == brand.GetType().GetProperty("BrandId").GetValue(brand, null))
-{
-<ul class="mega-item">
-    <li><a href="/ProductListing/product_listing3?subbrandId=@subbrand.GetType().GetProperty("SubBrandId").GetValue(subbrand, null)">@subbrand.GetType().GetProperty("SubBrandName").GetValue(subbrand, null)</a></li>
-</ul>}}
-</div>}}
-        </div>
-    </div>
-</li>
-}}
+                    @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "PC000")
+                    {
+                    <li class="menu-item menu-item-has-children has-mega-menu">
+                        <a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)">PC</a>
+                        <div class="mega-menu">
+                            <div class="mega-wrap">
+                                @foreach (var brand in @ViewBag.AllBrand)
+                                {
+                    @if (brand.GetType().GetProperty("CategoryId").GetValue(brand, null) == "PC000")
+                    {
+                    <div class="mega-column">
+                        <a href="/ProductListing/product_listing?brandId=@brand.GetType().GetProperty("BrandId").GetValue(brand, null)"> <h4 class="mega-heading">@brand.GetType().GetProperty("BrandName").GetValue(brand, null)</h4> </a>
+                        @foreach (var subbrand in @ViewBag.AllSubBrand)
+                        {
+                    @if (subbrand.GetType().GetProperty("BrandId").GetValue(subbrand, null) == brand.GetType().GetProperty("BrandId").GetValue(brand, null))
+                    {
+                    <ul class="mega-item">
+                        <li><a href="/ProductListing/product_listing3?subbrandId=@subbrand.GetType().GetProperty("SubBrandId").GetValue(subbrand, null)">@subbrand.GetType().GetProperty("SubBrandName").GetValue(subbrand, null)</a></li>
+                    </ul>}}
+                    </div>}}
+                            </div>
+                        </div>
+                    </li>}}
                         @foreach (var item in @ViewBag.AllCategory)
                         {
-            @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "PK000")
-            {
-<li class="menu-item"><a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)">Phụ Kiện</a></li>
-}}
+                    @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "PK000")
+                    {
+                    <li class="menu-item"><a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)">Phụ Kiện</a></li>}}
                         <li class="menu-item"><a href="/Blog/all_blog">Tin Tức</a></li>
                     </ul>
                 </div>
@@ -154,23 +161,18 @@
                     </div>
                     <div class="menu-toggle"><span></span></div>
                     <a class="ps-cart__toggle" href="#}"><i class="fa fa-bell-o" aria-hidden="true" title="Thông báo"></i></a>
-                    <!--<?php
-                    //$CustomerId= Session::get('CustomerIdId');
-                    $CustomerId= Session::get('CustomerId');
-                    if($CustomerId) { ?> -->
-
-                    <a class="ps-cart__toggle" href="/wishlist')}}"><i class="fa fa-heart-o" aria-hidden="true" title="Wish List"></i></a>
-
-                    <!--<?php } ?> -->
-
+                    @if (!string.IsNullOrEmpty(customerId))
+                    {<a class="ps-cart__toggle" href="/Wishlist/Index"><i class="fa fa-heart-o" aria-hidden="true" title="Wish List"></i></a>}
                     <div class="dropdown">
-                        <div class="nut_dropdown"><a href="//login" class="ps-cart__toggle"><i class="fa fa-user-circle-o" title="Đăng Nhập"></i></a></div>
+                        <div class="nut_dropdown"><a href="/Home/login" class="ps-cart__toggle"><i class="fa fa-user-circle-o" title="Đăng Nhập"></i></a></div>
                         <div class="noidung_dropdown">
-
-                            <a href="/Profile/profile">Tài khoản</a>
-                            <a href="/Order/my-orders">Đơn hàng của tôi</a>
-                            <a href="/customer-logout">Kiểm tra bảo hành</a>
-                            <a href="/customer-logout">Đăng xuất</a>
+                            @if (!string.IsNullOrEmpty(customerId))
+                            {
+                                <a href="/Profile/profile">Tài khoản</a>
+                                <a href="/Order/my_orders">Đơn hàng của tôi</a>
+                                <a href="/customer">Kiểm tra bảo hành</a>
+                                <a href="/Home/Logout">Đăng xuất</a>
+                             }
                         </div>
                     </div>
 
@@ -387,7 +389,7 @@
                 if (customer_id) {
                     var ProductId = $(this).parents('.button-head').find('.ProductId').val();
                     $.ajax({
-                        url: "/add-product-to-wishlist",
+                        url: "/Wishlist/add_product_to_wishlist",
                         method: "GET",
                         data: { ProductId: ProductId },
                         success: function (data) {
@@ -419,7 +421,7 @@
                         buttons: ["OK", "Đăng nhập"],
                     }).then(function (isConfirm) {
                         if (isConfirm) {
-                            window.location = "/login";
+                            window.location = "/Home/login";
                         }
                     })
                 }
