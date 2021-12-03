@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCardSession.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
@@ -80,6 +81,78 @@ namespace ITGoShop_F_Ver2.Controllers
                 }
             }
             return -1;
+        }
+
+        public string load_comment(int ProductId)
+        {
+            string output = "";
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            List<object> parentCommentList = context.getCommentParentCommentForProductDetail(ProductId);
+            int customerId = Convert.ToInt32(HttpContext.Session.GetInt32("customerId"));
+            int adminId = Convert.ToInt32(HttpContext.Session.GetInt32("adminId"));
+            foreach (var item in parentCommentList)
+            {
+                string created_at = ((DateTime)item.GetType().GetProperty("CreatedAt").GetValue(item, null)).ToString("HH:mm dd/MM/yyyy"); 
+                string userImage = item.GetType().GetProperty("UserImage").GetValue(item, null).ToString();
+                if (string.IsNullOrEmpty(userImage))
+                {
+                    userImage = "default-user-icon.png";
+                }
+                output += @$"
+                <div class='o-comment'><div class='single-comment'>
+                <img src = '/public/images_upload/user/{userImage}' alt='#'>
+                <div class='content'><input type = 'text' class='CommentId' value='{item.GetType().GetProperty("CommentId").GetValue(item, null)}' hidden>";
+                int userCommentId = (int)item.GetType().GetProperty("UserId").GetValue(item, null);
+                if (userCommentId == customerId || userCommentId == adminId)
+                {
+                    output += @"<div class='button' style='float:right'>
+                                    <a href='javascript:void(0)' class='btn btn-xoa-comment'><i class='fa fa-times' aria-hidden='true'></i></a>
+                                </div>";
+                }
+                output += @$"<h4>{item.GetType().GetProperty("LastName").GetValue(item, null)} {item.GetType().GetProperty("FirstName").GetValue(item, null)}<span>{created_at}</span></h4>
+                    <p> {item.GetType().GetProperty("CommentContent").GetValue(item, null)}</p>
+                    <input type = 'text' class='ParentCommentId' value='{item.GetType().GetProperty("CommentId").GetValue(item, null)}' hidden>
+                    <div class='button'>
+                        <a href = 'javascript:void(0)' class='btn btn-reply'><i class='fa fa-reply' aria-hidden='true'></i>Trả lời</a>
+                    </div>
+                </div>
+            </div>";
+                //============Phần load sub comment============
+                List<object> subCommentList = context.getSubCommentForProductDetail((int)item.GetType().GetProperty("CommentId").GetValue(item, null));
+                foreach(var subItem in subCommentList)
+                {
+                    created_at = ((DateTime)subItem.GetType().GetProperty("CreatedAt").GetValue(subItem, null)).ToString("HH:mm dd/MM/yyyy"); 
+                    userImage = subItem.GetType().GetProperty("UserImage").GetValue(subItem, null).ToString();
+                    if (string.IsNullOrEmpty(userImage))
+                    {
+                        userImage = "default-user-icon.png";
+                    }
+                    output += $@"<div class='single-comment left'>
+                    <img src = '/public/images_upload/user/{userImage}' alt='#'>
+                    <div class='content'><input type = 'text' class='CommentId' value='{subItem.GetType().GetProperty("CommentId").GetValue(subItem, null)}' hidden>";
+
+                    if (userCommentId == customerId || userCommentId == adminId)
+                    {
+                        output +=@"<div class='button' style='float:right'>
+                                        <a href = 'javascript:void(0)' class='btn btn-xoa-comment'><i class='fa fa-times' aria-hidden='true'></i></a>
+                                    </div>";
+                    }    
+                    output += $"<h4>{subItem.GetType().GetProperty("LastName").GetValue(subItem, null)} {subItem.GetType().GetProperty("FirstName").GetValue(subItem, null)}";
+                    if ((int)subItem.GetType().GetProperty("Admin").GetValue(subItem, null) == 1)
+                    {
+                        output += "<span><i> Nhân viên ITGoShop</i></span>";
+                    }
+                    output += @$"<span>{created_at}</span></h4>
+                        <p>{subItem.GetType().GetProperty("CommentContent").GetValue(subItem, null)}</p>
+                          <div class='button'>
+                            <a href = 'javascript:void(0)' class='btn btn-reply'><i class='fa fa-reply' aria-hidden='true'></i>Trả lời</a>
+                        </div>
+                    </div>
+                </div>";
+                }    
+                output += "</div>";
+            }
+            return output;
         }
     }
 }

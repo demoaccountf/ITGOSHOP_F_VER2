@@ -1553,6 +1553,77 @@ namespace ITGoShop_F_Ver2.Models
             return list;
         }
 
+        public List<object> getCommentParentCommentForProductDetail(int productId)
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT CommentId, ProductId, C.UserId, UserImage, LastName, FirstName, CommentContent, Admin, C.CreatedAt
+                            FROM COMMENT C JOIN user P ON C.UserId = P.UserId 
+                            WHERE ProductId = @productid
+                            AND ParentComment IS NULL
+                            ORDER BY CommentId DESC";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("productid", productId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            CommentId = Convert.ToInt32(reader[0]),
+                            ProductId = Convert.ToInt32(reader[1]),
+                            UserId = Convert.ToInt32(reader[2]),
+                            UserImage = reader[3].ToString(),
+                            LastName = reader[4].ToString(),
+                            FirstName = reader[5].ToString(),
+                            CommentContent = reader[6].ToString(),
+                            Admin = Convert.ToInt32(reader[7]),
+                            CreatedAt = (DateTime)reader[8],
+                        };
+                        list.Add(obj);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public List<object> getSubCommentForProductDetail(int commendId)
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT CommentId, ProductId, C.UserId, UserImage, LastName, FirstName, CommentContent, Admin, C.CreatedAt
+                            FROM COMMENT C JOIN user P ON C.UserId = P.UserId 
+                            AND ParentComment = @parentcomment
+                            ORDER BY CommentId DESC";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("parentcomment", commendId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            CommentId = Convert.ToInt32(reader[0]),
+                            ProductId = Convert.ToInt32(reader[1]),
+                            UserId = Convert.ToInt32(reader[2]),
+                            UserImage = reader[3].ToString(),
+                            LastName = reader[4].ToString(),
+                            FirstName = reader[5].ToString(),
+                            CommentContent = reader[6].ToString(),
+                            Admin = Convert.ToInt32(reader[7]),
+                            CreatedAt = (DateTime)reader[8],
+                        };
+                        list.Add(obj);
+                    }
+                }
+            }
+            return list;
+        }
+
         /*================Code thầy Hùng =================*/
         public Product findProduct(int Id)
         {

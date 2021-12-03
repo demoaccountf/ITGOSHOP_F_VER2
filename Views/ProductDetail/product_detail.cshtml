@@ -172,10 +172,6 @@
                     <textarea class="textarea-commnent-content" name="CommentContent" rows="4" style="padding: 16px; border-radius: 8px; resize: none; margin: 10px 0px 10px; font-size: 16px; background-color:#F3F5F8;" placeholder="Mời bạn để lại bình luận"></textarea>
                     <button class="send-comment-button" type="button" style="margin-bottom:30px;float:right;width: 60px;height: 30px; width: 60px;height: 30px;border-radius: 50px;font-size: 14px;background: black;"> <a href="javascript:void(0)" style="color: white;font-weight: bold;">Gửi</a> </button>
                 </div>
-
-
-                <!-- </div> -->
-
                 <form>
                     <input name="ProductId" type="hidden" class="input_product_id" value="@ViewBag.ProductDetail.GetType().GetProperty("ProductId").GetValue(ViewBag.ProductDetail, null)">
                     <div id="show_comment"></div>
@@ -201,7 +197,7 @@
                                 <!-- Start Single Product -->
                                 <div class="single-product">
                                     <div class="product-img" style="width: 250px; height: 200px;">
-                                        <a href="/ProductDetail/Index?productId=@item.ProductId">
+                                        <a href="/ProductDetail/product_detail?productId=@item.ProductId">
                                             <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.ProductImage" alt="#">
                                             <img class="hover-img" src="~/public/images_upload/product/@item.ProductImage" alt="">
 
@@ -241,16 +237,16 @@
 <script>
 		$(document).ready(function(){
 			var product_id = $('.input_product_id').val();
-			var _token = $('input[name="_token"]').val();
 			load_comment();
-			setInterval(load_comment, 20000);
+			//setInterval(load_comment, 20000);
 			function load_comment()
 			{
 				$.ajax({
-					url: "{{url('/load-comment')}}",
+					url: "/ProductDetail/load_comment",
 					method:"POST",
-					data:{ProductId: product_id, _token:_token},
-					success:function(data){
+					data:{ProductId: product_id},
+                    success: function (data) {
+                        alert(data);
 						$('#show_comment').html(data);
 					},
 					error:function(data)
