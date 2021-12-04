@@ -96,16 +96,6 @@
 
                             <div class="table-responsive">
                                 <div id="add-row_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-
-                                    <?php
-                                    $message = Session::get('message');
-                                    if($message)
-                                    {
-                                    echo '<label>'.$message.'</label>';
-                                    Session::put('message', null);
-                                    }
-                                    ?>
-
                                     <table id="multi-filter-select" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>

@@ -152,13 +152,13 @@
                                                       </td>
                                                       <td>
                                                           <div class="form-button-action">
-                                                              <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                                  <a href="{{URL::to('/update-product-category/'.$pro_category->CategoryId)}}" class="active" ui-toggle-class="">
+                                                              <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Cập nhật sản phẩm">
+                                                                  <a href="/CategoryManagement/update_product_category?blogtId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)" class="active" ui-toggle-class="">
                                                                       <i class="fa fa-edit text-active"></i>
                                                                   </a>
                                                               </button>
-                                                              <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                                                  <a onclick="return confirm('Bạn cho chắc muốn xóa danh mục này không?')" href="{{URL::to('/delete-product-category/'.$pro_category->CategoryId)}}" class="active" ui-toggle-class="">
+                                                              <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa sản phẩm">
+                                                                  <a href="javascript:void(0)" class="active" ui-toggle-class="">
                                                                       <i class="fa fa-times text-danger text"></i>
                                                                   </a>
                                                               </button>
