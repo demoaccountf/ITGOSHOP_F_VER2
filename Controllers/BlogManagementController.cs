@@ -32,7 +32,7 @@ namespace ITGoShop_F_Ver2.Controllers
             foreach (IFormFile postedFile in Image)
             {
                 // Lấy tên file
-                newProduct.ProductImage = DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName;
+                newBlog.Image = DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName;
                 // Lưu file vào project
                 string fileName = Path.GetFileName(DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName);
                 using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
@@ -42,8 +42,8 @@ namespace ITGoShop_F_Ver2.Controllers
             }
 
             var context = new ITGoShopLINQContext();
-            context.saveProduct(newProduct);
-            return RedirectToAction("add_product");
+            context.saveBlog(newBlog);
+            return RedirectToAction("add_content");
 
         }
         public IActionResult view_content()
