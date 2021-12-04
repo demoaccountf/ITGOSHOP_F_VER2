@@ -186,6 +186,11 @@ namespace ITGoShop_F_Ver2.Controllers
                     comment.ParentComment = null;
                 linqContext.addComment(comment);
             }   
-        }    
+        }
+        public void delete_comment(int comment_id)
+        {
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            linqContext.deleteComment(comment_id);
+        }
     }
 }

@@ -238,7 +238,7 @@
 		$(document).ready(function(){
 			var product_id = $('.input_product_id').val();
 			load_comment();
-			//setInterval(load_comment, 20000);
+			setInterval(load_comment, 20000);
 			function load_comment()
 			{
 				$.ajax({
@@ -308,8 +308,8 @@
 					if(CommentContent != '')
 					{
 						$.ajax({
-							url:"{{url('/send-comment')}}",
-							method: "POST",
+                            url:"/ProductDetail/send_comment",
+							//method: "POST",
 							data:{ProductId: ProductId, CommentContent: CommentContent, ParentComment: ParentComment},
 							success:function(data){
 								load_comment();
@@ -346,7 +346,7 @@
 				var comment_id = $(this).parents('.single-comment').find('.CommentId').val();
 				var thisdiv = $(this).parents('.single-comment');
 				$.ajax({
-					url:"{{url('/delete-comment')}}",
+                    url:"/ProductDetail/delete_comment",
 					method: "GET",
 					data:{comment_id: comment_id},
 					success:function(data){

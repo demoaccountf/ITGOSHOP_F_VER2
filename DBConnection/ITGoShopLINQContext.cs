@@ -498,5 +498,16 @@ namespace ITGoShop_F_Ver2.Models
             Comment.Add(comment);
             SaveChanges();
         }
+
+        public void deleteComment(int commentId)
+        {
+            var comment = Comment.Where(c => c.CommentId == commentId || c.ParentComment == commentId).ToList();
+
+            foreach(var item in comment)
+            {
+                Remove(item);
+                SaveChanges();
+            }
+        }
     }
 }
