@@ -43,5 +43,13 @@ namespace ITGoShop_F_Ver2.Controllers
 
             return View();
         }
+        public IActionResult product_listing4(string brandName)
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.AllCategory = context.getAllCategory();
+            ViewBag.AllBrand = context.getAllBrand();
+            ViewBag.AllSubBrand = context.getAllSubBrand();
+            return View();
+        }
     }
 }

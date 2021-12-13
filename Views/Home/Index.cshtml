@@ -6,16 +6,16 @@
 }
 
 <!-- Slider Area -->
-<section class="slider-area" style="height:340px">
+<section class="slider-area" style="height:400px">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <div class="slideshow-container" style="max-height:300px; box-shadow: 2px 2px 6px 0px rgb(0 0 0 / 10%); align-items: center;">
+                <div class="slideshow-container" style="max-height:360px; box-shadow: 2px 2px 6px 0px rgb(0 0 0 / 10%); align-items: center;">
                     @foreach (var item in @ViewBag.SliderForHomePage)
                     {
-                        <div class="mySlides">
+                        <div class="mySlides pt-45">
                             <a href="/Blog/blog_detail/@item.GetType().GetProperty("BlogId").GetValue(item, null)">
-                                <img src="~/public/images_upload/banner-slider/@item.GetType().GetProperty("SliderImage").GetValue(item, null)" style="width:100%;">
+                                <img src="~/public/images_upload/banner-slider/@item.GetType().GetProperty("SliderImage").GetValue(item, null)" style="width: 100%; border-radius: 0;">
                             </a>
                         </div>
                     }
@@ -23,16 +23,16 @@
                     <a class="next" style="color: white;" onclick="plusSlides(1)">&#10095;</a>
                     <div style="text-align:center; margin:10px">
                         @for (int i = 1; i <= @ViewBag.SliderForHomePage.Count; i++)
-                        { 
-                        <span class="dot" onclick="currentSlide(@i)"></span>
+                        {
+                            <span class="dot" onclick="currentSlide(@i)"></span>
                         }
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4" style="margin-top:50px;">
                 @foreach (var item in @ViewBag.New)
                 {
-                    <div class="card" style="margin-top:50px; border-radius:  10px 10px 0px 0px;background-color:#ccf2f4; border-left: 6px solid #A2D2FF; border-bottom: 6px solid #A2D2FF;">
+                    <div class="card" style="margin-bottom:10px; border-radius:  10px 10px 0px 0px;background-color:#ccf2f4; border-left: 6px solid #A2D2FF; border-bottom: 6px solid #A2D2FF;">
                         <div class="card-body">
                             <a style="color:#333; font-size:17px;" href="/Blog/blog_detail?blogId=@item.GetType().GetProperty("BlogId").GetValue(item, null)"><b>@item.GetType().GetProperty("Title").GetValue(item, null)</b></a>
                         </div>
@@ -73,71 +73,9 @@
         </div>
     </section>
  -->
-
-<section class="small-banner section">
-    <div class="container">
-        <div class="row">
-            <!-- Single Banner  -->
-            <div class="col-lg-4 col-md-6 col-12">
-                <div class="single-banner">
-                    <img src="~/public/client/Images/pannel/2.png" alt="#">
-                    <div class="content">
-                        <p>MSI Collection</p>
-                        <h3>MSI Modern <br> 15 AMD</h3>
-                        <a href="#">Discover Now</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /End Single Banner  -->
-            <!-- Single Banner  -->
-            <div class="col-lg-4 col-md-6 col-12">
-                <div class="single-banner">
-                    <img src="~/public/client/Images/pannel/2.png" alt="#">
-                    <div class="content">
-                        <p>Logitech Collectons</p>
-                        <h3>Tai nghe Gaming <br> Logitech G335</h3>
-                        <a href="#">Shop Now</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /End Single Banner  -->
-            <!-- Single Banner  -->
-            <div class="col-lg-4 col-12">
-                <div class="single-banner tab-height">
-                    <img src="~/public/client/Images/pannel/3.png" alt="#">
-                    <div class="content">
-                        <p>Flash Sale 12.12</p>
-                        <h3>Phụ Kiện <br> Up to <span>40%</span> Off</h3>
-                        <a href="#">Discover Now</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /End Single Banner  -->
-            <!--//foreach ($new_product as $key => $product)
-            <div class="col-lg-4 col-md-6">
-                <div class="single-banner" style="width: 350px; height: 185.25px; ">
-                    <img src="~/public/images_upload/banner-slider/'.$product->SliderImage)}}" alt="#" style="border-radius: 10px;margin: auto; width: 350px; height: 185.25px;">
-                    <div class="content">
-                        <p>{{$product->CategoryName}}</p>
-                        <h3>{{$product->ProductName}}</h3>
-                        <a href="~//product-detail/'.$product->ProductId)}}">Xem Chi Tiết</a>
-                    </div>
-                </div>
-            </div>
-            //endforeach
-
-            //foreach ($list_campaign as $key => $campaign)
-            <div class="col-lg-4">
-                <div class="single-banner tab-height" style="width: 350px; height: 185.25px;">
-                    <a href="~//campaign/'.$campaign->CampaignId)}}" style="border-radius: 10px;margin: auto; width: 350px; height: 185.25px;"><img href="~//campaign/'.$campaign->CampaignId)}}" src="~/public/images_upload/campaign/'.$campaign->CampaignImage)}}" alt="#" style="border-radius: 10px;"></a>
-
-                </div>
-            </div>
-            //endforeach-->
-        </div>
-    </div>
-</section>
-
+<br>
+<br>
+<br>
 <div class="product-area most-popular section" style="background-color: #F6FCFF">
     <div class="container">
         <div class="row">
@@ -155,39 +93,39 @@
                 <div class="owl-carousel popular-slider">
                     @foreach (var item in @ViewBag.GiamGiaSoc)
                     {
-                <div class="single-product">
-                    <div class="product-img" style="width: 250px; height: 200px;">
-                        <a href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">
-                            <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.ProductImage" alt="#">
-                            <img class="hover-img" src="~/public/images_upload/product/@item.ProductImage" alt="">
-                            <span class="out-of-stock">GIẢM @item.Discount %</span>
-                            @{double so_ngay_da_moban = (DateTime.Now - item.StartsAt).TotalDays;}
-                            @if (@so_ngay_da_moban < 14)
-                             {
-                                <span class="new" style="right: 180px;">New</span>
-                             }
-                        </a>
-                        <div class="button-head">
-                            <div class="product-action">
-                                <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Lượt xem: @item.View</span></a>
-                                <a title="Wishlist" href="javascript:void(0)"><i class=" ti-heart "></i><span>Yêu thích</span></a>
-                                <input type="text" class="ProductId" value="@item.ProductId" hidden>
+                        <div class="single-product">
+                            <div class="product-img" style="width: 250px; height: 200px;">
+                                <a href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">
+                                    <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.ProductImage" alt="#">
+                                    <img class="hover-img" src="~/public/images_upload/product/@item.ProductImage" alt="">
+                                    <span class="out-of-stock">GIẢM @item.Discount %</span>
+                                    @{double so_ngay_da_moban = (DateTime.Now - item.StartsAt).TotalDays;}
+                                    @if (@so_ngay_da_moban < 14)
+                                    {
+                                        <span class="new" style="right: 180px;">New</span>
+                                    }
+                                </a>
+                                <div class="button-head">
+                                    <div class="product-action">
+                                        <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Lượt xem: @item.View</span></a>
+                                        <a title="Wishlist" href="javascript:void(0)"><i class=" ti-heart "></i><span>Yêu thích</span></a>
+                                        <input type="text" class="ProductId" value="@item.ProductId" hidden>
+                                    </div>
+                                    <div class="product-action-2">
+                                        <a title="Add to cart" class="add-to-cart-a-tag" href="javascript:void(0)">Thêm vào giỏ hàng</a>
+                                        <input type="text" value="@item.ProductId" hidden>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="product-action-2">
-                                <a title="Add to cart" class="add-to-cart-a-tag" href="javascript:void(0)">Thêm vào giỏ hàng</a>
-                                <input type="text" value="@item.ProductId" hidden>
+                            <div class="product-content">
+                                <h3><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)"><b style="font-size:17px">@item.ProductName</b></a></h3>
+                                <div class="product-price">
+                                    <span style="color:red; font-size:17px"><b>@item.Price.ToString("#,###", cul.NumberFormat) ₫</b></span>
+                                    <br>
+                                    <span class="old">@((@item.Price + @item.Price * ((@item.Discount)/100)).ToString("#,###", cul.NumberFormat)) ₫</span>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="product-content">
-                        <h3><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)"><b style="font-size:17px">@item.ProductName</b></a></h3>
-                        <div class="product-price">
-                            <span style="color:red; font-size:17px"><b>@item.Price.ToString("#,###", cul.NumberFormat) ₫</b></span>
-                            <br>
-                            <span class="old">@((@item.Price + @item.Price * ((@item.Discount)/100)).ToString("#,###", cul.NumberFormat)) ₫</span>
-                        </div>
-                    </div>
-                </div>}
+                        </div>}
 
 
                 </div>
@@ -195,6 +133,50 @@
         </div>
     </div>
 </div>
+
+<section class="small-banner section">
+    <div class="container">
+        <div class="row">
+
+            <div class="product-area most-popular section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="section-title">
+                                <h2 style="text-transform:none;">Thương hiệu nổi bật</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="owl-carousel popular-slider">
+                                @foreach (var item in @ViewBag.AllBrand)
+                                {
+                                    @if (item.GetType().GetProperty("BrandName").GetValue(item, null) != "No Brand")
+                                    {
+                                        <div class="single-banner tab-height">
+                                            <div class="product-img" style="width: 200px; height: 150px; ">
+                                                <a href="/ProductListing/product_listing4?brandName=@item.GetType().GetProperty("BrandName").GetValue(item, null)">
+                                                    <img class="default-img" style="margin: auto; max-width: 200px; max-height: 150px; width: auto; height: auto; border-radius: 10px; " src="~/public/images_upload/brand/@item.BrandLogo" alt="#">
+                                                    <img class="hover-img" src="~/public/images_upload/product/@item.BrandLogo" alt="">
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                        <!-- End Single Product -->
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
 <!-- End Sản phẩm mới nhất -->
 <!-- Start Product Area -->
 <div class="product-area section">
@@ -258,9 +240,9 @@
                                                         @if (@item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
                                                         {
                                                             double dc = @item.GetType().GetProperty("Price").GetValue(item, null) + (@item.GetType().GetProperty("Price").GetValue(item, null) * (@item.GetType().GetProperty("Discount").GetValue(item, null)) / 100);
-                                                        <br>
-                                                        <span class="old">@dc.ToString("#,###", cul.NumberFormat) ₫</span>
-                                                        <span class="o-giam-gia" style="font-size:10px">-@item.GetType().GetProperty("Discount").GetValue(item, null)% </span>
+                                                            <br>
+                                                            <span class="old">@dc.ToString("#,###", cul.NumberFormat) ₫</span>
+                                                            <span class="o-giam-gia" style="font-size:10px">-@item.GetType().GetProperty("Discount").GetValue(item, null)% </span>
                                                         }
                                                     </div>
                                                 </div>
@@ -338,9 +320,9 @@
                                                         @if (@item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
                                                         {
                                                             double dc = @item.GetType().GetProperty("Price").GetValue(item, null) + (@item.GetType().GetProperty("Price").GetValue(item, null) * (@item.GetType().GetProperty("Discount").GetValue(item, null)) / 100);
-                                                        <br>
-                                                        <span class="old">@dc.ToString("#,###", cul.NumberFormat) ₫</span>
-                                                        <span class="o-giam-gia" style="font-size:10px">-@item.GetType().GetProperty("Discount").GetValue(item, null)% </span>
+                                                            <br>
+                                                            <span class="old">@dc.ToString("#,###", cul.NumberFormat) ₫</span>
+                                                            <span class="o-giam-gia" style="font-size:10px">-@item.GetType().GetProperty("Discount").GetValue(item, null)% </span>
                                                         }
                                                     </div>
                                                 </div>
@@ -389,9 +371,9 @@
                                                         @if (@item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
                                                         {
                                                             double dc = @item.GetType().GetProperty("Price").GetValue(item, null) + (@item.GetType().GetProperty("Price").GetValue(item, null) * (@item.GetType().GetProperty("Discount").GetValue(item, null)) / 100);
-                                                        <br>
-                                                        <span class="old">@dc.ToString("#,###", cul.NumberFormat) ₫</span>
-                                                        <span class="o-giam-gia" style="font-size:10px">-@item.GetType().GetProperty("Discount").GetValue(item, null)% </span>
+                                                            <br>
+                                                            <span class="old">@dc.ToString("#,###", cul.NumberFormat) ₫</span>
+                                                            <span class="o-giam-gia" style="font-size:10px">-@item.GetType().GetProperty("Discount").GetValue(item, null)% </span>
                                                         }
                                                     </div>
                                                 </div>
@@ -459,25 +441,25 @@
                 <!-- Start Single List  -->
                 @foreach (var item in @ViewBag.Top3ProductView)
                 {
-                <div class="single-list">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-12">
-                            <div class="list-image overlay" style="width: 230px; height: 200px;">
-                                <img style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
-                                <a href="javascript:void(0)" class="buy add-to-cart-a-tag"><i class="fa fa-shopping-bag"></i></a>
-                                <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                    <div class="single-list">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="list-image overlay" style="width: 230px; height: 200px;">
+                                    <img style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
+                                    <a href="javascript:void(0)" class="buy add-to-cart-a-tag"><i class="fa fa-shopping-bag"></i></a>
+                                    <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-12 no-padding">
-                            <div class="content">
-                                <h5 class="title"><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
-                                <p class="price with-discount">@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</p>
-                                
-                                <h5 class="title"><a>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null) <i class=" ti-eye"></i></a> </h5>
+                            <div class="col-lg-6 col-md-6 col-12 no-padding">
+                                <div class="content">
+                                    <h5 class="title"><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
+                                    <p class="price with-discount">@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</p>
+
+                                    <h5 class="title"><a>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null) <i class=" ti-eye"></i></a> </h5>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 }
             </div>
         </div>
