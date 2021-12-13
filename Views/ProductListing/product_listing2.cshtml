@@ -28,6 +28,20 @@
 }
 <div class="ps-products-wrap pr-80 pl-80 pt-80 pb-80">
     <div class="ps-products" data-mh="product-listing">
+        <div class="ps-product-action">
+            <div class="ps-product__filter">
+                <form>
+                    @csrf
+                    <select name="sort" id="sort" class="form-control" style="font-size:12px;">
+                        <option value="{{Request::url()}}?sort_by=none" style="font-size:12px;">Sắp Xếp Theo</option>
+                        <option value="{{Request::url()}}?sort_by=tangdan" style="font-size:12px;">_Giá Tăng Dần_ </option>
+                        <option value="{{Request::url()}}?sort_by=giamdan" style="font-size:12px;">_Giá Giảm Dần_ </option>
+                        <option value="{{Request::url()}}?sort_by=az" style="font-size:12px;">_A - Z_ </option>
+                        <option value="{{Request::url()}}?sort_by=za" style="font-size:12px;">_Z - A_ </option>
+                    </select>
+                </form>
+            </div>
+        </div>
         <div class="ps-product__columns">
             @foreach (var item in @ViewBag.CateProduct)
             {
