@@ -146,9 +146,9 @@
                     </ul>
                 </div>
                 <div class="navigation__column right">
-                    <form class="ps-search--header" action="/Home/search_result" method="post">
+                    <form class="ps-search--header" action="/Home/search_result" name="timkiem" method="post">
                         <input class="form-control" type="text" id="keyword" name="kw_submit" placeholder="Tìm kiếm">
-                        <button type="submit"><i class="fa fa-search"></i></button>
+                        <button type="submit" name="submit"><i class="fa fa-search"></i></button>
                     </form>
                     <div class="ps-cart">
                         <a class="ps-cart__toggle" href="/Cart/show_cart" title="Giỏ hàng">
@@ -160,7 +160,6 @@
                         </div>
                     </div>
                     <div class="menu-toggle"><span></span></div>
-                    <a class="ps-cart__toggle" href="#}"><i class="fa fa-bell-o" aria-hidden="true" title="Thông báo"></i></a>
                     @if (!string.IsNullOrEmpty(customerId))
                     {<a class="ps-cart__toggle" href="/Wishlist/Index"><i class="fa fa-heart-o" aria-hidden="true" title="Wish List"></i></a>}
                     <div class="dropdown">

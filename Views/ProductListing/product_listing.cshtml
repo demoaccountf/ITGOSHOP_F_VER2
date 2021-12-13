@@ -1,10 +1,10 @@
 ﻿@using System.Globalization;
+@using PagedList.Mvc;
 @{
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
     CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 }
-@model List<object>
-
+@model PagedList.IPagedList<object>
 @foreach (var item in @ViewBag.Brand)
 {
     <section class="blog-single section " style="display: flex; flex-wrap: nowrap;">
@@ -72,7 +72,7 @@
             }
         </div>
 
-        {{ $all_product->links() }}
+        //Html.PagedListPager(Model, page => Url.Action("product_listing", "ProductListingController", new { page }))
     </div>
     <div class="ps-sidebar" data-mh="product-listing">
         <aside class="ps-widget--sidebar ps-widget--category">
@@ -134,4 +134,22 @@
         </aside>
     </div>
 </div>
+<script type="text/javascript">
+		$(document).ready(function(){
+			$( "#slider-range" ).slider({
+			range: true,
+			min: {{$min_price_range}},
+			max: {{$max_price_range}},
+			step: 100000,
+			values: [ {{$min_price}} , {{$max_price}} ],
+			slide: function( event, ui ) {
+				$( "#sotien" ).val( ui.values[ 0 ] + " đ - " + ui.values[ 1 ] + " đ");
+				$( "#start_price" ).val( ui.values[ 0 ] );
+				$( "#end_price" ).val( ui.values[ 1 ] );
+			}
+			});
+			$( "#sotien" ).val( $( "#slider-range" ).slider( "values", 0 ) +
+			" đ - " + $( "#slider-range" ).slider( "values", 1 ) + " đ");
+		});
 
+</script>
