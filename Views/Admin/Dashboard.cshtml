@@ -168,17 +168,17 @@
                             <div class="card-head-row">
                                 <div class="card-title">Biểu đồ doanh thu</div>
                                 <div class="card-tools">
-                                    <a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
-                                        <span class="btn-label">
-                                            <i class="fa fa-pencil"></i>
-                                        </span>
-                                        Export
-                                    </a>
-                                    <a href="#" class="btn btn-info btn-border btn-round btn-sm">
+                                    <a target="_blank" rel="noopener noreferrer" id="print-revenue-report" href="~/Report/print_revenue_report" class="btn btn-info btn-border btn-round btn-sm">
                                         <span class="btn-label">
                                             <i class="fa fa-print"></i>
                                         </span>
-                                        Print
+                                        In thống kê doanh thu Bán hàng
+                                    </a>
+                                    <a target="_blank" rel="noopener noreferrer" id="print-customer-report" href="~/Report/print_customer_report" class="btn btn-info btn-border btn-round btn-sm">
+                                        <span class="btn-label">
+                                            <i class="fa fa-print"></i>
+                                        </span>
+                                        In thống kê doanh thu Khách hàng
                                     </a>
                                 </div>
                             </div>
@@ -271,6 +271,12 @@
                         <div class="card-header">
                             <div class="card-title"><i class="fas fa-fire" style="color:red;"></i> Top sản phẩm bán chạy</div>
                             <small class="text-muted">Tháng @DateTime.Now.AddMonths(-1).Month và tháng @DateTime.Now.Month</small>
+                            <a target="_blank" style="float:right" rel="noopener noreferrer" id="print-product-report" href="Report/print_product_report" class="btn btn-info btn-border btn-round btn-sm">
+                                <span class="btn-label">
+                                    <i class="fa fa-print"></i>
+                                </span>
+                                In thống kê sản phẩm
+                            </a>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -792,6 +798,18 @@
                         data: { tu_ngay: tu_ngay, den_ngay: den_ngay },
                         success: function (data) {
                             chart.setData(data);
+                            var newURL = "/Report/print_revenue_report?tu_ngay=tu-ngay&den_ngay=den-ngay";
+                            newURL = newURL.replace('tu-ngay', tu_ngay);
+                            newURL = newURL.replace('den-ngay', den_ngay);
+                            $('#print-revenue-report').attr("href", newURL);
+                            var newProductURL = "/Report/print_product_report?tu_ngay=tu-ngay&den_ngay=den-ngay";
+                            newProductURL = newProductURL.replace('tu-ngay', tu_ngay);
+                            newProductURL = newProductURL.replace('den-ngay', den_ngay);
+                            $('#print-product-report').attr("href", newProductURL);
+                            var newCustomerURL = "/Report/print_customer_report?tu_ngay=tu-ngay&den_ngay=den-ngay";
+                            newCustomerURL = newCustomerURL.replace('tu-ngay', tu_ngay);
+                            newCustomerURL = newCustomerURL.replace('den-ngay', den_ngay);
+                            $('#print-customer-report').attr("href", newCustomerURL);
                         },
                         error: function (data) {
                             swal({

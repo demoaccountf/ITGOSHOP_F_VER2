@@ -411,8 +411,18 @@ namespace ITGoShop_F_Ver2.Models
                                        System.Globalization.CultureInfo.InvariantCulture);
 
             var statistic = Statistic.Where(s => s.StatisticDate == myDate).FirstOrDefault();
-            if(statistic != null)
-                System.Diagnostics.Debug.WriteLine("SD: " + statistic.StatisticDate);
+            //if(statistic != null)
+            //    System.Diagnostics.Debug.WriteLine("SD: " + statistic.StatisticDate);
+            return statistic;
+        }
+
+        public List<Statistic> getStatistic(DateTime tu_ngay, DateTime den_ngay)
+        {
+            // Chuyển đổi như vầy để set Time = 00:00:00 để so sánh với statisticDate (kiểu Date, ko có Time) trong CSDL
+            tu_ngay = DateTime.ParseExact(tu_ngay.ToString("yyyy-MM-dd"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            den_ngay = DateTime.ParseExact(den_ngay.ToString("yyyy-MM-dd"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+
+            var statistic = Statistic.Where(s => s.StatisticDate >= tu_ngay && s.StatisticDate <= den_ngay).ToList();
             return statistic;
         }
 

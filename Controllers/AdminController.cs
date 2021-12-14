@@ -135,8 +135,8 @@ namespace ITGoShop_F_Ver2.Controllers
         public List<object> filter_by_date(DateTime den_ngay, DateTime tu_ngay)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            System.Diagnostics.Debug.WriteLine(den_ngay);
-            System.Diagnostics.Debug.WriteLine(tu_ngay);
+            //System.Diagnostics.Debug.WriteLine(den_ngay);
+            //System.Diagnostics.Debug.WriteLine(tu_ngay);
             return context.getRevenueByDate(tu_ngay, den_ngay);
         }
     }
