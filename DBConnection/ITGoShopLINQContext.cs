@@ -30,7 +30,8 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<Campaign> Campaign { set; get; }
         public DbSet<Order> Order { set; get; }
         public DbSet<OrderDetail> OrderDetail { set; get; }
-        
+        public DbSet<Blog> Blog { set; get; }
+
         public DbSet<LoginHistory> LoginHistory { set; get; }
         public DbSet<ShipMethod> ShipMethod { set; get; }
         public DbSet<ProductGallary> ProductGallary { set; get; }
@@ -51,6 +52,12 @@ namespace ITGoShop_F_Ver2.Models
             SaveChanges();
         }
 
+        public void saveBlog(Blog newBlog)
+        {
+            newBlog.DateCreate = DateTime.Now;
+            Blog.Add(newBlog);
+            SaveChanges();
+        }
         public void saveCategory(Category newCate)
         {
             Category.Add(newCate);

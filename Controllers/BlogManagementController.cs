@@ -42,8 +42,8 @@ namespace ITGoShop_F_Ver2.Controllers
             }
 
             var context = new ITGoShopLINQContext();
-           // context.saveProduct(newProduct);
-            return RedirectToAction("add_product");
+            context.saveBlog(newBlog);
+            return RedirectToAction("add_content");
 
         }
         public IActionResult view_content()

@@ -25,7 +25,7 @@ namespace ITGoShop_F_Ver2.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string kw_submit)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
@@ -75,9 +75,17 @@ namespace ITGoShop_F_Ver2.Controllers
             }
             return RedirectToAction("login", new { message = "Mật khẩu hoặc tài khoản sai. Xin nhập lại!" });
         }
-
-        public IActionResult search_result()
+        public IActionResult search_result(string kw_submit)
         {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.AllCategory = context.getAllCategory();
+            ViewBag.AllBrand = context.getAllBrand();
+            ViewBag.AllSubBrand = context.getAllSubBrand();
+            ViewBag.AllBlog = context.getAllBlog();
+            ViewBag.Result1 = context.FindBlog(kw_submit);
+            ViewBag.Result2 = context.FindProduct(kw_submit);
+            
+
             return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

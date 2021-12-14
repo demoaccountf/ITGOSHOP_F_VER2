@@ -1,10 +1,10 @@
 ﻿@using System.Globalization;
+@using PagedList.Mvc;
 @{
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
     CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 }
-@model List<object>
-
+@model PagedList.IPagedList<object>
 @foreach (var item in @ViewBag.Brand)
 {
     <section class="blog-single section " style="display: flex; flex-wrap: nowrap;">
@@ -26,6 +26,19 @@
 }
 <div class="ps-products-wrap pr-80 pl-80 pb-80">
     <div class="ps-products" data-mh="product-listing">
+        <div class="ps-product-action">
+            <div class="ps-product__filter">
+                <form>
+                    <select name="sort" id="sort" class="form-control" style="font-size:12px;">
+                        <option value="{{Request::url()}}?sort_by=none" style="font-size:12px;">Sắp Xếp Theo</option>
+                        <option value="{{Request::url()}}?sort_by=tangdan" style="font-size:12px;">_Giá Tăng Dần_ </option>
+                        <option value="{{Request::url()}}?sort_by=giamdan" style="font-size:12px;">_Giá Giảm Dần_ </option>
+                        <option value="{{Request::url()}}?sort_by=az" style="font-size:12px;">_A - Z_ </option>
+                        <option value="{{Request::url()}}?sort_by=za" style="font-size:12px;">_Z - A_ </option>
+                    </select>
+                </form>
+            </div>
+        </div>
         <div class="ps-product__columns">
             @foreach (var item in @ViewBag.BrandProduct)
             {
@@ -59,7 +72,7 @@
             }
         </div>
 
-        {{ $all_product->links() }}
+        //Html.PagedListPager(Model, page => Url.Action("product_listing", "ProductListingController", new { page }))
     </div>
     <div class="ps-sidebar" data-mh="product-listing">
         <aside class="ps-widget--sidebar ps-widget--category">
@@ -121,4 +134,22 @@
         </aside>
     </div>
 </div>
+<script type="text/javascript">
+		$(document).ready(function(){
+			$( "#slider-range" ).slider({
+			range: true,
+			min: {{$min_price_range}},
+			max: {{$max_price_range}},
+			step: 100000,
+			values: [ {{$min_price}} , {{$max_price}} ],
+			slide: function( event, ui ) {
+				$( "#sotien" ).val( ui.values[ 0 ] + " đ - " + ui.values[ 1 ] + " đ");
+				$( "#start_price" ).val( ui.values[ 0 ] );
+				$( "#end_price" ).val( ui.values[ 1 ] );
+			}
+			});
+			$( "#sotien" ).val( $( "#slider-range" ).slider( "values", 0 ) +
+			" đ - " + $( "#slider-range" ).slider( "values", 1 ) + " đ");
+		});
 
+</script>

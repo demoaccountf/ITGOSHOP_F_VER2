@@ -27,6 +27,7 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllBannerSlider = context.getAllBannerSliders();
             return View();
         }
+        
 
         public void update_slider_status(int SliderId, int Status)
         {
