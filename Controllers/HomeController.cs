@@ -101,7 +101,7 @@ namespace ITGoShop_F_Ver2.Controllers
             HttpContext.Session.Remove(customerLastName);
             HttpContext.Session.Remove(customerFirstName);
             HttpContext.Session.Remove(customerImage);
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
     }
