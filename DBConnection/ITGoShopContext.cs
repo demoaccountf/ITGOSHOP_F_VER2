@@ -1764,6 +1764,105 @@ namespace ITGoShop_F_Ver2.Models
             return list;
         }
 
+        public List<object> getCustomerRevenueStatistic(DateTime tu_ngay, DateTime den_ngay)
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT U.UserId, FirstName, LastName, SUM(OrderQuantity * (Price - Cost)) as Revenue, COUNT(DISTINCT O.OrderId) as NumberOrder
+                            FROM ((`user` U JOIN `order` O ON O.UserId = U.UserId)
+		                            JOIN `orderdetail` OD ON OD.OrderId = O.OrderId)
+        	                            JOIN `product` P ON P.ProductId = OD.ProductId
+                            WHERE Admin = 0
+                            AND OrderDate BETWEEN @startdate AND @enddate
+                            GROUP BY U.UserId, FirstName, LastName;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("startdate", tu_ngay);
+                cmd.Parameters.AddWithValue("enddate", den_ngay);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            Revenue = Convert.ToInt32(reader["Revenue"]),
+                            LastName = reader["LastName"].ToString(),
+                            FirstName = reader["FirstName"].ToString(),
+                            NumberOrder = Convert.ToInt32(reader["NumberOrder"]),
+                        };
+                        list.Add(obj);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public List<object> getCustomerLoginStatistic(DateTime tu_ngay, DateTime den_ngay)
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT COUNT(*) AS NumberAccess, FirstName, LastName
+                            FROM `loginhistory` L JOIN `user` U ON U.UserId = L.UserId
+                            WHERE Admin = 0 
+                            AND LOGINDATE BETWEEN @startdate AND @enddate 
+                            GROUP BY FirstName, LastName";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("startdate", tu_ngay);
+                cmd.Parameters.AddWithValue("enddate", den_ngay);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            NumberAccess = Convert.ToInt32(reader["numberAccess"]),
+                            LastName = reader["LastName"].ToString(),
+                            FirstName = reader["FirstName"].ToString(),
+                        };
+                        list.Add(obj);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public List<object> getKhachHangTiemNang(DateTime tu_ngay, DateTime den_ngay)
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT COUNT(*) AS NumberAccess, FirstName, LastName
+                            FROM `loginhistory` L JOIN `user` U ON U.UserId = L.UserId
+                            WHERE Admin = 0 
+                            AND LOGINDATE BETWEEN @startdate AND @enddate 
+                            GROUP BY FirstName, LastName
+                            ORDER BY NumberAccess DESC
+                            LIMIT 5;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("startdate", tu_ngay);
+                cmd.Parameters.AddWithValue("enddate", den_ngay);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            NumberAccess = Convert.ToInt32(reader["numberAccess"]),
+                            LastName = reader["LastName"].ToString(),
+                            FirstName = reader["FirstName"].ToString(),
+                        };
+                        list.Add(obj);
+                    }
+                }
+            }
+            return list;
+        }
+
+
         /*================Code thầy Hùng =================*/
         public Product findProduct(int Id)
         {
