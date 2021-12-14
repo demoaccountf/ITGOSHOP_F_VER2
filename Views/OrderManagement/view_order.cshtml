@@ -42,7 +42,6 @@
                                             <th>Tổng đơn hàng</th>
                                             <th>Trạng thái đơn hàng</th>
                                             <th>Trạng thái thanh toán</th>
-
                                             <th> Thao tác </th>
                                         </tr>
                                     </thead>
@@ -52,18 +51,17 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    <a href="~/order_detail/@item.GetType().GetProperty("OrderId").GetValue(item, null)">
+                                                    <a href="/OrderManagement/order_detail?orderId=@item.GetType().GetProperty("OrderId").GetValue(item, null)">
                                                         <span class="OrderId">@item.GetType().GetProperty("OrderId").GetValue(item, null)</span>
                                                     </a>
                                                 </td>
 
-                                                <td>@item.GetType().GetProperty("FirstName").GetValue(item, null) @item.GetType().GetProperty("LastName").GetValue(item, null)</td>
+                                                <td>@item.GetType().GetProperty("LastName").GetValue(item, null) @item.GetType().GetProperty("FirstName").GetValue(item, null)</td>
                                                 <td>@item.GetType().GetProperty("Total").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</td>
 
                                                 <td class="OrderStatus" style="color: #77ACF1; font-size: 14px; font-weight: 600; text-align: center;">@item.GetType().GetProperty("OrderStatus").GetValue(item, null)<!-- CHÚ Ý !!!! Không thêm khoảng cách (SPACE) vô đây, tránh bị lỗi js  --></td>
                                                 <td class="PaymentStatus" style="color: #77ACF1; font-size: 14px; font-weight: 600; text-align: center;">@if(@item.GetType().GetProperty("OrderStatus").GetValue(item, null) != "Đã hủy"){@item.GetType().GetProperty("PaymentStatus").GetValue(item, null)}else{<p>-</p>}<!-- CHÚ Ý !!!! Không thêm khoảng cách (SPACE) vô đây, tránh bị lỗi js  -->
                                                 </td>
-
                                                 <td>
                                                     @if (@item.GetType().GetProperty("OrderStatus").GetValue(item, null) != "Đã hủy")
                                                     {
@@ -73,7 +71,7 @@
                                                                     <i class="fa fa-edit text-active"></i>
                                                                 </a>
                                                             </button>
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="In đơn hàng">
+                                                            <button type="button" onclick="window.open('/Report/print_invoice/?orderId=@item.GetType().GetProperty("OrderId").GetValue(item, null)');" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="In đơn hàng">
                                                                 <a class="active" ui-toggle-class="">
                                                                     <i class="fa fa-print text-active"></i>
                                                                 </a>

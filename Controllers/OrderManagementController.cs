@@ -1,4 +1,5 @@
 ﻿using ITGoShop_F_Ver2.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,22 @@ namespace ITGoShop_F_Ver2.Controllers
         {
             var context = new ITGoShopLINQContext();
             context.updateOrderStatus(OrderId, OrderStatus, PaymentStatus);
+        }
+
+        public IActionResult order_detail(int orderId)
+        {
+            /*===Cái này để load layout ===*/
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.AllCategory = context.getAllCategory();
+            ViewBag.AllBrand = context.getAllBrand();
+            ViewBag.AllSubBrand = context.getAllSubBrand();
+            /*======*/
+           
+            var OrderInfo = context.getOrderInfo(orderId);
+            ViewBag.DefaultShippingAddress = context.getDefaultShippingAddress((int)OrderInfo.GetType().GetProperty("UserId").GetValue(OrderInfo, null));
+            ViewBag.OrderInfo = OrderInfo;
+            ViewBag.OrderDetail = context.getOrderDetail(orderId);
+            return View();
         }
     }
 }

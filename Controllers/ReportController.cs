@@ -109,5 +109,14 @@ namespace ITGoShop_F_Ver2.Controllers
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             return context.countLoginByDate(tu_ngay, den_ngay);
         }
+        public IActionResult print_invoice(int orderId)
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            var OrderInfo = context.getOrderInfo(orderId);
+            ViewBag.DefaultShippingAddress = context.getDefaultShippingAddress((int)OrderInfo.GetType().GetProperty("UserId").GetValue(OrderInfo, null));
+            ViewBag.OrderInfo = OrderInfo;
+            ViewBag.OrderDetail = context.getOrderDetail(orderId);
+            return View();
+        }
     }
 }

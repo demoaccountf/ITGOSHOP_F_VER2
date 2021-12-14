@@ -1862,7 +1862,43 @@ namespace ITGoShop_F_Ver2.Models
             return list;
         }
 
-
+        public object getOrderInfo(int OrderId)
+        {
+            object orderInfo = new object();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT U.UserId as UserId, OrderId, LastName, FirstName, OrderDate, OrderStatus, Email, Mobile, ShipFee, PaymentMethod, Total, PaymentStatus, ShipMethod
+                        FROM `order` O JOIN `user` U ON U.UserId = O.UserId 
+                        WHERE OrderId = @orderid";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("orderid", OrderId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        orderInfo = new
+                        {
+                            UserId = Convert.ToInt32(reader["UserId"]),
+                            OrderId = Convert.ToInt32(reader["OrderId"]),
+                            LastName = reader["LastName"].ToString(),
+                            FirstName = reader["FirstName"].ToString(),
+                            OrderDate = (DateTime)reader["OrderDate"],
+                            OrderStatus = reader["OrderStatus"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Mobile = reader["Mobile"].ToString(),
+                            ShipFee = Convert.ToInt32(reader["ShipFee"]),
+                            PaymentMethod = reader["PaymentMethod"].ToString(),
+                            Total = Convert.ToInt32(reader["Total"]),
+                            PaymentStatus = reader["PaymentStatus"].ToString(),
+                            ShipMethod = reader["ShipMethod"].ToString(),
+                        };
+                    }
+                }
+            }
+            return orderInfo;
+        }
+        
         /*================Code thầy Hùng =================*/
         public Product findProduct(int Id)
         {
