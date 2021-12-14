@@ -268,6 +268,44 @@ namespace ITGoShop_F_Ver2.Models
             return products;
         }
 
+        public List<object> getTopProductNotLimit(DateTime startDate, DateTime endDate)
+        {
+            List<object> products = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT SUM(OrderQuantity) AS NumberSolded , ProductName, ProductImage, P.ProductId, StartsAt, Quantity, Cost, Price " +
+                    "FROM (`product` P JOIN `orderdetail` OD ON P.ProductId = OD.ProductId) " +
+                    "JOIN `order` O ON O.OrderId = OD.OrderId " +
+                    "WHERE OrderStatus <> 'Đã hủy' " +
+                    "AND ORDERDATE BETWEEN @startdate AND @enddate " +
+                    "GROUP BY ProductName, ProductImage, P.ProductId, StartsAt, Quantity, Cost, Price " +
+                    "ORDER BY SUM(OrderQuantity) DESC ";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("startdate", startDate.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("enddate", endDate.ToString("yyyy-MM-dd"));
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            StartsAt = (DateTime)reader["StartsAt"],
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            Cost = Convert.ToInt32(reader["Cost"]),
+                            Price = Convert.ToInt32(reader["Price"]),
+                            NumberSolded = Convert.ToInt32(reader["NumberSolded"])
+                        };
+                        products.Add(obj);
+                    }
+                }
+            }
+            return products;
+        }
+
         public List<Blog> getTopBlogView()
         {
             List<Blog> blogs = new List<Blog>();
@@ -1687,6 +1725,39 @@ namespace ITGoShop_F_Ver2.Models
                             CreatedAt = (DateTime)reader[8],
                         };
                         list.Add(obj);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public List<Product> getSanPhamKhongBanDuoc(DateTime tu_ngay, DateTime den_ngay)
+        {
+            List<Product> list = new List<Product>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT * FROM `product`
+                        WHERE ProductId NOT IN (    SELECT ProductId
+                        	                        FROM `order` O JOIN `orderdetail` OD ON O.OrderId = OD.OrderId
+                                                    WHERE OrderDate BETWEEN @startdate AND @enddate)";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("startdate", tu_ngay);
+                cmd.Parameters.AddWithValue("enddate", den_ngay);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var product = new Product()
+                        {
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            Price = Convert.ToInt32(reader["Price"]),
+                            Cost = Convert.ToInt32(reader["Cost"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            ProductImage = reader["ProductImage"].ToString(),
+                            Sold = Convert.ToInt32(reader["Sold"]),
+                        };
+                        list.Add(product);
                     }
                 }
             }
