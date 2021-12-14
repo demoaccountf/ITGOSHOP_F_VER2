@@ -77,14 +77,14 @@
     <!-- Header -->
     <div class="header--sidebar"></div>
     <header class="header">
-        <nav class="navigation">
+        <nav class="navigation" style="height:60px; margin-bottom: 15px;">
             <div class="container-fluid">
                 <div class="navigation__column left">
                     <div class="header__logo pl-40"><a class="ps-logo" href="/Home/Index"><img src="~/public/client/Images/logo.png" alt=""></a></div>
                     <input type="text" id="input-customer-id" value="@customerId" hidden><!--Đừng xóa cái này  -->
                     <input type="text" id="input-admin-id" value="@adminId" hidden>
                 </div>
-                <div class="navigation__column center">
+                <div class="navigation__column center" style="height:60px; margin-bottom: 15px;">
                     <ul class="main-menu menu">
                         @foreach (var item in @ViewBag.AllCategory)
                         {
@@ -148,7 +148,7 @@
                         <li class="menu-item"><a href="/Blog/all_blog">Tin Tức</a></li>
                     </ul>
                 </div>
-                <div class="navigation__column right">
+                <div class="navigation__column right" style="height:60px; margin-bottom: 15px;">
                     <form class="ps-search--header" action="/Home/search_result" name="timkiem" method="post">
                         <input class="form-control" type="text" id="keyword" name="kw_submit" placeholder="Tìm kiếm">
                         <button type="submit" name="submit"><i class="fa fa-search"></i></button>
