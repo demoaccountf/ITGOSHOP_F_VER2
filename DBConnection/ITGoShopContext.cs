@@ -1898,7 +1898,75 @@ namespace ITGoShop_F_Ver2.Models
             }
             return orderInfo;
         }
-        
+        public List<object> getRating(int ProductId)
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT U.UserId as UserId, FirstName, LastName, Title, Content, Rating, CreatedAt, UserImage, ProductRatingStatus
+                            FROM `productrating` PR JOIN `user` U ON PR.UserId = U.UserId 
+                            WHERE PR.ProductId = @productid";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("productid", ProductId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            UserId = Convert.ToInt32(reader["UserId"]),
+                            LastName = reader["LastName"].ToString(),
+                            FirstName = reader["FirstName"].ToString(),
+                            UserImage = reader["UserImage"].ToString(),
+                            Title = reader["Title"].ToString(),
+                            Content = reader["Content"].ToString(),
+                            Rating = Convert.ToInt32(reader["Rating"]),
+                            CreatedAt = (DateTime)reader["CreatedAt"],
+                            ProductRatingStatus = reader["ProductRatingStatus"].ToString(),
+                        };
+                        list.Add(obj);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public List<object> getAllRating()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT U.UserId as UserId, FirstName, LastName, Title, PR.Content, Rating, PR.CreatedAt, UserImage, ProductName, PR.ProductId as ProductId, ProductRatingStatus
+                            FROM (`productrating` PR JOIN `user` U ON PR.UserId = U.UserId )
+                                JOIN `product` P ON P.ProductId = PR.ProductId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            UserId = Convert.ToInt32(reader["UserId"]),
+                            LastName = reader["LastName"].ToString(),
+                            FirstName = reader["FirstName"].ToString(),
+                            UserImage = reader["UserImage"].ToString(),
+                            Title = reader["Title"].ToString(),
+                            Content = reader["Content"].ToString(),
+                            Rating = Convert.ToInt32(reader["Rating"]),
+                            CreatedAt = (DateTime)reader["CreatedAt"],
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            ProductRatingStatus = Convert.ToInt32(reader["ProductRatingStatus"]),
+                        };
+                        list.Add(obj);
+                    }
+                }
+            }
+            return list;
+        }
+
         /*================Code thầy Hùng =================*/
         public Product findProduct(int Id)
         {

@@ -27,7 +27,10 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.ProductDetail = productDetail;
             ViewBag.RelatedProduct = linqContext.getRelatedProduct(productId, categoryId, brandId);
             ViewBag.ProductGallary = linqContext.getProductGallary(productId);
-            return View("product_detail");
+            List<object> ratingList = context.getRating(productId);
+            ViewBag.RatingList = ratingList;
+            ViewBag.AvgRating = ratingList.Average(item => (int)item.GetType().GetProperty("Rating").GetValue(item, null));
+            return View("Index");
         }
 
         public IActionResult product_detail2()
@@ -37,8 +40,6 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllCategory = context.getAllCategory();
             ViewBag.AllBrand = context.getAllBrand();
             ViewBag.AllSubBrand = context.getAllSubBrand();
-
-            
             return View();
         }
 

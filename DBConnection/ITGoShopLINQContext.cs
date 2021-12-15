@@ -565,5 +565,23 @@ namespace ITGoShop_F_Ver2.Models
             ProductRating.Add(productRating);
             SaveChanges();
         }
+
+        public void updateRatingStatus(int userId, int productId, int status)
+        {
+            var rating = ProductRating.Where(p => p.UserId == userId && p.ProductId == productId).FirstOrDefault();
+            rating.ProductRatingStatus = status;
+            SaveChanges();
+        }
+
+        public void deleteRating(int userId, int productId)
+        {
+            var rating = ProductRating.Where(p => p.UserId == userId && p.ProductId == productId).FirstOrDefault();
+
+            if (rating != null)
+            {
+                Remove(rating);
+                SaveChanges();
+            }
+        }
     }
 }
