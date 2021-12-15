@@ -28,7 +28,6 @@ namespace ITGoShop_F_Ver2.Controllers
         }
         public IActionResult save_shipmethod(ShipMethod newShipMethod)
         {
-           
             var context = new ITGoShopLINQContext();
             context.saveShipMethod(newShipMethod);
             return RedirectToAction("view_shipmethod");
@@ -36,6 +35,17 @@ namespace ITGoShop_F_Ver2.Controllers
         public IActionResult add_shipmethod()
         {
             return View();
+        }
+        public IActionResult view_extra_shipfee()
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.ExtraShipfee = context.getAllExtraShipfee();
+            return View();
+        }
+        public void update_extra_shipfee(string maqh, int ExtraShippingFee)
+        {
+            var context = new ITGoShopLINQContext();
+            context.updateExtraShipfee(maqh, ExtraShippingFee);
         }
     }
 }

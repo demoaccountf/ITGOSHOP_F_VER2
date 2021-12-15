@@ -1528,7 +1528,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                var str = @"SELECT ShippingAddressId, Address, Phone, TT.name, QH.name, XP.name, ReceiverName, ShippingAddressType
+                var str = @"SELECT ShippingAddressId, Address, Phone, TT.name, QH.name, XP.name, ReceiverName, ShippingAddressType, ExtraShippingFee
                         FROM shippingaddress SA, devvn_quanhuyen QH, devvn_tinhthanhpho TT, devvn_xaphuongthitran XP
                         WHERE SA.matp = TT.matp
                         AND SA.maqh = QH.maqh
@@ -1551,6 +1551,7 @@ namespace ITGoShop_F_Ver2.Models
                             XaPhuong = reader[5].ToString(),
                             ReceiverName = reader[6].ToString(),
                             ShippingAddressType = reader[7].ToString(),
+                            ExtraShippingFee = Convert.ToInt32(reader[8].ToString()),
                         };
                         return item;
                     }
@@ -1996,6 +1997,32 @@ namespace ITGoShop_F_Ver2.Models
                             View = Convert.ToInt32(reader["View"]),
                             Sold = Convert.ToInt32(reader["Sold"]),
                             StartsAt = (DateTime)reader["StartsAt"],
+                        };
+                        list.Add(obj);
+                    }
+                }
+            }
+            return list;
+        }
+        public List<object> getAllExtraShipfee()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT QH.name as quanhuyen , TP.name as tinhtp, maqh, ExtraShippingFee 
+                            FROM devvn_quanhuyen QH JOIN devvn_tinhthanhpho TP ON QH.matp = TP.matp;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            quanhuyen = reader["quanhuyen"].ToString(),
+                            maqh = reader["maqh"].ToString(),
+                            ExtraShippingFee = Convert.ToInt32(reader["ExtraShippingFee"]),
+                            tinhtp = reader["tinhtp"].ToString(),
                         };
                         list.Add(obj);
                     }

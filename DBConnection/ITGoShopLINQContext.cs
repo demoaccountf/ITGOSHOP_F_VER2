@@ -22,6 +22,8 @@ namespace ITGoShop_F_Ver2.Models
             modelBuilder.Entity<WishList>().HasKey(wl => new { wl.ProductId, wl.UserId });
             modelBuilder.Entity<OrderTracking>().HasKey(ot => new { ot.OrderId, ot.OrderStatus });
             modelBuilder.Entity<ProductRating>().HasKey(pt => new { pt.ProductId, pt.UserId });
+            modelBuilder.Entity<LoginHistory>().HasKey(lh => new { lh.UserId});
+            modelBuilder.Entity<devvn_quanhuyen>().HasKey(qh => new { qh.Maqh });
         }
         public DbSet<User> User { set; get; }   // Bảng User trong DataBase, <User> tên lớp
         public DbSet<Product> Product { set; get; }
@@ -580,6 +582,16 @@ namespace ITGoShop_F_Ver2.Models
             if (rating != null)
             {
                 Remove(rating);
+                SaveChanges();
+            }
+        }
+
+        public void updateExtraShipfee(string maqh, int newExtraShippingFee)
+        {
+            var quanhuyenInfo = devvn_quanhuyen.Where(qh => qh.Maqh == maqh).FirstOrDefault();
+            if (quanhuyenInfo != null)
+            {
+                quanhuyenInfo.ExtraShippingFee = newExtraShippingFee;
                 SaveChanges();
             }
         }
