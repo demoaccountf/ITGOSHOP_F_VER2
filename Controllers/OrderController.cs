@@ -62,8 +62,10 @@ namespace ITGoShop_F_Ver2.Controllers
             if(numberOfProduct > 1)
                 order.Description +=" và " + (numberOfProduct - 1) + " sản phẩm khác";
             int orderId = linqContext.createOrder(order);
+            // Thêm theo dõi đơn hàng
+            linqContext.addOrderTracking(orderId, "Đặt hàng thành công");
 
-            foreach(var item in cart)
+            foreach (var item in cart)
             {
                 OrderDetail orderDetail = new OrderDetail() 
                 { 
@@ -96,9 +98,7 @@ namespace ITGoShop_F_Ver2.Controllers
 
                 // Trừ số lượng tồn kho
                 linqContext.updateSoldProduct(productInfo.ProductId, item.Quantity);
-
-                // Thêm theo dõi đơn hàng
-                linqContext.addOrderTracking(orderId, "Đặt hàng thành công");
+               
             }
             return RedirectToAction("order_detail", new { orderId = orderId });
         }

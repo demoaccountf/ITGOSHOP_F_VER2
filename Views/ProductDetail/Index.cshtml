@@ -246,11 +246,11 @@
                                     <H4>@item.GetType().GetProperty("LastName").GetValue(item, null) @item.GetType().GetProperty("FirstName").GetValue(item, null)</H4>
                                     
                                     @{DateTime createdAt = item.GetType().GetProperty("CreatedAt").GetValue(item, null);
-                                    int thangdanhgia = (DateTime.Now - createdAt).Days;
-                                    int ngaydanhgia = (DateTime.Now - createdAt).Days;
-                                    int giodanhgia = (DateTime.Now - createdAt).Days;
-                                    int phutdanhgia = (DateTime.Now - createdAt).Days;
-                                    int giaydanhgia = (DateTime.Now - createdAt).Days;}
+                                    double thangdanhgia = Math.Round((DateTime.Now - createdAt).TotalDays / 30, 0);
+                                    double ngaydanhgia = Math.Round((DateTime.Now - createdAt).TotalDays, 0);
+                                    double giodanhgia = Math.Round((DateTime.Now - createdAt).TotalHours, 0);
+                                    double phutdanhgia = Math.Round((DateTime.Now - createdAt).TotalMinutes, 0);
+                                    double giaydanhgia = Math.Round((DateTime.Now - createdAt).TotalSeconds, 0);}
 
                                     @if(thangdanhgia > 0){ <p>Đánh giá vào @thangdanhgia tháng trước</p>}
                                     else if(ngaydanhgia > 0){<p>Đánh giá vào @ngaydanhgia ngày trước</p>}

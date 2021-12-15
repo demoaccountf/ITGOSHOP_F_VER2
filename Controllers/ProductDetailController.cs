@@ -29,7 +29,8 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.ProductGallary = linqContext.getProductGallary(productId);
             List<object> ratingList = context.getRating(productId);
             ViewBag.RatingList = ratingList;
-            ViewBag.AvgRating = ratingList.Average(item => (int)item.GetType().GetProperty("Rating").GetValue(item, null));
+            if(ratingList.Count > 0)
+                ViewBag.AvgRating = ratingList.Average(item => (int)item.GetType().GetProperty("Rating").GetValue(item, null));
             return View("Index");
         }
 

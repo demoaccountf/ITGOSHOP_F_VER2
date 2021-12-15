@@ -1966,7 +1966,43 @@ namespace ITGoShop_F_Ver2.Models
             }
             return list;
         }
-
+        public List<object> getGiamGiaSoc()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = @"SELECT AVG(Rating) AS avg_rating,  ProductImage, ProductName, P.ProductId , Price, Cost, Discount, View, Sold, StartsAt
+                            FROM `productrating` PR JOIN `product` P ON P.ProductId = PR.ProductId
+                            group by ProductImage, ProductName, P.ProductId, Price, Cost, Discount, View, Sold, StartsAt
+                            LIMIT 6;";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            ProductImage = reader["ProductImage"].ToString(),
+                            //Title = reader["Title"].ToString(),
+                            //Content = reader["Content"].ToString(),
+                            AvgRating = Convert.ToInt32(reader["avg_rating"]),
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
+                            ProductName = reader["ProductName"].ToString(),
+                            //ProductRatingStatus = Convert.ToInt32(reader["ProductRatingStatus"]),
+                            Price = Convert.ToInt32(reader["Price"]),
+                            Cost = Convert.ToInt32(reader["Cost"]),
+                            Discount = Convert.ToInt32(reader["Discount"]),
+                            View = Convert.ToInt32(reader["View"]),
+                            Sold = Convert.ToInt32(reader["Sold"]),
+                            StartsAt = (DateTime)reader["StartsAt"],
+                        };
+                        list.Add(obj);
+                    }
+                }
+            }
+            return list;
+        }
         /*================Code thầy Hùng =================*/
         public Product findProduct(int Id)
         {

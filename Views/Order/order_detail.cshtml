@@ -56,7 +56,6 @@
                         <i style="font-size: 20px; padding-right: 15px; font-weight:bold;" class="fa fa-user-circle-o" class="fa fa-user-circle-o"></i>
                         <a href="/profile/@customerId" style="color:#333; font-weight:500;">Tài khoản</a>
                     </h4>
-
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <h4 class="mb-0">
@@ -66,12 +65,11 @@
                             <a href="/wishlist'" style="color:#333; font-weight:500;">Sản phẩm yêu thích</a>
                         }
                     </h4>
-
                 </li>
 
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <h4 class="mb-0">
-                        <i style="font-size: 20px; padding-right: 18px;" class="fa fa-history" class="fa fa-history"></i>
+                        <i style="font-size: 20px; padding-right: 18px;" class="fa fa-history"></i>
                         <a href="/my-orders" style="color:#333; font-weight:500;">Lịch sử mua hàng</a>
                     </h4>
                 </li>
@@ -82,6 +80,22 @@
     <div class="col-md-9">
         <h3 style="margin: 20px 0px;">Chi tiết đơn hàng #@ViewBag.OrderInfo.OrderId - <b class="OrderStatus">@ViewBag.OrderInfo.OrderStatus</b> <p style="float:right;">Ngày đặt hàng: @ViewBag.OrderInfo.OrderDate.ToString("HH:mm dd/MM/yyyy") </p></h3>
         <input type="text" class="OrderId" value="@ViewBag.OrderInfo.OrderId" hidden>
+        @if (ViewBag.OrderInfo.PaymentMethod == "Chuyển khoản online" && ViewBag.OrderInfo.PaymentStatus == "Chờ thanh toán" && ViewBag.OrderInfo.OrderStatus != "Đã hủy" && ViewBag.OrderInfo.OrderStatus != "Giao hàng thành công")
+        {
+        <div id="payment-message" style="margin:10px">
+            <div style="background-color: #fbfbfb; border-radius: 8px; padding:20px;margin-bottom:20px">
+                <button class="close-button" style="float:right;font-size:28px;background-color: #fbfbfb;border: none;height: 10px;margin-right: 20px;">&times;</button>
+                <p>Với các đơn hàng thanh toán online, để được giao hàng theo thời gian dự kiến. <br> Quý khách vui lòng chuyển khoản với nội dung ghi rõ <b>Tên & Số Điện Thoại người</b> nhận hàng. Ví dụ: <b>A THANH 0988888888</b></p>
+                <div style="border: 2px solid #fbfbfb; padding: 10px; border-radius:10px">
+                    <p style="line-height: 2;">
+                        <b>Vietcombank - Ngân Hàng Ngoại Thương Việt Nam</b> <br>
+                        Chủ tài khoản: LE LAM LINH <br>
+                        Số tài khoản: <b>0011004366653</b> <br>
+                    </p>
+                </div>
+            </div>
+        </div>
+        }
         <div class="row">
             <div class="col-sm-4">
                 <div class="card panel-default">
@@ -131,7 +145,8 @@
                             <tr>
                                 <td><img style="margin: auto; max-width: 60px; max-height: 60px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt=""></td>
                                 <td>
-                                    @item.GetType().GetProperty("ProductName").GetValue(item, null)<br>
+                                    <a href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)"  style="text-decoration:none; color:black; font-weight:bold">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a>
+                                    <br>
                                     @if (ViewBag.OrderInfo.OrderStatus == "Giao hàng thành công")
                                     {
                                         <button type="button" class="btn btn-primary btn-danh-gia" style="margin:10px 0px;position: inherit;">Đánh giá sản phẩm</button>
@@ -551,5 +566,12 @@
         });
     });
 
+</script>
+<script>
+    $(document).ready(function () {
+        $('.close-button').click(function () {
+            $('#payment-message').slideUp();
+        });
+    });
 </script>
 <!-- Map Section -->

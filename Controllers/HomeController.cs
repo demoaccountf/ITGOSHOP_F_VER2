@@ -45,7 +45,7 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.SliderForHomePage = context.getSliderForHomePage();
 
             var linqContext = new ITGoShopLINQContext();
-            ViewBag.GiamGiaSoc = linqContext.getGiamGiaSoc();
+            ViewBag.GiamGiaSoc = context.getGiamGiaSoc();
             return View();
         }
 
