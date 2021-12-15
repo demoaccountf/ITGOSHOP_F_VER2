@@ -92,7 +92,7 @@ namespace ITGoShop_F_Ver2.Controllers
                                || s.Title.Contains(kw_submit)
                                || s.Summary.Contains(kw_submit)); 
             }
-
+            ViewBag.Result2 = blog;
             var product = from s in linqContext.Product select s;
             if (!String.IsNullOrEmpty(kw_submit))
             {
@@ -100,9 +100,10 @@ namespace ITGoShop_F_Ver2.Controllers
                                || s.Content.Contains(kw_submit));
             }
 
+            ViewBag.Result1 = product;
 
-            
-            return View(product);
+
+            return View();
         }
 
         private IActionResult View(List<Blog> blogs, List<Product> products)
