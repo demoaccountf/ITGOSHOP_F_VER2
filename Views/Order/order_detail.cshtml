@@ -159,8 +159,15 @@
         @{string orderStatus = @ViewBag.OrderInfo.OrderStatus; }
         @if (orderStatus != "Đã hủy" && orderStatus != "Đang giao hàng" && orderStatus != "Đã giao cho đơn vị vận chuyển" && orderStatus != "Giao hàng thành công")
         {
-            <button type="button" style="height:40px;width:150px;float:right;font-size: 14px;" class="btn btn-warning">
+            <button type="button" style="height:40px;width:150px;float:right;font-size: 14px;" class="btn btn-success">
                 <a href="javascript:void(0)" style="text-decoration:none; color: white;" class="button-huy-don-hang">Hủy đơn hàng</a>
+            </button>
+        }
+
+        @if (orderStatus != "Đã hủy")
+        {
+            <button type="button" style="height:40px;width:200px;float:right;font-size: 14px;margin-right:20px" class="btn btn-warning">
+                <a href="/OrderTracking?orderId=@ViewBag.OrderInfo.OrderId" style="text-decoration:none; color: white;">Theo dõi đơn hàng</a>
             </button>
         }
         <p><a href="/Order/my_orders"><< Quay lại đơn hàng của tôi</a></p>

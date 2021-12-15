@@ -96,6 +96,9 @@ namespace ITGoShop_F_Ver2.Controllers
 
                 // Trừ số lượng tồn kho
                 linqContext.updateSoldProduct(productInfo.ProductId, item.Quantity);
+
+                // Thêm theo dõi đơn hàng
+                linqContext.addOrderTracking(orderId, "Đặt hàng thành công");
             }
             return RedirectToAction("order_detail", new { orderId = orderId });
         }

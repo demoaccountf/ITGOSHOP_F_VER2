@@ -21,6 +21,7 @@ namespace ITGoShop_F_Ver2.Controllers
         {
             var context = new ITGoShopLINQContext();
             context.updateOrderStatus(OrderId, OrderStatus, PaymentStatus);
+            context.addOrderTracking(OrderId, OrderStatus);
         }
 
         public IActionResult order_detail(int orderId)

@@ -13,7 +13,6 @@ namespace ITGoShop_F_Ver2.Controllers
         private DateTime estimatedDeliveryTime;
         private string shipMethod;
         private DateTime orderDate;
-        private DateTime? orderDateCompleted;
         private string orderStatus;
         private string paymentMethod;
         private string paymentStatus;
@@ -24,7 +23,7 @@ namespace ITGoShop_F_Ver2.Controllers
         {
         }
 
-        public Order(int orderId, int userId, long total, int shippingAddressId, int shipFee, DateTime estimatedDeliveryTime, string shipMethod, DateTime orderDate, DateTime orderDateCompleted, string orderStatus, string paymentMethod, string paymentStatus, string description, DateTime dateUpdate)
+        public Order(int orderId, int userId, long total, int shippingAddressId, int shipFee, DateTime estimatedDeliveryTime, string shipMethod, DateTime orderDate,  string orderStatus, string paymentMethod, string paymentStatus, string description, DateTime dateUpdate)
         {
             this.orderId = orderId;
             this.userId = userId;
@@ -34,7 +33,6 @@ namespace ITGoShop_F_Ver2.Controllers
             this.estimatedDeliveryTime = estimatedDeliveryTime;
             this.shipMethod = shipMethod;
             this.orderDate = orderDate;
-            this.orderDateCompleted = orderDateCompleted;
             this.orderStatus = orderStatus;
             this.paymentMethod = paymentMethod;
             this.paymentStatus = paymentStatus;
@@ -50,7 +48,6 @@ namespace ITGoShop_F_Ver2.Controllers
         public DateTime EstimatedDeliveryTime { get => estimatedDeliveryTime; set => estimatedDeliveryTime = value; }
         public string ShipMethod { get => shipMethod; set => shipMethod = value; }
         public DateTime OrderDate { get => orderDate; set => orderDate = value; }
-        public DateTime? OrderDateCompleted { get => orderDateCompleted; set => orderDateCompleted = value; }
         public string OrderStatus { get => orderStatus; set => orderStatus = value; }
         public string PaymentMethod { get => paymentMethod; set => paymentMethod = value; }
         public string PaymentStatus { get => paymentStatus; set => paymentStatus = value; }

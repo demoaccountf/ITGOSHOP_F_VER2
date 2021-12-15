@@ -20,6 +20,7 @@ namespace ITGoShop_F_Ver2.Models
             // Hàm này để set primary key cho Entity Framework
             modelBuilder.Entity<OrderDetail>().HasKey(od => new {od.OrderId, od.ProductId });
             modelBuilder.Entity<WishList>().HasKey(wl => new { wl.ProductId, wl.UserId });
+            modelBuilder.Entity<OrderTracking>().HasKey(ot => new { ot.OrderId, ot.OrderStatus });
         }
         public DbSet<User> User { set; get; }   // Bảng User trong DataBase, <User> tên lớp
         public DbSet<Product> Product { set; get; }
@@ -42,6 +43,7 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<ShippingAddress> ShippingAddress { set; get; }
         public DbSet<Statistic> Statistic { set; get; }
         public DbSet<WishList> WishList { set; get; }
+        public DbSet<OrderTracking> OrderTracking { set; get; }
 
         public void saveProduct(Product newProduct)
         {
@@ -244,6 +246,14 @@ namespace ITGoShop_F_Ver2.Models
             order.PaymentStatus = PaymentStatus;
             SaveChanges();
         }
+
+        public void addOrderTracking(int OrderId, string OrderStatus)
+        {
+            OrderTracking orderTracking = new OrderTracking(OrderId, OrderStatus, DateTime.Now);
+            OrderTracking.Add(orderTracking);
+            SaveChanges();
+        }
+
         public void updateOrderStatus(int OrderId, string OrderStatus)
         {
             var order = Order.Where(p => p.OrderId == OrderId).FirstOrDefault();
@@ -466,7 +476,7 @@ namespace ITGoShop_F_Ver2.Models
 
         public List<Order> getOrderListOfCustomer(int userId)
         {
-            var orderList = Order.Where(o => o.UserId == userId).ToList();
+            var orderList = Order.Where(o => o.UserId == userId).OrderByDescending(o => o.OrderDate).ToList();
             return orderList;
         }
 
@@ -525,6 +535,11 @@ namespace ITGoShop_F_Ver2.Models
                 Remove(item);
                 SaveChanges();
             }
+        }
+
+        public List<OrderTracking> getOrderTracking(int orderId)
+        {
+            return OrderTracking.Where(ot => ot.OrderId == orderId).OrderByDescending(ot => ot.CreatedAt).ToList();
         }
     }
 }
