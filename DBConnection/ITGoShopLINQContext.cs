@@ -21,6 +21,7 @@ namespace ITGoShop_F_Ver2.Models
             modelBuilder.Entity<OrderDetail>().HasKey(od => new {od.OrderId, od.ProductId });
             modelBuilder.Entity<WishList>().HasKey(wl => new { wl.ProductId, wl.UserId });
             modelBuilder.Entity<OrderTracking>().HasKey(ot => new { ot.OrderId, ot.OrderStatus });
+            modelBuilder.Entity<ProductRating>().HasKey(pt => new { pt.ProductId, pt.UserId });
         }
         public DbSet<User> User { set; get; }   // Bảng User trong DataBase, <User> tên lớp
         public DbSet<Product> Product { set; get; }
@@ -44,7 +45,7 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<Statistic> Statistic { set; get; }
         public DbSet<WishList> WishList { set; get; }
         public DbSet<OrderTracking> OrderTracking { set; get; }
-
+        public DbSet<ProductRating> ProductRating { set; get; }
         public void saveProduct(Product newProduct)
         {
             newProduct.StartsAt = DateTime.Now;
@@ -540,6 +541,29 @@ namespace ITGoShop_F_Ver2.Models
         public List<OrderTracking> getOrderTracking(int orderId)
         {
             return OrderTracking.Where(ot => ot.OrderId == orderId).OrderByDescending(ot => ot.CreatedAt).ToList();
+        }
+
+        public int isRatingeExit(int productId, int userId)
+        {
+            var productRating = ProductRating.Where(pr => pr.ProductId == productId && pr.UserId == userId).FirstOrDefault();
+            if (productRating == null)
+                return 0;
+            return 1;
+        }
+
+        public void addRating(int productId, string title, string content, int rating, int userId)
+        {
+            ProductRating productRating = new ProductRating() 
+            { 
+                ProductId = productId,
+                Title = title,
+                Content = content,
+                Rating = rating,
+                UserId = userId,
+                CreatedAt = DateTime.Now
+            };
+            ProductRating.Add(productRating);
+            SaveChanges();
         }
     }
 }
