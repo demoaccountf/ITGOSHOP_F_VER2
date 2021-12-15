@@ -1,10 +1,10 @@
 ﻿@using System.Globalization;
-@using X.PagedList.Mvc.Core;
 @{
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
     CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 }
-@model IPagedList<ITGoShop_F_Ver2.Models.Product>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
 @foreach (var item in @ViewBag.Brand)
 {
     <section class="blog-single section " style="display: flex; flex-wrap: nowrap;">
@@ -40,42 +40,49 @@
             </div>
         </div>
         <div class="ps-product__columns">
-            @foreach (var item in Model)
+            @foreach (var item in @ViewBag.OnePageOfProducts)
             {
                 <div class="ps-product__column" style="width: 250px; height: 350px; margin-right: 15px; ">
                     <div class="single-product">
-                        <div class="product-img" style="width: 250px; height: 200px; ">
-                            <a href="/ProductDetail/product_detail?productId=@item.ProductId">
-                                <img class="default-img" style="margin: auto; width: 250px; height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.ProductImage" alt="#">
-                                <img class="hover-img" src="~/public/images_upload/product/@item.ProductImage" alt="#">
+                        <div class="product-img" style="width: 250px; height: 200px;">
+                            <a href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">
+                                <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
+                                <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
+                                @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
+                                @if (@so_ngay_da_moban < 14)
+                                {
+                                    <span class="new">New</span>}
                             </a>
                             <div class="button-head">
                                 <div class="product-action">
-                                    <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Lượt xem: @item.View</span></a>
+                                    <a data-toggle="modal" data-target="#exampleModal" title="Lượt Xem" href="#"><i class=" ti-eye"></i><span>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null)</span></a>
                                     <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Yêu thích</span></a>
                                     <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>So sánh</span></a>
+                                    <input type="text" class="ProductId" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
                                 </div>
                                 <div class="product-action-2">
                                     <a title="Add to cart" class="add-to-cart-a-tag" href="javascript:void(0)">Thêm vào giỏ hàng</a>
-                                    <input type="text" value="@item.ProductId" hidden>
+                                    <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
                                 </div>
                             </div>
                         </div>
                         <div class="product-content">
-                            <h3><a href="/ProductDetail/product_detail?productId=@item.ProductId">@item.ProductName</a></h3>
+                            <h3><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
                             <div class="product-price">
-                                <span>@item.Price.ToString("#,###", cul.NumberFormat) đ</span>
+                                <span style="color:black; font-size:17px"><b>@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</b></span>
+                                @if (@item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
+                                {
+                                    double dc = @item.GetType().GetProperty("Price").GetValue(item, null) + (@item.GetType().GetProperty("Price").GetValue(item, null) * (@item.GetType().GetProperty("Discount").GetValue(item, null)) / 100);
+                                    <br>
+                                    <span class="old">@dc.ToString("#,###", cul.NumberFormat) ₫</span>
+                                    <span class="o-giam-gia" style="font-size:10px">-@item.GetType().GetProperty("Discount").GetValue(item, null)% </span>}
                             </div>
                         </div>
                     </div>
                 </div>
             }
         </div>
-
-        <div class="pull-right">
-            @Html.PagedListPager((IPagedList)Model, page => Url.Action("product_listing", new { page }))
-            
-        </div>
+        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("product_listing", new { page }))
     </div>
     <div class="ps-sidebar" data-mh="product-listing">
         <aside class="ps-widget--sidebar ps-widget--category">

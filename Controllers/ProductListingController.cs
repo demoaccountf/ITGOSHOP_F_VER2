@@ -11,7 +11,7 @@ namespace ITGoShop_F_Ver2.Controllers
     public class ProductListingController : Controller
     {
         private ITGoShopContext db = new ITGoShopContext();
-        public ActionResult product_listing(int? page,int brandId)
+        public object product_listing(int? page,int brandId)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
@@ -20,15 +20,18 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.SubBrand = context.getSubBrand(brandId);
             ViewBag.Brand = context.getBrand(brandId);
 
-            var pageNumber = page ?? 1;
-            var pageSize = 3; //Show 10 rows every time
             var linqContext = new ITGoShopLINQContext();
-            var BProduct = linqContext.getBrandProduct(brandId).ToPagedList(pageNumber, pageSize);
+            var BProduct = linqContext.getBrandProduct(brandId);
+            var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
+            var onePageOfProducts = BProduct.ToPagedList(pageNumber, 6); // will only contain 25 products max because of the pageSize
+
+            ViewBag.OnePageOfProducts = onePageOfProducts;
+            
 
             
-            return View(BProduct);
+            return View();
         }
-        public IActionResult product_listing2(int? page,string categoryId)
+        public object product_listing2(int? page,string categoryId)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
@@ -36,28 +39,34 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllSubBrand = context.getAllSubBrand();
             ViewBag.Cate = context.getCate(categoryId);
 
-            var pageNumber = page ?? 1;
-            var pageSize = 9; //Show 10 rows every time
             var linqContext = new ITGoShopLINQContext();
-            var CateProduct = linqContext.getCateProduct(categoryId).ToPagedList(pageNumber, pageSize);
+            var CateProduct = linqContext.getCateProduct(categoryId);
+            var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
+            var onePageOfProducts = CateProduct.ToPagedList(pageNumber, 6); // will only contain 25 products max because of the pageSize
+
+            ViewBag.OnePageOfProducts = onePageOfProducts;
+
             
-            return View(CateProduct);
+            
+            return View();
         }
-        public IActionResult product_listing3(int? page,string subbrandId)
+        public object product_listing3(int? page,string subbrandId)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
             ViewBag.AllBrand = context.getAllBrand();
             ViewBag.AllSubBrand = context.getAllSubBrand();
-            var pageNumber = page ?? 1;
-            var pageSize = 9; //Show 10 rows every time
-            var linqContext = new ITGoShopLINQContext();
-            var SubProduct = linqContext.getSubProduct(subbrandId).ToPagedList(pageNumber, pageSize);
 
-            
+            var linqContext = new ITGoShopLINQContext();
+            var SubProduct = linqContext.getSubProduct(subbrandId);
+            var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
+            var onePageOfProducts = SubProduct.ToPagedList(pageNumber, 6); // will only contain 25 products max because of the pageSize
+
+            ViewBag.OnePageOfProducts = onePageOfProducts;
+
             ViewBag.Brand = context.getSub(subbrandId);
 
-            return View(SubProduct);
+            return View();
         }
         public IActionResult product_listing4(int? page,string brandName)
         {
@@ -65,6 +74,14 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllCategory = context.getAllCategory();
             ViewBag.AllBrand = context.getAllBrand();
             ViewBag.AllSubBrand = context.getAllSubBrand();
+
+            var linqContext = new ITGoShopLINQContext();
+            var BNProduct = linqContext.getBNProduct(brandName);
+            var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
+            var onePageOfProducts = BNProduct.ToPagedList(pageNumber, 6); // will only contain 25 products max because of the pageSize
+
+            ViewBag.OnePageOfProducts = onePageOfProducts;
+            ViewBag.Brand = context.getBrand(brandName);
             return View();
         }
     }

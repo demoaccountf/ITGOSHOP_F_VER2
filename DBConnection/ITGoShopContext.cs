@@ -1107,6 +1107,7 @@ namespace ITGoShop_F_Ver2.Models
             return list;
         }
 
+       
         public List<object> getSubProduct(string subbrandId)
         {
             List<object> list = new List<object>();
@@ -1155,6 +1156,38 @@ namespace ITGoShop_F_Ver2.Models
                 string str = "select * from Brand B JOIN subbrand S ON S.BrandId = B.BrandId  where S.SubBrandId = @subbrandId LIMIT 1";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 cmd.Parameters.AddWithValue("SubBrandId", subbrandId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        list.Add(new Brand()
+                        {
+                            BrandId = Convert.ToInt32(reader["BrandId"]),
+                            BrandName = reader["BrandName"].ToString(),
+                            Description = reader["Description"].ToString(),
+                            CategoryId = reader["CategoryId"].ToString(),
+                            Status = Convert.ToInt32(reader["Status"]),
+                            BrandLogo = reader["BrandLogo"].ToString(),
+                        });
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
+
+        public List<Brand> getBrand(string brandName)
+        {
+            List<Brand> list = new List<Brand>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select * from Brand where BrandName = @brandName LIMIT 1";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("BrandName", brandName);
                 using (var reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())

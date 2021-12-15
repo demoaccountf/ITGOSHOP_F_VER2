@@ -9,7 +9,7 @@ namespace ITGoShop_F_Ver2.Models
 {
     public class ITGoShopLINQContext : DbContext
     {
-        private const string connectionString = "server=localhost;port=3307;database=itgoshop;uid=root;password=";
+        private const string connectionString = "server=localhost;port=3307;database=itgoshop;uid=root;password=;Convert Zero Datetime=True";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -22,6 +22,8 @@ namespace ITGoShop_F_Ver2.Models
             modelBuilder.Entity<WishList>().HasKey(wl => new { wl.ProductId, wl.UserId });
             modelBuilder.Entity<OrderTracking>().HasKey(ot => new { ot.OrderId, ot.OrderStatus });
             modelBuilder.Entity<ProductRating>().HasKey(pt => new { pt.ProductId, pt.UserId });
+            modelBuilder.Entity<LoginHistory>().HasKey(lh => new { lh.UserId });
+            modelBuilder.Entity<devvn_quanhuyen>().HasKey(qh => new { qh.Maqh });
         }
         public DbSet<User> User { set; get; }   // Bảng User trong DataBase, <User> tên lớp
         public DbSet<Product> Product { set; get; }
@@ -47,10 +49,6 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<OrderTracking> OrderTracking { set; get; }
         public DbSet<ProductRating> ProductRating { set; get; }
 
-        public IQueryable<> GetAll()
-        {
-            return this.DbSet;
-        }
         public void saveProduct(Product newProduct)
         {
             newProduct.StartsAt = DateTime.Now;
@@ -288,19 +286,29 @@ namespace ITGoShop_F_Ver2.Models
             return Product.Where(p => p.Status == 1 && p.Discount != 0).OrderByDescending(b => b.Discount).Take(6).ToList();
         }
 
-        public List<Product> getBrandProduct(int brandId)
+        public IQueryable<Product> getBrandProduct(int brandId)
         {
             return Product.Where(p => p.Status == 1 && p.BrandId == brandId );
         }
 
-        public List<Product> getCateProduct(string categoryId)
+        public IQueryable<Product> getCateProduct(string categoryId)
         {
-            return Product.Where(p => p.Status == 1 && p.CategoryId == categoryId).ToList();
+            return Product.Where(p => p.Status == 1 && p.CategoryId == categoryId);
         }
 
-        public List<Product> getSubProduct(string subbrandId)
+        public IQueryable<Product> getSubProduct(string subbrandId)
         {
-            return Product.Where(p => p.Status == 1 && p.SubBrandId == subbrandId).ToList();
+            return Product.Where(p => p.Status == 1 && p.SubBrandId == subbrandId);
+        }
+        public IQueryable<object> getBNProduct(string brandName)
+        {
+            var ketqua = from product in Product
+                         join brand in Brand on product.BrandId equals brand.BrandId into t
+                         from brand in t.DefaultIfEmpty()
+                         where brand.BrandName == brandName
+                         select product ;
+
+            return ketqua;
         }
 
         public List<ProductGallary> getProductGallary(int productId)
@@ -599,6 +607,15 @@ namespace ITGoShop_F_Ver2.Models
             if (rating != null)
             {
                 Remove(rating);
+                SaveChanges();
+            }
+        }
+        public void updateExtraShipfee(string maqh, int newExtraShippingFee)
+        {
+            var quanhuyenInfo = devvn_quanhuyen.Where(qh => qh.Maqh == maqh).FirstOrDefault();
+            if (quanhuyenInfo != null)
+            {
+                quanhuyenInfo.ExtraShippingFee = newExtraShippingFee;
                 SaveChanges();
             }
         }
