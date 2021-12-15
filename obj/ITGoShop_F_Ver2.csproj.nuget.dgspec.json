@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C#Code\\New folder (2)\\ITGoShop_F_Ver2.csproj": {}
+    "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\ITGoShop_F_Ver2.csproj": {}
   },
   "projects": {
-    "D:\\C#Code\\New folder (2)\\ITGoShop_F_Ver2.csproj": {
+    "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\ITGoShop_F_Ver2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#Code\\New folder (2)\\ITGoShop_F_Ver2.csproj",
+        "projectUniqueName": "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\ITGoShop_F_Ver2.csproj",
         "projectName": "ITGoShop_F_Ver2",
-        "projectPath": "D:\\C#Code\\New folder (2)\\ITGoShop_F_Ver2.csproj",
-        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "D:\\C#Code\\New folder (2)\\obj\\",
+        "projectPath": "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\ITGoShop_F_Ver2.csproj",
+        "packagesPath": "C:\\Users\\Selena\\.nuget\\packages\\",
+        "outputPath": "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Selena\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -59,9 +56,9 @@
               "target": "Package",
               "version": "[13.0.1, )"
             },
-            "PagedList.Mvc": {
+            "X.PagedList.Mvc.Core": {
               "target": "Package",
-              "version": "[4.5.0, )"
+              "version": "[8.1.0, )"
             }
           },
           "imports": [
@@ -82,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
