@@ -76,7 +76,7 @@ namespace ITGoShop_F_Ver2.Controllers
             }
             return RedirectToAction("login", new { message = "Mật khẩu hoặc tài khoản sai. Xin nhập lại!" });
         }
-        public async Task<IActionResult> search_result(string kw_submit)
+        public ActionResult search_result(string kw_submit)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
@@ -102,7 +102,7 @@ namespace ITGoShop_F_Ver2.Controllers
 
 
             
-            return View(await product.AsNoTracking().ToListAsync());
+            return View(product);
         }
 
         private IActionResult View(List<Blog> blogs, List<Product> products)
