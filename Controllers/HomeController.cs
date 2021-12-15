@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCardSession.Helpers;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
@@ -25,7 +26,7 @@ namespace ITGoShop_F_Ver2.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(string kw_submit)
+        public IActionResult Index()
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
@@ -75,19 +76,40 @@ namespace ITGoShop_F_Ver2.Controllers
             }
             return RedirectToAction("login", new { message = "Mật khẩu hoặc tài khoản sai. Xin nhập lại!" });
         }
-        public IActionResult search_result(string kw_submit)
+        public async Task<IActionResult> search_result(string kw_submit)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
             ViewBag.AllBrand = context.getAllBrand();
             ViewBag.AllSubBrand = context.getAllSubBrand();
             ViewBag.AllBlog = context.getAllBlog();
-            ViewBag.Result1 = context.FindBlog(kw_submit);
-            ViewBag.Result2 = context.FindProduct(kw_submit);
-            
+            var linqContext = new ITGoShopLINQContext();
+            ViewData["CurrentFilter"] = kw_submit;
+            var blog = from s in linqContext.Blog select s;
+            if (!String.IsNullOrEmpty(kw_submit))
+            {
+                blog = blog.Where(s => s.Author.Contains(kw_submit)
+                               || s.Title.Contains(kw_submit)
+                               || s.Summary.Contains(kw_submit)); 
+            }
 
-            return View();
+            var product = from s in linqContext.Product select s;
+            if (!String.IsNullOrEmpty(kw_submit))
+            {
+                product = product.Where(s => s.ProductName.Contains(kw_submit)
+                               || s.Content.Contains(kw_submit));
+            }
+
+
+            
+            return View(await product.AsNoTracking().ToListAsync());
         }
+
+        private IActionResult View(List<Blog> blogs, List<Product> products)
+        {
+            throw new NotImplementedException();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
