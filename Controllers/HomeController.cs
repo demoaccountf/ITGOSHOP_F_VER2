@@ -10,6 +10,8 @@ using MyCardSession.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using System.Net;
+using System.Net.Mail;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
@@ -28,7 +30,7 @@ namespace ITGoShop_F_Ver2.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             var linqContext = new ITGoShopLINQContext();
@@ -181,12 +183,11 @@ namespace ITGoShop_F_Ver2.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove(customerId);
-            HttpContext.Session.Remove(customerLastName);
-            HttpContext.Session.Remove(customerFirstName);
-            HttpContext.Session.Remove(customerImage);
+            HttpContext.Session.SetString("customerId", "");
+            HttpContext.Session.SetString("customerLastName", "");
+            HttpContext.Session.SetString("customerFirstName", "");
+            HttpContext.Session.SetString("customerImage", "");
             return RedirectToAction("Index");
         }
-
     }
 }

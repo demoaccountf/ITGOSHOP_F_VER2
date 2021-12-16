@@ -91,7 +91,7 @@
                             @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "LT000")
                             {
                                 <li class="menu-item menu-item-has-children has-mega-menu">
-                                    <a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)">Laptop</a>
+                                    <a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)" style="text-decoration:none">Laptop</a>
                                     <div class="mega-menu">
                                         <div class="mega-wrap">
                                             @foreach (var brand in @ViewBag.AllBrand)
@@ -118,7 +118,7 @@
                             @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "PC000")
                             {
                                 <li class="menu-item menu-item-has-children has-mega-menu">
-                                    <a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)">PC</a>
+                                    <a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)" style="text-decoration:none">PC</a>
                                     <div class="mega-menu">
                                         <div class="mega-wrap">
                                             @foreach (var brand in @ViewBag.AllBrand)
@@ -143,9 +143,9 @@
                         {
                             @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "PK000")
                             {
-                                <li class="menu-item"><a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)">Phụ Kiện</a></li>
+                                <li class="menu-item"><a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)" style="text-decoration:none">Phụ Kiện</a></li>
                             }}
-                        <li class="menu-item"><a href="/Blog/all_blog">Tin Tức</a></li>
+                        <li class="menu-item"><a href="/Blog/all_blog" style="text-decoration:none">Tin Tức</a></li>
                     </ul>
                 </div>
                 <div class="navigation__column right" style="height:60px; margin-bottom: 15px;">
