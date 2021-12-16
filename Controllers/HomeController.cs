@@ -19,6 +19,7 @@ namespace ITGoShop_F_Ver2.Controllers
         string customerLastName = "";
         string customerFirstName = "";
         string customerImage = "";
+        string total1 = "" , total2 = "";
 
         private readonly ILogger<HomeController> _logger;
 
@@ -79,6 +80,7 @@ namespace ITGoShop_F_Ver2.Controllers
         }
         public ActionResult search_result(string kw_submit)
         {
+            
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
             ViewBag.AllBrand = context.getAllBrand();
@@ -93,14 +95,27 @@ namespace ITGoShop_F_Ver2.Controllers
                                || s.Title.Contains(kw_submit)
                                || s.Summary.Contains(kw_submit)); 
             }
-
+            if (blog.Count() == 0)
+            {
+                total2 = "1";
+            }
+            
+            ViewBag.Result2 = blog;
             var product = from s in linqContext.Product select s;
             if (!String.IsNullOrEmpty(kw_submit))
             {
                 product = product.Where(s => s.ProductName.Contains(kw_submit)
                                || s.Content.Contains(kw_submit));
             }
-            return View(product);
+            if (product.Count() == 0)
+            {
+                total1 = "1";
+            }
+            ViewBag.Result1 = product;
+            
+            
+
+            return View();
         }
 
         private IActionResult View(List<Blog> blogs, List<Product> products)
