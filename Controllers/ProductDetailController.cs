@@ -15,11 +15,11 @@ namespace ITGoShop_F_Ver2.Controllers
         {
             //System.Diagnostics.Debug.WriteLine("Chạy product detail");
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            ViewBag.AllCategory = context.getAllCategory();
-            ViewBag.AllBrand = context.getAllBrand();
-            ViewBag.AllSubBrand = context.getAllSubBrand();
-
             var linqContext = new ITGoShopLINQContext();
+            ViewBag.AllCategory = linqContext.getAllCategory();
+            ViewBag.AllBrand = linqContext.getAllBrand();
+            ViewBag.AllSubBrand = linqContext.getAllSubBrand();
+
             var productDetail = context.getProductDetail(productId);
             string categoryId = (string)productDetail.GetType().GetProperty("CategoryId").GetValue(productDetail, null);
             int brandId = (int)productDetail.GetType().GetProperty("BrandId").GetValue(productDetail, null);

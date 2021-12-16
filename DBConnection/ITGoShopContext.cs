@@ -534,6 +534,40 @@ namespace ITGoShop_F_Ver2.Models
             }
             return list;
         }
+
+        public List<object> getAllBrandForBrandManagement()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select BrandId, CategoryName, BrandName, B.Status, BrandLogo, B.Description, B.CategoryId " +
+                    " from Brand B JOIN Category C ON B.CategoryId = C.CategoryId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new 
+                        {
+                            BrandId = Convert.ToInt32(reader["BrandId"]),
+                            BrandName = reader["BrandName"].ToString(),
+                            Description = reader["Description"].ToString(),
+                            CategoryId = reader["CategoryId"].ToString(),
+                            Status = Convert.ToInt32(reader["Status"]),
+                            BrandLogo = reader["BrandLogo"].ToString(),
+                            CategoryName = reader["CategoryName"].ToString(),
+                        };
+                        list.Add(obj);
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
         public List<Blog> FindBlog(string kw_submit)
         {
             List<Blog> list = new List<Blog>();
@@ -1029,7 +1063,7 @@ namespace ITGoShop_F_Ver2.Models
             }
             return list;
         }
-
+        
         public List<object> getPKProduct()
         {
             List<object> list = new List<object>();

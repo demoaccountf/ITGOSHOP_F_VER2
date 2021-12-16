@@ -18,12 +18,12 @@ namespace ITGoShop_F_Ver2.Controllers
             {
                 /*===Cái này để load layout ===*/
                 ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-                ViewBag.AllCategory = context.getAllCategory();
-                ViewBag.AllBrand = context.getAllBrand();
-                ViewBag.AllSubBrand = context.getAllSubBrand();
+                var linqContext = new ITGoShopLINQContext();
+                ViewBag.AllCategory = linqContext.getAllCategory();
+                ViewBag.AllBrand = linqContext.getAllBrand();
+                ViewBag.AllSubBrand = linqContext.getAllSubBrand();
                 /*======*/
 
-                var linqContext = new ITGoShopLINQContext();
                 ViewBag.DefaultShippingAddress = context.getDefaultShippingAddress(customerId);
                 ViewBag.AllShipMethod = linqContext.getShipMethodToCheckout();
                 var cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");

@@ -49,6 +49,22 @@ namespace ITGoShop_F_Ver2.Models
         public DbSet<OrderTracking> OrderTracking { set; get; }
         public DbSet<ProductRating> ProductRating { set; get; }
 
+        public List<Category>getAllCategory()
+        {
+            var categories = Category.Where(c => c.Status == 1).ToList();
+            return categories;
+        }
+        public List<Brand> getAllBrand()
+        {
+            var brands = Brand.Where(c => c.Status == 1).ToList();
+            return brands;
+        }
+
+        public List<SubBrand> getAllSubBrand()
+        {
+            var subbrand = SubBrand.Where(c => c.Status == 1).ToList();
+            return subbrand;
+        }
         public void saveProduct(Product newProduct)
         {
             newProduct.StartsAt = DateTime.Now;
@@ -109,6 +125,20 @@ namespace ITGoShop_F_Ver2.Models
             }    
             this.SaveChanges();
         }
+        public void updateBrand(Brand brandInfo)
+        {
+            var brand = Brand.Where(p => p.BrandId == brandInfo.BrandId).FirstOrDefault();
+            brand.BrandName = brandInfo.BrandName;
+            brand.CategoryId = brandInfo.CategoryId;
+            brand.Description = brandInfo.Description;
+            brand.Status = brandInfo.Status;
+            if (!string.IsNullOrEmpty(brandInfo.BrandLogo))
+            {
+                brand.BrandLogo = brandInfo.BrandLogo;
+                // Chưa làm xóa ảnh cũ ở đây
+            }
+            SaveChanges();
+        }
         public void deleteProduct(int productId)
         {
             var product = (from p in Product
@@ -137,10 +167,20 @@ namespace ITGoShop_F_Ver2.Models
 
         public void deleteBrand(int brandId)
         {
+            var subbrand = (from p in SubBrand
+                        where (p.BrandId == brandId)
+                        select p).ToList();
+            if(subbrand.Count > 0)
+            {
+                foreach (var item in subbrand)
+                {
+                    Remove(item);
+                    SaveChanges();
+                }    
+            }
             var brand = (from p in Brand
                         where (p.BrandId == brandId)
                         select p).FirstOrDefault();
-
             if (brand != null)
             {
                 Remove(brand);
@@ -646,6 +686,14 @@ namespace ITGoShop_F_Ver2.Models
                 comment.Reply = Reply;
                 SaveChanges();
             }
+        }
+
+        public Brand getBrand(int brandId)
+        {
+            var brandInfo = Brand.Where(b => b.BrandId == brandId).FirstOrDefault();
+            if (brandInfo != null)
+                return brandInfo;
+            return null;
         }
     }
 }

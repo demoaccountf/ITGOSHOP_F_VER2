@@ -90,7 +90,7 @@ namespace ITGoShop_F_Ver2.Controllers
         [Obsolete]
         public IActionResult save_update_product(Product product, List<IFormFile> productImage)
         {
-            System.Diagnostics.Debug.WriteLine("PImg: " + product.ProductImage +"-"+ product.ProductName);
+            //System.Diagnostics.Debug.WriteLine("PImg: " + product.ProductImage +"-"+ product.ProductName);
             if (!string.IsNullOrEmpty(product.ProductImage))
             {
                 //Lưu ảnh sản phẩm vào trước

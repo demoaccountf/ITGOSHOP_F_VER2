@@ -53,11 +53,16 @@ namespace ITGoShop_F_Ver2.Controllers
         public IActionResult view_brand()
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            ViewBag.AllBrand = context.getAllBrand();
+            ViewBag.AllBrand = context.getAllBrandForBrandManagement();
+            ViewBag.AllCategory = context.getAllCategory();
             return View();
         }
-        public IActionResult update_brand()
+        public IActionResult update_brand(int BrandId)
         {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            ViewBag.BrandInfo = linqContext.getBrand(BrandId);
+            ViewBag.AllCategory = context.getAllCategory();
             return View();
         }
         public void unactive_brand(int BrandId)
@@ -75,6 +80,53 @@ namespace ITGoShop_F_Ver2.Controllers
         {
             var context = new ITGoShopLINQContext();
             context.deleteBrand(BrandId);
+        }
+
+        [Obsolete]
+        public IActionResult save_brand(Brand newBrand, List<IFormFile> BrandLogo)
+        {
+            // Lưu ảnh sản phẩm vào trước
+            string path = Path.Combine(this.Environment.WebRootPath, "public/images_upload/brand");
+            foreach (IFormFile postedFile in BrandLogo)
+            {
+                // Lấy tên file
+                newBrand.BrandLogo = DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName;
+                // Lưu file vào project
+                string fileName = Path.GetFileName(DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName);
+                using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+            }
+
+            var context = new ITGoShopLINQContext();
+            context.saveBrand(newBrand);
+            return RedirectToAction("view_brand");
+        }
+        
+        [Obsolete]
+        public IActionResult save_update_brand(Brand brand, List<IFormFile> BrandLogo)
+        {
+            if (BrandLogo.Count != 0)
+            {
+                
+                string path = Path.Combine(this.Environment.WebRootPath, "public/images_upload/brand");
+                foreach (IFormFile postedFile in BrandLogo)
+                {
+                    // Lấy tên file
+                    brand.BrandLogo = DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName;
+                    // Lưu file vào project
+                    string fileName = Path.GetFileName(DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName);
+                    using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
+                    {
+                        postedFile.CopyTo(stream);
+                    }
+                }
+            }
+            var context = new ITGoShopLINQContext();
+            context.updateBrand(brand);
+            return RedirectToAction("view_brand");
+
         }
     }
 }

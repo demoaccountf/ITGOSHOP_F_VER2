@@ -9,7 +9,6 @@ namespace ITGoShop_F_Ver2.Controllers
     {
         private int brandId;
         private string brandName, description;
-        private int subBrand;
         private string categoryId;
         private int status;
         private string brandLogo;
@@ -18,12 +17,11 @@ namespace ITGoShop_F_Ver2.Controllers
         {
         }
 
-        public Brand(int brandId, string brandName, string description, int subBrand, string categoryId, int status, string brandLogo)
+        public Brand(int brandId, string brandName, string description, string categoryId, int status, string brandLogo)
         {
             this.brandId = brandId;
             this.brandName = brandName;
             this.description = description;
-            this.subBrand = subBrand;
             this.categoryId = categoryId;
             this.status = status;
             this.brandLogo = brandLogo;
@@ -32,7 +30,6 @@ namespace ITGoShop_F_Ver2.Controllers
         public int BrandId { get => brandId; set => brandId = value; }
         public string BrandName { get => brandName; set => brandName = value; }
         public string Description { get => description; set => description = value; }
-        public int SubBrand { get => subBrand; set => subBrand = value; }
         public string CategoryId { get => categoryId; set => categoryId = value; }
         public int Status { get => status; set => status = value; }
         public string BrandLogo { get => brandLogo; set => brandLogo = value; }

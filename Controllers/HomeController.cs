@@ -31,9 +31,10 @@ namespace ITGoShop_F_Ver2.Controllers
         public IActionResult Index()
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            ViewBag.AllCategory = context.getAllCategory();
-            ViewBag.AllBrand = context.getAllBrand();
-            ViewBag.AllSubBrand = context.getAllSubBrand();
+            var linqContext = new ITGoShopLINQContext();
+            ViewBag.AllCategory = linqContext.getAllCategory();
+            ViewBag.AllBrand = linqContext.getAllBrand();
+            ViewBag.AllSubBrand = linqContext.getAllSubBrand();
             ViewBag.AllBlog = context.getAllBlog();
             ViewBag.AllBannerSlider = context.getAllBannerSlider();
             ViewBag.Top3ProductView = context.getTop3ProductView();
@@ -45,8 +46,6 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.PKProduct = context.getPKProduct();
 
             ViewBag.SliderForHomePage = context.getSliderForHomePage();
-
-            var linqContext = new ITGoShopLINQContext();
             ViewBag.GiamGiaSoc = context.getGiamGiaSoc();
             return View();
         }
