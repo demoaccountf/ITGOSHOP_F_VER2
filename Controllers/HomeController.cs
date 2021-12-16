@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using MyCardSession.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace ITGoShop_F_Ver2.Controllers
 {
@@ -99,9 +100,6 @@ namespace ITGoShop_F_Ver2.Controllers
                 product = product.Where(s => s.ProductName.Contains(kw_submit)
                                || s.Content.Contains(kw_submit));
             }
-
-
-            
             return View(product);
         }
 
@@ -125,6 +123,48 @@ namespace ITGoShop_F_Ver2.Controllers
             List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
             return cart.Sum(item => item.Quantity);
         }
+
+        public string load_cart()
+        {
+            if (SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart") == null)
+            {
+                return @"<img style='display: block; width: auto; height: 150px; margin-left: auto; margin-right:auto;' src='/public/client/Images/empty-cart.png'>
+                <p> Bạn chưa có sản phẩm nào trong giỏ hàng</p>";
+            }
+
+            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
+            List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
+            int numberProduct = cart.Sum(item => item.Quantity);
+            if(numberProduct == 0)
+            {
+                return @"<img style='display: block; width: auto; height: 150px; margin-left: auto; margin-right:auto;' src='/public/client/Images/empty-cart.png'>
+                <p> Bạn chưa có sản phẩm nào trong giỏ hàng</p>";
+            }    
+
+            string output = "<div class='ps-cart__content'>";
+            foreach (var cartItem in cart)
+            {
+                string image = cartItem.Product.ProductImage;
+                output += @$"<div class='ps-cart-item'>
+                <input type = 'hidden' class='item-id-for-cart' value='{cartItem.Product.ProductId}'/>
+                <a class='ps-cart-item__close delete-button-in-nav' href='javascript:void(0)'></a>
+                <div class='ps-cart-item__thumbnail'>
+                    <a href = '/ProductDetail?productId={cartItem.Product.ProductId}'></a><img src='/public/images_upload/product/{cartItem.Product.ProductImage}' alt=''>
+                </div>
+                <div class='ps-cart-item__content'>
+                    <a class='ps-cart-item__title' href='/ProductDetail?productId={cartItem.Product.ProductId}'>{cartItem.Product.ProductName}</a>
+                    <p>{cartItem.Product.Price.ToString("#,###", cul.NumberFormat)}₫ x{cartItem.Quantity}</p>
+                </div>
+            </div>";
+            }
+            output += @$"</div><div class='ps-cart__total'>
+            <p>Số sản phẩm:<span>{numberProduct}</span></p>
+            <p>Tổng tiền:<span>{(cart.Sum(item => item.Product.Price * item.Quantity)).ToString("#,###", cul.NumberFormat)} ₫</span></p></div>
+            <div class='ps-cart__footer'>
+            <a href = 'javascript:void(0)' class='ps-btn btn-thanh-toan'>THANH TOÁN</a>";
+            return output;
+        }
+
         public IActionResult Logout()
         {
             HttpContext.Session.Remove(customerId);

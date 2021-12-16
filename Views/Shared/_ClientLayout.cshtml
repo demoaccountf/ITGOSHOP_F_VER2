@@ -155,7 +155,7 @@
                     </form>
                     <div class="ps-cart">
                         <a class="ps-cart__toggle" href="/Cart/show_cart" title="Giỏ hàng">
-                            <span><i id="so-luong-sp-gio-hang"></i></span>
+                            <span><i id="so-luong-sp-gio-hang">0</i></span>
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         </a>
                         <div class="ps-cart__listing">
@@ -399,9 +399,25 @@
     </script>
     <script>
         $(document).ready(function () {
-            //load_cart();
+            load_cart();
             load_cart_quantity();
             setInterval(load_cart_quantity, 2000);
+            $('body').on("click", ".delete-button-in-nav", function () {
+                $(this).parent().remove();
+                var ItemId = $(this).parent().find('.item-id-for-cart').val();
+                $.ajax({
+                    url: '/Cart/remove_item',
+                    methed: "GET",
+                    data: { id: ItemId },
+                    success: function (data) {
+                        load_cart();
+                        load_cart_quantity();
+                    },
+                    error: function (data) {
+                        alert('Lỗi');
+                    }
+                });
+            });
         });
         function load_cart_quantity() {
             $.ajax({
@@ -498,7 +514,7 @@
                 methed: "GET",
                 data: { ProductId: productId, Quantity: 1 },
                 success: function (data) {
-                    //load_cart();
+                    load_cart();
                     //$('#so-luong-sp-gio-hang').text(numberOfProduct);
                     swal({
                         title: "Thông báo",

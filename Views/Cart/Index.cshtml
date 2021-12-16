@@ -310,8 +310,7 @@
                 methed: "GET",
                 data: { id: ProductId },
                 success: function (data) {
-                    //load_cart();
-                   // $('#so-luong-sp-gio-hang').text(Number($('#so-luong-sp-gio-hang').text()) - numberProduct);
+                    load_cart();
                     swal({
                         title: "Thông báo",
                         text: "Đã xóa sản phẩm khỏi giỏ hàng!",
@@ -342,9 +341,9 @@
                 url: '/Cart/update_quantity',
                 methed: "GET",
                 data: { ProductId: ProductId, newQuantity: newQuantity },
-                //success: function (data) {
-                //    alert('Thành công');
-                //},
+                success: function (data) {
+                    load_cart();
+                },
                 error: function (data) {
                     alert('Lỗi');
                 }
@@ -373,11 +372,11 @@
                     url: '/Cart/update_quantity',
                     methed: "GET",
                     data: { ProductId: ProductId, newQuantity: newQuantity },
-                    // success:funtion(data)
-                    // {
-                    // 	load_cart();
-                    // },
-                    error: function (data) {
+                     ////success:funtion(data)
+                     ////{
+                     ////	load_cart();
+                     ////},
+                    error:function (data) {
                         alert('Lỗi nhập');
                     }
                 });
