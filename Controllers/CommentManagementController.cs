@@ -30,13 +30,13 @@ namespace ITGoShop_F_Ver2.Controllers
                 output += $"<td>{item.GetType().GetProperty("ProductName").GetValue(item, null)}</td><td style='text-align:center;'>";
 
                 if ((int)item.GetType().GetProperty("Reply").GetValue(item, null) == 1)
-                    output += "<input class='form-check-input' type='checkbox' value='' checked>";
+                    output += "<input class='form-check-input reply-check-box' type='checkbox' value='' checked>";
                 else
-                    output += "<input class='form-check-input' type='checkbox' value=''></td>";
+                    output += "<input class='form-check-input reply-check-box' type='checkbox' value=''></td>";
                 output += @$"<td>
                             <div class='form-button-action'>
                                 <button type = 'button' data-toggle='tooltip' title='' class='btn btn-link btn-danger' data-original-title='Trả lời bình luận'>
-                                 <a href = 'javascript:void(0)' onclick='return window.open()' class='active' ui-toggle-class=''>
+                                 <a target='_blank' rel='noopener noreferrer' href = '/ProductDetail/product_detail?productId={item.GetType().GetProperty("ProductId").GetValue(item, null)}' class='active' ui-toggle-class=''>
                                  <i class='fa fa-reply' aria-hidden='true'></i></a>
                             </button>"; // Chỗ này chưa code onclick='return window.open()'
                 //System.Diagnostics.Debug.WriteLine((int)item.GetType().GetProperty("CommentStatus").GetValue(item, null));
@@ -69,6 +69,23 @@ namespace ITGoShop_F_Ver2.Controllers
                             </button></div></td></tr>";
             }
             return output;
+        }
+        public void update_comment_status(int CommentId, int Status)
+        {
+            var context = new ITGoShopLINQContext();
+            context.updateCommentStatus(CommentId, Status);
+        }
+
+        public void reply_comment(int CommentId, int Reply)
+        {
+            var context = new ITGoShopLINQContext();
+            context.updateCommentReply(CommentId, Reply);
+        }
+
+        public void delete_comment(int CommentId)
+        {
+            var context = new ITGoShopLINQContext();
+            context.deleteComment(CommentId);
         }
     }
 }

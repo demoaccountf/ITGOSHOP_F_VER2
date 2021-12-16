@@ -1455,6 +1455,7 @@ namespace ITGoShop_F_Ver2.Models
                             CreatedAt = ((DateTime)reader["CreatedAt"]).ToString("dd-MM-yyyy"),
                             Reply = Convert.ToInt32(reader["Reply"]),
                             CommentStatus = Convert.ToInt32(reader["CommentStatus"]),
+                            ProductId = Convert.ToInt32(reader["ProductId"]),
                         };
                         list.Add(obj);
                     }
@@ -1703,7 +1704,8 @@ namespace ITGoShop_F_Ver2.Models
                 var str = @"SELECT CommentId, ProductId, C.UserId, UserImage, LastName, FirstName, CommentContent, Admin, C.CreatedAt
                             FROM COMMENT C JOIN user P ON C.UserId = P.UserId 
                             WHERE ProductId = @productid
-                            AND ParentComment IS NULL
+                            AND ParentComment IS NULL 
+                            AND CommentStatus = 1 
                             ORDER BY CommentId DESC";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 cmd.Parameters.AddWithValue("productid", productId);

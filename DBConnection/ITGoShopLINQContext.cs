@@ -557,11 +557,20 @@ namespace ITGoShop_F_Ver2.Models
 
         public void deleteComment(int commentId)
         {
-            var comment = Comment.Where(c => c.CommentId == commentId || c.ParentComment == commentId).ToList();
+            var subComment = Comment.Where(c => c.ParentComment == commentId).ToList();
 
-            foreach(var item in comment)
+            if (subComment.Count != 0)
             {
-                Remove(item);
+                foreach (var item in subComment)
+                {
+                    Remove(item);
+                    SaveChanges();
+                }
+            }
+            var comment = Comment.Where(c => c.CommentId == commentId).FirstOrDefault();
+            if(comment != null)
+            {
+                Remove(comment);
                 SaveChanges();
             }
         }
@@ -616,6 +625,25 @@ namespace ITGoShop_F_Ver2.Models
             if (quanhuyenInfo != null)
             {
                 quanhuyenInfo.ExtraShippingFee = newExtraShippingFee;
+                SaveChanges();
+            }
+        }
+
+        public void updateCommentStatus(int CommentId, int Status)
+        {
+            var comment = Comment.Where(c => c.CommentId == CommentId).FirstOrDefault();
+            if (comment != null)
+            {
+                comment.CommentStatus = Status;
+                SaveChanges();
+            }
+        }
+        public void updateCommentReply(int CommentId, int Reply)
+        {
+            var comment = Comment.Where(c => c.CommentId == CommentId).FirstOrDefault();
+            if (comment != null)
+            {
+                comment.Reply = Reply;
                 SaveChanges();
             }
         }

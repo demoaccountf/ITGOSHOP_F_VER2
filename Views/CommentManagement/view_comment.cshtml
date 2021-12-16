@@ -63,7 +63,7 @@
             </div>
         </div>
     </div>
-     @*<a href="/CommentManagement/load_comment">HiHI</a>*@
+    @*<a href="/CommentManagement/load_comment">HiHI</a>*@
     <script>
         $(document).ready(function () {
 
@@ -89,75 +89,116 @@
     </script>
 
     <script>
-        $(document).ready(function () {
-            $('button[data-original-title="Hiển thị bình luận"]').click(function () {
-                var CommentId = $(this).parents('tr').find('.CommentId').val();
-                var activeButton = $(this);
+		$(document).ready(function(){
+			$('body').on('click', 'button[data-original-title="Hiển thị bình luận"]', function(){
+				var CommentId = $(this).parents('tr').find('.CommentId').val();
+				var activeButton = $(this);
                 var unactiveButton = $(this).parent().find('button[data-original-title="Ẩn bình luận"]');
-                $.ajax({
-                    url: '/unactive-product-gallary',
-                    method: "GET",
-                    data: { CommentId: CommentId },
-                    success: function (data) {
-                        activeButton.attr('hidden', true);
-                        unactiveButton.removeAttr('hidden');
-                    },
-                    error: function (data) {
-                        alert('Lỗi');
-                    }
-                });
-            });
+				$.ajax({
+                    url: '/CommentManagement/update_comment_status',
+					method:"GET",
+					data:{CommentId: CommentId, Status: 0},
+					success:function(data)
+					{
+						activeButton.attr('hidden',true);
+						unactiveButton.removeAttr('hidden');
+					},
+					error:function(data)
+					{
+						alert('Lỗi');
+					}
+				});
+			});
 
-            $('button[data-original-title="Ẩn bình luận"]').click(function () {
-                var CommentId = $(this).parents('tr').find('.CommentId').val();
-                var unactiveButton = $(this);
+			$('body').on('click', 'button[data-original-title="Ẩn bình luận"]', function(){
+				var CommentId = $(this).parents('tr').find('.CommentId').val();
+				var unactiveButton = $(this);
                 var activeButton = $(this).parent().find('button[data-original-title="Hiển thị bình luận"]');
-                $.ajax({
-                    url: '/active-product-gallary',
-                    method: "GET",
-                    data: { CommentId: CommentId },
-                    success: function (data) {
-                        unactiveButton.attr('hidden', true);
-                        activeButton.removeAttr('hidden');
-                    },
-                    error: function (data) {
-                        alert('Lỗi');
-                    }
-                });
-            });
+				$.ajax({
+                    url: '/CommentManagement/update_comment_status',
+					method:"GET",
+                    data: { CommentId: CommentId, Status: 1},
+					success:function(data)
+					{
+						unactiveButton.attr('hidden',true);
+						activeButton.removeAttr('hidden');
+					},
+					error:function(data)
+					{
+						alert('Lỗi');
+					}
+				});
+			});
 
-            $('button[data-original-title="Xóa bình luận"]').click(function () {
-                var comment_id = $(this).parents('tr').find('.CommentId').val();
+			$('body').on('click', 'button[data-original-title="Xóa bình luận"]', function(){
+				var comment_id = $(this).parents('tr').find('.CommentId').val();
                 var thisImage = $(this).parents('tr');
-                swal({
-                    title: "Xác nhận",
-                    text: "Bạn có chắc muốn xóa bình luận này không?",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            $.ajax({
-                                url: '/delete-comment',
-                                method: "GET",
-                                data: { comment_id: comment_id },
-                                success: function (data) {
-                                    thisImage.remove();
-                                    swal("Xóa bình luận thành công!", {
-                                        icon: "success",
-                                    });
-                                },
-                                error: function (data) {
-                                    alert('Lỗi');
-                                }
-                            });
+				swal({
+					title: "Xác nhận",
+					text: "Bạn có chắc muốn xóa bình luận này không?",
+					icon: "warning",
+					buttons: true,
+					dangerMode: true,
+					})
+					.then((willDelete) => {
+					if (willDelete) {
+						$.ajax({
+                            url: '/CommentManagement/delete_comment',
+							method:"GET",
+							data:{CommentId: comment_id},
+							success:function(data)
+							{
+								thisImage.remove();
+								swal("Xóa bình luận thành công!", {
+								icon: "success",
+								});
+							},
+							error:function(data)
+							{
+								alert('Lỗi xóa bình luận');
+							}
+						});
 
-                        }
-                    });
-
-            });
-        });
+					}
+				});
+			});
+			$('body').on('change', '.reply-check-box', function(){
+				var thisRow = $(this).parents('tr');
+                var CommentId = thisRow.find('.CommentId').val();
+				if(this.checked)
+				{
+					$.ajax({
+                        url: '/CommentManagement/reply_comment',
+						method:"GET",
+						data:{CommentId: CommentId, Reply: 1},
+						// success:function(data)
+						// {
+						// 	alert('Thành công');
+						// },
+						error:function(data)
+						{
+							alert('Lỗi');
+						}
+					});
+				}
+				else
+				{
+					$.ajax({
+                        url: '/CommentManagement/reply_comment',
+						method:"GET",
+						data:{CommentId: CommentId, Reply: 0},
+						// success:function(data)
+						// {
+						// 	alert('Thành công');
+						// },
+						error:function(data)
+						{
+							alert('Lỗi');
+						}
+					});
+				}
+			});
+		});
     </script>
 
 
