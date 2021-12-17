@@ -34,7 +34,7 @@
         <!-- Nếu khách hàng đã có địa chỉ mặc định thì thanh toán luôn nếu ko thì phải thêm mới địa chỉ giao hàng -->
         @if (ViewBag.DefaultShippingAddress != null)
         {
-            <form action="/Order/create_order" method="POST">
+            <form action="/Checkout/create_order" method="POST">
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="panel panel-default">

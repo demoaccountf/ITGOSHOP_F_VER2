@@ -38,10 +38,17 @@
                         <div class="card-header">
                             <div class="d-flex align-items-center">
                                 <h4 class="card-title">Danh sách danh mục sản phẩm</h4>
-                                <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-                                    <i class="fa fa-plus"></i>
-                                    Thêm sản phẩm
+                                <button class="btn btn-info btn-border btn-round btn-sm mr-2" data-toggle="modal" data-target="#addRowModal" style="height:36px;">
+                                    <span class="btn-label">
+                                        <i class="fas fa-file-import"></i>
+                                    </span>Import
                                 </button>
+                                <form action="/ProductManagement/ExportProduct" method="POST" class="btn btn-info btn-border btn-round btn-sm">
+                                    <span class="btn-label">
+                                        <i class="fas fa-download"></i>
+                                    </span>
+                                    <input type="submit" value="Export" style="background: none;border: none;"></input>
+                                </form>
                             </div>
                         </div>
                         <div class="card-body">

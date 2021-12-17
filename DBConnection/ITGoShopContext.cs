@@ -806,13 +806,15 @@ namespace ITGoShop_F_Ver2.Models
                     while (reader.Read())
                     {
                         var obj = new
-                        {
+                        { 
                             ProductId = Convert.ToInt32(reader["ProductId"]),
                             ProductName = reader["ProductName"].ToString(),
                             CategoryName = reader["CategoryName"].ToString(),
                             BrandName = reader["BrandName"].ToString(),
                             Quantity = Convert.ToInt32(reader["Quantity"]),
                             Price = Convert.ToInt32(reader["Price"]),
+                            Sold = Convert.ToInt32(reader["Sold"]),
+                            Cost = Convert.ToInt32(reader["Cost"]),
                             Status = Convert.ToInt32(reader["Status"]),
                             ProductImage = reader["ProductImage"].ToString()
                         };
