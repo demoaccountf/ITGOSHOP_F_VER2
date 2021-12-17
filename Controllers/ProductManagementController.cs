@@ -180,9 +180,11 @@ namespace ITGoShop_F_Ver2.Controllers
                 //sheet.Cells["A1:C1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 sheet.Cells["A1:H1"].Value = "CÔNG TY CỔ PHẦN THƯƠNG MẠI DỊCH VỤ ITGOSHOP";
                 sheet.Cells["A1:H1"].Style.Font.Bold = true;
+                sheet.Cells["A1:H1"].Style.Font.Size = 12;
                 sheet.Cells["A1:H1"].Merge = true;
                 //sheet.Cells["A2:C2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 sheet.Cells["A2:C2"].Value = "Tầng 5, Số 117-119-121 Nguyễn Du, Phường Bến Thành, Quận 1, Thành Phố Hồ Chí Minh";
+                sheet.Cells["A2:H2"].Style.Font.Size = 12;
                 sheet.Cells["A2:H2"].Merge = true;
 
                 sheet.Cells["A3:H3"].Merge = true;
@@ -193,32 +195,38 @@ namespace ITGoShop_F_Ver2.Controllers
                 sheet.Cells["A4:D4"].Style.Font.Size = 16;
                 sheet.Cells["A4:H4"].Merge = true;
 
+                string ngayKiemKho = DateTime.Now.ToString("HH:mm dd/MM/yyyy");
+                sheet.Cells["A5:D5"].Value = $"(Ngày kiểm kho: {ngayKiemKho})";
+                sheet.Cells["A5:D5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                sheet.Cells["A5:D5"].Style.Font.Italic = true;
                 sheet.Cells["A5:H5"].Merge = true;
-               
-                sheet.Row(6).Height = 25;
-                sheet.Cells["A6:H6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                sheet.Cells["A6:H6"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                sheet.Cells["A6:H6"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells["A6:H6"].Style.Fill.BackgroundColor.SetColor(0, 186, 248, 255);
-                sheet.Cells["A6:H6"].Style.Font.Bold = true;
-                sheet.Cells["A6:H6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                sheet.Cells["A6:H6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                sheet.Cells["A6:H6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                sheet.Cells["A6:H6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                sheet.Cells["A6:A6"].Value = "Mã sản phẩm";
-                sheet.Cells["B6:B6"].Value = "Tên sản phẩm";
-                sheet.Cells["C6:C6"].Value = "Danh mục sản phẩm";
-                sheet.Cells["D6:D6"].Value = "Thương hiệu";
-                sheet.Cells["E6:E6"].Value = "Giá vốn";
-                sheet.Cells["F6:F6"].Value = "Giá bán";
-                sheet.Cells["G6:G6"].Value = "Đã bán";
-                sheet.Cells["H6:H6"].Value = "Tồn kho khả dụng";
+
+                sheet.Cells["A6:H6"].Merge = true;
+
+                sheet.Row(7).Height = 25;
+                sheet.Cells["A7:H7"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                sheet.Cells["A7:H7"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                sheet.Cells["A7:H7"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells["A7:H7"].Style.Fill.BackgroundColor.SetColor(0, 186, 248, 255);
+                sheet.Cells["A7:H7"].Style.Font.Bold = true;
+                sheet.Cells["A7:H7"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                sheet.Cells["A7:H7"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                sheet.Cells["A7:H7"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                sheet.Cells["A7:H7"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                sheet.Cells["A7:A7"].Value = "Mã sản phẩm";
+                sheet.Cells["B7:B7"].Value = "Tên sản phẩm";
+                sheet.Cells["C7:C7"].Value = "Danh mục sản phẩm";
+                sheet.Cells["D7:D7"].Value = "Thương hiệu";
+                sheet.Cells["E7:E7"].Value = "Giá vốn";
+                sheet.Cells["F7:F7"].Value = "Giá bán";
+                sheet.Cells["G7:G7"].Value = "Đã bán";
+                sheet.Cells["H7:H7"].Value = "Tồn kho khả dụng";
 
                 ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
                 List<object> products = context.getAllProduct();
 
-                int count = products.Count + 6;
-                string productArea = $"A6:H{count}";
+                int count = products.Count + 7;
+                string productArea = $"A7:H{count}";
                 sheet.Cells[productArea].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 sheet.Cells[productArea].Style.Border.Right.Style = ExcelBorderStyle.Thin;
                 sheet.Cells[productArea].Style.Border.Top.Style = ExcelBorderStyle.Thin;
@@ -226,7 +234,7 @@ namespace ITGoShop_F_Ver2.Controllers
                 sheet.Cells[productArea].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 sheet.Cells[productArea].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
-                int j = 7;
+                int j = 8;
                 foreach (var item in products)
                 {
                     sheet.Row(j).Height = 25;
@@ -250,14 +258,17 @@ namespace ITGoShop_F_Ver2.Controllers
                 }
                 sheet.Cells[$"G{count + 3}:G{count + 3}"].Value = "Ngày . . .  tháng . . . năm . . .";
                 sheet.Cells[$"G{count + 3}:G{count + 3}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                sheet.Cells[$"G{count + 3}:G{count + 3}"].Style.Font.Size = 12;
 
                 sheet.Cells[$"G{count + 4}:G{count + 4}"].Value = "Nhân viên kiểm kho";
                 sheet.Cells[$"G{count + 4}:G{count + 4}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 sheet.Cells[$"G{count + 4}:G{count + 4}"].Style.Font.Bold = true;
+                sheet.Cells[$"G{count + 4}:G{count + 4}"].Style.Font.Size = 12;
 
                 sheet.Cells[$"G{count + 5}:G{count + 5}"].Value = "(Kí, ghi rõ họ tên)";
                 sheet.Cells[$"G{count + 5}:G{count + 5}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; 
                 sheet.Cells[$"G{count + 5}:G{count + 5}"].Style.Font.Italic = true;
+                sheet.Cells[$"G{count + 5}:G{count + 5}"].Style.Font.Size = 12;
 
                 sheet.Cells[productArea].AutoFitColumns();
                 sheet.Name = "Product";
@@ -265,9 +276,48 @@ namespace ITGoShop_F_Ver2.Controllers
             }
             stream.Position = 0;
 
-            var tenfile = $"tenfile.xlsx";
+            var tenfile = $"product.xlsx";
 
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", tenfile);
+        }
+
+        [Obsolete]
+        public ActionResult ImportProduct(List<IFormFile> ProductList)
+        {
+            var context = new ITGoShopLINQContext();
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            foreach (IFormFile postedFile in ProductList)
+            {
+                // Lưu file
+                string path = Path.Combine(this.Environment.WebRootPath, "public/images_upload/product");
+                string fileName = Path.GetFileName(DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName);
+                using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+
+                string _path = Path.Combine(path, fileName);
+                var package = new OfficeOpenXml.ExcelPackage(new FileInfo(_path));
+                var workSheet = package.Workbook.Worksheets[0];
+
+                for (int i = 1; workSheet.Cells[$"A{i},A{i}"].Value != null; i++)
+                {
+                    Product newProduct = new Product()
+                    {
+                        ProductName = workSheet.Cells[$"A{i},A{i}"].Value.ToString(),
+                        SubBrandId = workSheet.Cells[$"B{i},B{i}"].Value.ToString(),
+                        BrandId = Convert.ToInt32(workSheet.Cells[$"C{i},C{i}"].Value.ToString()),
+                        CategoryId = workSheet.Cells[$"D{i},D{i}"].Value.ToString(),
+                        Discount = Convert.ToInt32(workSheet.Cells[$"E{i},E{i}"].Value),
+                        Price = Convert.ToInt32(workSheet.Cells[$"F{i},F{i}"].Value),
+                        Cost = Convert.ToInt32(workSheet.Cells[$"G{i},G{i}"].Value),
+                        Quantity = Convert.ToInt32(workSheet.Cells[$"H{i},H{i}"].Value),
+                        ProductImage = workSheet.Cells[$"I{i},I{i}"].Value.ToString(),
+                    };
+                    context.saveProduct(newProduct);
+                }
+            }
+            return RedirectToAction("view_product");
         }
     }
 }

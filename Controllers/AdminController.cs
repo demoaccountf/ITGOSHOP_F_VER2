@@ -109,7 +109,7 @@ namespace ITGoShop_F_Ver2.Controllers
         public List<object> load_default_chart()
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            return context.getRevenueByDate(DateTime.Now.AddDays(-30), DateTime.Now);
+            return context.getRevenueByDate(DateTime.Now.AddDays(-14), DateTime.Now);
         }
 
         public List<object> filter_by_time_span(string time_span)

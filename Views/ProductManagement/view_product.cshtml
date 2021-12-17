@@ -37,7 +37,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Danh sách danh mục sản phẩm</h4>
+                                <h4 class="card-title" style="margin-right:30px">Danh sách sản phẩm</h4>
                                 <button class="btn btn-info btn-border btn-round btn-sm mr-2" data-toggle="modal" data-target="#addRowModal" style="height:36px;">
                                     <span class="btn-label">
                                         <i class="fas fa-file-import"></i>
@@ -58,7 +58,7 @@
                                         <div class="modal-header no-bd">
                                             <h5 class="modal-title">
                                                 <span class="fw-mediumbold">
-                                                    Thêm
+                                                    Import
                                                 </span>
                                                 <span class="fw-light">
                                                     sản phẩm mới
@@ -68,40 +68,26 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-
-                                        <div class="modal-body">
-                                            <p class="small">Create a new row using this form, make sure you fill them all</p>
-                                            <form>
+                                        <form action="/ProductManagement/ImportProduct" method="POST" enctype="multipart/form-data">
+                                            <div class="modal-body">
+                                                <!-- <p class="small">Create a new row using this form, make sure you fill them all</p> -->
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="form-group form-group-default">
-                                                            <label>Name</label>
-                                                            <input id="addName" type="text" class="form-control" placeholder="fill name">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 pr-0">
-                                                        <div class="form-group form-group-default">
-                                                            <label>Position</label>
-                                                            <input id="addPosition" type="text" class="form-control" placeholder="fill position">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group form-group-default">
-                                                            <label>Office</label>
-                                                            <input id="addOffice" type="text" class="form-control" placeholder="fill office">
+                                                            <label>Thêm file sản phẩm (.xlsx)</label>
+                                                            <input type="file" class="form-control" name="ProductList" accept=".xlsx" style="margin: 20px 0px;" required>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer no-bd">
-                                            <button type="button" id="addRowButton" class="btn btn-primary">Add</button>
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                        </div>
+                                            </div>
+                                            <div class="modal-footer no-bd">
+                                                <input type="submit" class="btn btn-primary" value="Thêm"></input>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="table-responsive">
                                 <div id="add-row_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                                     <table id="multi-filter-select" class="display table table-striped table-hover">
