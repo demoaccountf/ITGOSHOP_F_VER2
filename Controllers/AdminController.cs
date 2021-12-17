@@ -1,6 +1,7 @@
 ﻿using ITGoShop_F_Ver2.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -138,6 +139,14 @@ namespace ITGoShop_F_Ver2.Controllers
             //System.Diagnostics.Debug.WriteLine(den_ngay);
             //System.Diagnostics.Debug.WriteLine(tu_ngay);
             return context.getRevenueByDate(tu_ngay, den_ngay);
+        }
+
+        public IActionResult customer_register(User newCustomer)
+        {
+            var context = new ITGoShopLINQContext();
+            context.saveCustomer(newCustomer);
+            System.Diagnostics.Debug.WriteLine(newCustomer.Email);
+            return RedirectToAction("check_password", "Home", new RouteValueDictionary(newCustomer));
         }
     }
 }

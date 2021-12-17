@@ -73,7 +73,15 @@ namespace ITGoShop_F_Ver2.Models
             Product.Add(newProduct);
             SaveChanges();
         }
-
+        public void saveCustomer(User newUser)
+        {
+            newUser.Admin = 0;
+            newUser.UserImage = "default-user-icon.png";
+            newUser.LastLogin = DateTime.Now;
+            newUser.RegisteredAt = DateTime.Now;
+            User.Add(newUser);
+            SaveChanges();
+        }
         public void saveBlog(Blog newBlog)
         {
             newBlog.DateCreate = DateTime.Now;
