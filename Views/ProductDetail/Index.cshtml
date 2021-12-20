@@ -355,8 +355,7 @@
                 </form>
             </div>
         </div>
-        @if (@ViewBag.RelatedProduct.Count != 0)
-        {
+        
             <div class="product-area most-popular section">
                 <div class="container">
                     <div class="row">
@@ -381,12 +380,13 @@
                                         </a>
                                         <div class="button-head">
                                             <div class="product-action">
-                                                <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Lượt xem: @item.View</span></a>
-                                                <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Yêu thích</span></a>
+                                                <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null)</span></a>
+                                                <a title="Wishlist" href="javascript:void(0)"><i class=" ti-heart "></i><span>Yêu thích</span></a>
+                                                <input type="text" class="ProductId" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
                                             </div>
                                             <div class="product-action-2">
                                                 <a title="Add to cart" class="add-to-cart-a-tag" href="javascript:void(0)">Thêm vào giỏ hàng</a>
-                                                <input type="text" value="@item.ProductId" hidden>
+                                                <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
                                             </div>
                                         </div>
                                     </div>
@@ -404,7 +404,6 @@
                     </div>
                 </div>
             </div>
-        }
     </div>
 </section>
 <!--/ End Blog Single -->

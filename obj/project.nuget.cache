@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OiTYxEXiNiq1WaWhJ+3uS5kEkp9YnMraXt/DuabaRbCs8f2YwY8KytqavmiNSMlEqdAvcKMODYWGiEvHYa1jSQ==",
+  "dgSpecHash": "8t046o7Jq0K8eGrHpO42wBDaDVXWKsQ1vzvKKGg+di3OAZZ4DxCJ4qw7F84GjwpvGu2AYbr6yfTtqxpBOmBkHA==",
   "success": true,
   "projectFilePath": "F:\\MyUniversityIT\\Year03\\ITGOSHOP_F_VER2\\ITGoShop_F_Ver2.csproj",
   "expectedPackageFiles": [
@@ -79,6 +79,7 @@
     "C:\\Users\\Selena\\.nuget\\packages\\system.io.filesystem\\4.3.0\\system.io.filesystem.4.3.0.nupkg.sha512",
     "C:\\Users\\Selena\\.nuget\\packages\\system.io.filesystem.primitives\\4.3.0\\system.io.filesystem.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\Selena\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
+    "C:\\Users\\Selena\\.nuget\\packages\\system.linq.dynamic.core\\1.2.15\\system.linq.dynamic.core.1.2.15.nupkg.sha512",
     "C:\\Users\\Selena\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
     "C:\\Users\\Selena\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
     "C:\\Users\\Selena\\.nuget\\packages\\system.reflection.extensions\\4.3.0\\system.reflection.extensions.4.3.0.nupkg.sha512",

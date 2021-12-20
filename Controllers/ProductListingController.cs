@@ -5,13 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using ITGoShop_F_Ver2.Models;
 using X.PagedList;
+using System.Linq.Dynamic; // nhúng vào tập tin 
+using System.Linq.Expressions; // nhúng vào tập tin 
 
 namespace ITGoShop_F_Ver2.Controllers
 {
     public class ProductListingController : Controller
     {
         private ITGoShopContext db = new ITGoShopContext();
-        public object product_listing(int? page,int brandId)
+        public object product_listing(int? page,int brandId, string sortProperty, string sortOrder)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();

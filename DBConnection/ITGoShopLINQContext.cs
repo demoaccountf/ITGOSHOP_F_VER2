@@ -388,10 +388,10 @@ namespace ITGoShop_F_Ver2.Models
             SaveChanges();
         }
 
-        public List<Product> getRelatedProduct(int productId, string categoryId, int brandId)
+        public IQueryable<Product> getRelatedProduct(int productId, string categoryId, int brandId)
         {
             var relatedProduct = Product.Where(p => p.ProductId != productId && p.CategoryId == categoryId && p.BrandId == brandId).Take(10);
-            return relatedProduct.ToList();
+            return relatedProduct;
         }
 
         public void deleteShippingAddress(int ShippingAddressId)
