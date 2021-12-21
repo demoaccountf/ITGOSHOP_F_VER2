@@ -99,19 +99,18 @@ namespace ITGoShop_F_Ver2.Controllers
             }
             if (blog.Count() == 0)
             {
-                total2 = "1";
+                total2 = "NOTNULL";
             }
             
             ViewBag.Result2 = blog;
             var product = from s in linqContext.Product select s;
             if (!String.IsNullOrEmpty(kw_submit))
             {
-                product = product.Where(s => s.ProductName.Contains(kw_submit)
-                               || s.Content.Contains(kw_submit));
+                product = product.Where(s => s.ProductName.Contains(kw_submit));
             }
             if (product.Count() == 0)
             {
-                total1 = "1";
+                total1 = "NOTNULL";
             }
             ViewBag.Result1 = product;
             
