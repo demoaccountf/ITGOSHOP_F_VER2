@@ -12,51 +12,35 @@ namespace ITGoShop_F_Ver2.Controllers
 {
     public class ProductListingController : Controller
     {
+        
         private ITGoShopContext db = new ITGoShopContext();
-        public object product_listing(int? page,int brandId, string sortOrder)
+        public object product_listing(int brandId)
         {
+            
+
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
             ViewBag.AllBrand = context.getAllBrand();
             ViewBag.AllSubBrand = context.getAllSubBrand();
-            ViewBag.SubBrand = context.getSubBrand(brandId);
             ViewBag.Brand = context.getBrand(brandId);
 
             var linqContext = new ITGoShopLINQContext();
-            var BProduct = linqContext.getBrandProduct(brandId);
-            var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
-            var onePageOfProducts = BProduct.ToPagedList(pageNumber, 6); // will only contain 25 products max because of the pageSize
-            ViewBag.OnePageOfProducts = onePageOfProducts;
-
-            ViewData["tangdan"] = String.IsNullOrEmpty(sortOrder) ? "tangdan" : "";
-            ViewData["giamdan"] = String.IsNullOrEmpty(sortOrder) ? "giamdan" : "";
-            ViewData["az"] = String.IsNullOrEmpty(sortOrder) ? "az" : "";
-            ViewData["za"] = String.IsNullOrEmpty(sortOrder) ? "za" : "";
-            var products = from s in linqContext.getBrandProduct(brandId)
+            var BProduct = from s in linqContext.getBrandProduct(brandId)
                            select s;
-            if (!String.IsNullOrEmpty(sortOrder))
-            {
-                switch (sortOrder)
-                {
-                    case "tangdan":
-                        products = products.OrderBy(s => s.Price);
-                        break;
-                    case "giamdan":
-                        products = products.OrderByDescending(s => s.Price);
-                        break;
-                    case "az":
-                        products = products.OrderBy(s => s.ProductName);
-                        break;
-                    case "za":
-                        products = products.OrderByDescending(s => s.ProductName);
-                        break;
-                    default:
-                        products = products.OrderByDescending(s => s.ProductName);
-                        break;
-                }
-                ViewBag.OnePageOfProducts = products;
-            }
+            
+            ViewBag.OnePageOfProducts = BProduct;
+            ViewBag.SubBrand = linqContext.getSubBrand(brandId);
+            var minp = from s in linqContext.getBrandProduct(brandId)
+                       group s by s.BrandId into g
+                       select new { mn = g.Min(s=>s.Price)};
 
+            var maxp = from s in linqContext.getBrandProduct(brandId)
+                       group s by s.BrandId into g
+                       select new { mx = g.Max(s => s.Price) };
+            ViewBag.min_price = Convert.ToInt32((minp.FirstOrDefault()).mn);
+            ViewBag.max_price = Convert.ToInt32((maxp.FirstOrDefault()).mx);
+            ViewBag.min_price_range = ViewBag.min_price - 400000;
+            ViewBag.max_price_range = ViewBag.max_price + 40000000;
 
             return View();
         }
@@ -73,10 +57,23 @@ namespace ITGoShop_F_Ver2.Controllers
             var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
             var onePageOfProducts = CateProduct.ToPagedList(pageNumber, 6); // will only contain 25 products max because of the pageSize
 
+            var SubBrand = linqContext.getB(categoryId);
             ViewBag.OnePageOfProducts = onePageOfProducts;
 
-            
-            
+            ViewBag.SubBrand = linqContext.getB(categoryId);
+
+            var minp = from s in linqContext.getCateProduct(categoryId)
+                       group s by s.BrandId into g
+                       select new { mn = g.Min(s => s.Price) };
+
+            var maxp = from s in linqContext.getCateProduct(categoryId)
+                       group s by s.BrandId into g
+                       select new { mx = g.Max(s => s.Price) };
+            ViewBag.min_price = Convert.ToInt32((minp.FirstOrDefault()).mn);
+            ViewBag.max_price = Convert.ToInt32((maxp.FirstOrDefault()).mx);
+            ViewBag.min_price_range = ViewBag.min_price - 400000;
+            ViewBag.max_price_range = ViewBag.max_price + 40000000;
+
             return View();
         }
         public object product_listing3(int? page,string subbrandId)
@@ -94,7 +91,19 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.OnePageOfProducts = onePageOfProducts;
 
             ViewBag.Brand = context.getSub(subbrandId);
+            ViewBag.SubBrand = linqContext.getSB(subbrandId);
 
+            var minp = from s in linqContext.getSubProduct(subbrandId)
+                       group s by s.BrandId into g
+                       select new { mn = g.Min(s => s.Price) };
+
+            var maxp = from s in linqContext.getSubProduct(subbrandId)
+                       group s by s.BrandId into g
+                       select new { mx = g.Max(s => s.Price) };
+            ViewBag.min_price = Convert.ToInt32((minp.FirstOrDefault()).mn);
+            ViewBag.max_price = Convert.ToInt32((maxp.FirstOrDefault()).mx);
+            ViewBag.min_price_range = ViewBag.min_price - 400000;
+            ViewBag.max_price_range = ViewBag.max_price + 40000000;
             return View();
         }
         public IActionResult product_listing4(int? page,string brandName)
@@ -111,6 +120,19 @@ namespace ITGoShop_F_Ver2.Controllers
 
             ViewBag.OnePageOfProducts = onePageOfProducts;
             ViewBag.Brand = context.getBrand(brandName);
+            ViewBag.SubBrand = linqContext.getSBN(brandName);
+
+            var minp = from s in linqContext.getBNProduct(brandName)
+                       group s by s.BrandId into g
+                       select new { mn = g.Min(s => s.Price) };
+
+            var maxp = from s in linqContext.getBNProduct(brandName)
+                       group s by s.BrandId into g
+                       select new { mx = g.Max(s => s.Price) };
+            ViewBag.min_price = Convert.ToInt32((minp.FirstOrDefault()).mn);
+            ViewBag.max_price = Convert.ToInt32((maxp.FirstOrDefault()).mx);
+            ViewBag.min_price_range = ViewBag.min_price - 400000;
+            ViewBag.max_price_range = ViewBag.max_price + 40000000;
             return View();
         }
     }

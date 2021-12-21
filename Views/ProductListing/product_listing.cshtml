@@ -3,8 +3,7 @@
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
     CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 }
-@using X.PagedList.Mvc.Core;
-@using X.PagedList;
+@model IEnumerable<ITGoShop_F_Ver2.Models.Product>
 @foreach (var item in @ViewBag.Brand)
 {
     <section class="blog-single section " style="display: flex; flex-wrap: nowrap;">
@@ -29,6 +28,7 @@
         <div class="ps-product-action">
             <div class="ps-product__filter">
                 <form>
+
                     <select name="sort" id="sort" class="form-control" style="font-size:12px;">
                         <option value="{{Request::url()}}?sort_by=none" style="font-size:12px;">Sắp Xếp Theo</option>
                         <option value="{{Request::url()}}?sort_by=tangdan" style="font-size:12px;">_Giá Tăng Dần_ </option>
@@ -79,65 +79,55 @@
                         </div>
                     </div>
                 </div>
-                                    }
+            }
         </div>
     </div>
     <div class="ps-sidebar" data-mh="product-listing">
         <aside class="ps-widget--sidebar ps-widget--category">
-                                  <div class="ps-widget__header">
-                                    <h2 style="font-weight: bold;">Thương hiệu nhánh</h2>
-                                  </div>
-                                     <!--{
-                                      $sbrand_id = [];
-                                      $sbrand_arr = [];
-                                          if (isset($_GET['subbrand'])) {
-                                        $sbrand_id = $_GET['subbrand'];
-                                          } else {
-                                        $sbrand_id = $SubBrandId.",";
-                                          }
-                                      $sbrand_arr = explode(",", $sbrand_id);
-                                      }-->
-                                    <div class="ps-widget__content">
-                                      <ul class="ps-list--checked">
-                                        //foreach($subbrand as $key => $subbrand)
-                                        <li>
-                                          <label class="checkbox-inline" style="font-size: 14px;  "> 
-                                            <input type="checkbox" 
-                                            {{ in_array($subbrand->SubBrandId, $sbrand_arr)? 'checked' : '' }}
-                                            class="form-control-checkbox subbrand-filter" data-filters="subbrand" value="{{$subbrand->SubBrandId}}" name="subbrand-filter" style="width: 20px; height: 20px; padding-right: 30px;">
-                                            <span style="padding-left: 20px;  display: block;  position: relative; color: #313131;">{{$subbrand->SubBrandName}}</span>
-                                          </label>
-                                        </li>
-                                        //endforeach
-                                        </ul>
-                                    </div>
-                                </aside>
-                                <aside class="ps-widget--sidebar ">
-                                  <div class="ps-widget__header">
-                                  <h2 for="amount" >Khoảng Giá</h2>
-                                  </div>
-                                  <form>  
-                                    
-                                    <div id="slider-range"></div>
-                                    <input type="text" id="sotien" readonly style="border:0; color:#77ACF1; font-weight:bold; left:0; padding-top:10px; ">
-                                    <input type="hidden" name="start_price" id="start_price" >
-                                    <input type="hidden" name="end_price" id="end_price" >
-                                    <div style="padding-top:10px; ">
-                                        <input type="submit" name="filter_price" value="Lọc" class="btn btn-sm btn-default" >
-                                    </div>     
-                                  </form>
-                                  
-                                </aside>
+            <div class="ps-widget__header">
+                <h2 style="font-weight: bold;">Thương hiệu nhánh</h2>
+            </div>
+            
+            <div class="ps-widget__content">
+                <ul class="ps-list--checked">
+                    @foreach(var item in @ViewBag.SubBrand)
+                    {
+                    <li> 
+                        <label class="checkbox-inline" style="font-size: 14px;  ">
+                            <input type="checkbox" class="form-control-checkbox subbrand-filter" data-filters="subbrand" value="@item.GetType().GetProperty("SubBrandId").GetValue(item, null)" name="subbrand-filter" style="width: 20px; height: 20px; padding-right: 30px;">
+                            <span style="padding-left: 20px;  display: block;  position: relative; color: #313131;">@item.GetType().GetProperty("SubBrandName").GetValue(item, null)</span>
+                        </label>
+                    </li>
+                    }
+                </ul>
+            </div>
+        </aside>
+        <aside class="ps-widget--sidebar ">
+            <div class="ps-widget__header">
+                <h2 for="amount">Khoảng Giá</h2>
+            </div>
+            <form>
+
+                <div id="slider-range"></div>
+                <input type="text" id="sotien" readonly style="border:0; color:#77ACF1; font-weight:bold; left:0; padding-top:10px; ">
+                <input type="hidden" name="start_price" id="start_price">
+                <input type="hidden" name="end_price" id="end_price">
+                <div style="padding-top:10px; ">
+                    <input type="submit" name="filter_price" value="Lọc" class="btn btn-sm btn-default">
+                </div>
+            </form>
+
+        </aside>
     </div>
 </div>
 <script type="text/javascript">
 		$(document).ready(function(){
 			$( "#slider-range" ).slider({
 			range: true,
-			min: {{$min_price_range}},
-			max: {{$max_price_range}},
+            min: @ViewBag.min_price_range,
+            max: @ViewBag.max_price_range,
 			step: 100000,
-			values: [ {{$min_price}} , {{$max_price}} ],
+            values: [ @ViewBag.min_price , @ViewBag.max_price ],
 			slide: function( event, ui ) {
 				$( "#sotien" ).val( ui.values[ 0 ] + " đ - " + ui.values[ 1 ] + " đ");
 				$( "#start_price" ).val( ui.values[ 0 ] );

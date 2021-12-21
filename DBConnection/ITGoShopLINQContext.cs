@@ -25,6 +25,7 @@ namespace ITGoShop_F_Ver2.Models
             modelBuilder.Entity<LoginHistory>().HasKey(lh => new { lh.UserId });
             modelBuilder.Entity<devvn_quanhuyen>().HasKey(qh => new { qh.Maqh });
         }
+
         public DbSet<User> User { set; get; }   // Bảng User trong DataBase, <User> tên lớp
         public DbSet<Product> Product { set; get; }
         public DbSet<Brand> Brand { set; get; }
@@ -60,9 +61,17 @@ namespace ITGoShop_F_Ver2.Models
             return brands;
         }
 
+
+
         public List<SubBrand> getAllSubBrand()
         {
             var subbrand = SubBrand.Where(c => c.Status == 1).ToList();
+            return subbrand;
+        }
+
+        public List<SubBrand> getSubBrand(int brandId)
+        {
+            var subbrand = SubBrand.Where(c => c.BrandId == brandId).ToList();
             return subbrand;
         }
         public void saveProduct(Product newProduct)
@@ -348,7 +357,23 @@ namespace ITGoShop_F_Ver2.Models
         {
             return Product.Where(p => p.Status == 1 && p.SubBrandId == subbrandId);
         }
-        public IQueryable<object> getBNProduct(string brandName)
+
+        public IQueryable<Brand> getB(string categoryId)
+        {
+            return Brand.Where(p => p.Status == 1 && p.CategoryId == categoryId);
+        }
+        public IQueryable<SubBrand> getSB(string subbrandId)
+        {
+            var bi= SubBrand.Where(p => p.SubBrandId == subbrandId).FirstOrDefault();
+            return SubBrand.Where(p => p.Status == 1 && p.BrandId == bi.BrandId);
+        }
+
+        public IQueryable<SubBrand> getSBN(string brandname)
+        {
+            var bi = Brand.Where(p => p.BrandName == brandname).FirstOrDefault();
+            return SubBrand.Where(p => p.Status == 1 && p.BrandId == bi.BrandId);
+        }
+        public IQueryable<Product> getBNProduct(string brandName)
         {
             var ketqua = from product in Product
                          join brand in Brand on product.BrandId equals brand.BrandId into t
