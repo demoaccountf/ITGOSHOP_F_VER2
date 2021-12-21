@@ -356,8 +356,8 @@
     <script src="~/public/admin/js/plugin/sweetalert/sweetalert.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#sort').on('change', function () {
-                var url = $(this).val();
+            $('#sortOrder').on('change', function () {
+                var url = $(/ProductListing/product_listing).val();
                 if (url) {
                     window.location = url;
                 }

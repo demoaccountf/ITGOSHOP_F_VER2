@@ -13,7 +13,7 @@ namespace ITGoShop_F_Ver2.Controllers
     public class ProductListingController : Controller
     {
         private ITGoShopContext db = new ITGoShopContext();
-        public object product_listing(int? page,int brandId, string sortProperty, string sortOrder)
+        public object product_listing(int? page,int brandId, string sortOrder)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
@@ -26,11 +26,38 @@ namespace ITGoShop_F_Ver2.Controllers
             var BProduct = linqContext.getBrandProduct(brandId);
             var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
             var onePageOfProducts = BProduct.ToPagedList(pageNumber, 6); // will only contain 25 products max because of the pageSize
-
             ViewBag.OnePageOfProducts = onePageOfProducts;
-            
 
-            
+            ViewData["tangdan"] = String.IsNullOrEmpty(sortOrder) ? "tangdan" : "";
+            ViewData["giamdan"] = String.IsNullOrEmpty(sortOrder) ? "giamdan" : "";
+            ViewData["az"] = String.IsNullOrEmpty(sortOrder) ? "az" : "";
+            ViewData["za"] = String.IsNullOrEmpty(sortOrder) ? "za" : "";
+            var products = from s in linqContext.getBrandProduct(brandId)
+                           select s;
+            if (!String.IsNullOrEmpty(sortOrder))
+            {
+                switch (sortOrder)
+                {
+                    case "tangdan":
+                        products = products.OrderBy(s => s.Price);
+                        break;
+                    case "giamdan":
+                        products = products.OrderByDescending(s => s.Price);
+                        break;
+                    case "az":
+                        products = products.OrderBy(s => s.ProductName);
+                        break;
+                    case "za":
+                        products = products.OrderByDescending(s => s.ProductName);
+                        break;
+                    default:
+                        products = products.OrderByDescending(s => s.ProductName);
+                        break;
+                }
+                ViewBag.OnePageOfProducts = products;
+            }
+
+
             return View();
         }
         public object product_listing2(int? page,string categoryId)
