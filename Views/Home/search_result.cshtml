@@ -47,7 +47,7 @@
                         <div class="tab-pane fade show active" id="man" role="tabpanel">
                             <div class="tab-single">
                                 <div class="row">
-                                    @if (total1 != null)
+                                    @if (Enumerable.Count(ViewBag.Result1) == 0)
                                     {
                                         <div class="box_search_null">
                                             <img src="~/public/images_upload/Null.png" alt="null"> <div class="font-primary font-bold text-2xl text-dark-gray mb-2">
@@ -76,7 +76,6 @@
                                                             <div class="product-action">
                                                                 <a data-toggle="modal" data-target="#exampleModal" title="Lượt Xem" href="#"><i class=" ti-eye"></i><span>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null)</span></a>
                                                                 <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Yêu thích</span></a>
-                                                                <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>So sánh</span></a>
                                                                 <input type="text" class="ProductId" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
                                                             </div>
                                                             <div class="product-action-2">
@@ -109,7 +108,7 @@
                         <div class="tab-pane fade" id="women" role="tabpanel">
                             <div class="tab-single">
                                 <div class="row">
-                                    @if (total2 != null)
+                                    @if (Enumerable.Count(ViewBag.Result2) == 0)
                                     {
                                         <div class="box_search_null">
                                             <img src="~/public/images_upload/Null.png" alt="null"> <div class="font-primary font-bold text-2xl text-dark-gray mb-2">

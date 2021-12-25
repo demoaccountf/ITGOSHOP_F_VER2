@@ -56,9 +56,8 @@
                             </a>
                             <div class="button-head">
                                 <div class="product-action">
-                                    <a data-toggle="modal" data-target="#exampleModal" title="Lượt Xem" href="#"><i class=" ti-eye"></i><span>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null)</span></a>
-                                    <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Yêu thích</span></a>
-                                    <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>So sánh</span></a>
+                                    <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null)</span></a>
+                                    <a title="Wishlist" href="javascript:void(0)"><i class=" ti-heart "></i><span>Yêu thích</span></a>
                                     <input type="text" class="ProductId" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
                                 </div>
                                 <div class="product-action-2">
@@ -83,7 +82,6 @@
                 </div>
             }
         </div>
-        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("product_listing3", new { page }))
 
     </div>
     <div class="ps-sidebar" data-mh="product-listing">
@@ -103,16 +101,15 @@
          }-->
             <div class="ps-widget__content">
                 <ul class="ps-list--checked">
-                    //foreach($subbrand as $key => $subbrand)
-                    <li>
-                        <label class="checkbox-inline" style="font-size: 14px;  ">
-                            <input type="checkbox"
-                                   {{ in_array($subbrand->SubBrandId, $sbrand_arr)? 'checked' : '' }}
-                                   class="form-control-checkbox subbrand-filter" data-filters="subbrand" value="{{$subbrand->SubBrandId}}" name="subbrand-filter" style="width: 20px; height: 20px; padding-right: 30px;">
-                            <span style="padding-left: 20px;  display: block;  position: relative; color: #313131;">{{$subbrand->SubBrandName}}</span>
-                        </label>
-                    </li>
-                    //endforeach
+                    @foreach (var item in @ViewBag.SubBrand)
+                    {
+                        <li>
+                            <label class="checkbox-inline" style="font-size: 14px;  ">
+                                <input type="checkbox" class="form-control-checkbox subbrand-filter" data-filters="subbrand" value="@item.GetType().GetProperty("SubBrandId").GetValue(item, null)" name="subbrand-filter" style="width: 20px; height: 20px; padding-right: 30px;">
+                                <span style="padding-left: 20px;  display: block;  position: relative; color: #313131;">@item.GetType().GetProperty("SubBrandName").GetValue(item, null)</span>
+                            </label>
+                        </li>
+                    }
                 </ul>
             </div>
         </aside>
@@ -138,10 +135,10 @@
 		$(document).ready(function(){
 			$( "#slider-range" ).slider({
 			range: true,
-			min: {{$min_price_range}},
-			max: {{$max_price_range}},
+            min: @ViewBag.min_price_range,
+            max: @ViewBag.max_price_range,
 			step: 100000,
-			values: [ {{$min_price}} , {{$max_price}} ],
+            values: [ @ViewBag.min_price , @ViewBag.max_price ],
 			slide: function( event, ui ) {
 				$( "#sotien" ).val( ui.values[ 0 ] + " đ - " + ui.values[ 1 ] + " đ");
 				$( "#start_price" ).val( ui.values[ 0 ] );
