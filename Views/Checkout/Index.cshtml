@@ -85,10 +85,10 @@
                                                 <td style=" height:80px">
                                                     <img style="margin: auto; max-width: 60px; max-height: 60px; width: auto; height: auto; " src="~/public/images_upload/product/@item.Product.ProductImage" alt="">
                                                 </td>
-                                                <td><a href="/Product/product-detail/@item.Product.ProductId" style="text-decoration:none">@item.Product.ProductName</a></td>
+                                                <td><a href="/ProductDetail/product_detail?productId=@item.Product.ProductId" style="text-decoration:none; color:black;">@item.Product.ProductName</a></td>
                                                 <td>@item.Product.Price.ToString("#,###", cul.NumberFormat) ₫</td>
                                                 <td style="text-align:center">x@(@item.Quantity)</td>
-                                                <td>@(@item.Quantity * @item.Product.Price)</td>
+                                                <td>@((@item.Quantity * @item.Product.Price).ToString("#,###", cul.NumberFormat)) ₫</td>
                                             </tr>
                                         }
                                     </tbody>

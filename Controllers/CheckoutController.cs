@@ -132,6 +132,9 @@ namespace ITGoShop_F_Ver2.Controllers
                 // Trừ số lượng tồn kho
                 linqContext.updateSoldProduct(productInfo.ProductId, item.Quantity);
             }
+            cart.Clear();
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+
             // Gửi mail
             string customerFirstName = HttpContext.Session.GetString("customerFirstName");
             string customerLastName = HttpContext.Session.GetString("customerLastName");
@@ -140,7 +143,6 @@ namespace ITGoShop_F_Ver2.Controllers
                                           "itgoshop863@gmail.com", "Itgoshop");
             return RedirectToAction("order_detail", "Order", new { orderId = orderId });
         }
-
         public string getMailContent(Order orderInfo, string customerFirstName, string customerLastName)
         {
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
