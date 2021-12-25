@@ -95,9 +95,11 @@
                     <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="">
                     <span class="out-of-stock">GIẢM @item.GetType().GetProperty("Discount").GetValue(item, null)%</span>
                     @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
+                    @if (@item.GetType().GetProperty("Quantity").GetValue(item, null) < 1) { 
+                <span class="out-of-stock" style="background-color:#FF8C00;">Hết hàng</span>}
                     @if (@so_ngay_da_moban < 14)
                     {
-    <span class="new" style="right: 180px;">New</span>}
+                <span class="new" style="right: 180px;">New</span>}
                 </a>
                 <div class="button-head">
                     <div class="product-action">
@@ -108,11 +110,12 @@
                     <div class="product-action-2">
                         <a title="Add to cart" class="add-to-cart-a-tag" href="javascript:void(0)">Thêm vào giỏ hàng</a>
                         <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                        <input type="hidden" class="Quantity" value="@item.GetType().GetProperty("Quantity").GetValue(item, null)">
                     </div>
                 </div>
             </div>
             <div class="product-content">
-                <h3><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)"><b style="font-size:17px">@item.GetType().GetProperty("ProductName").GetValue(item, null)</b></a></h3>
+                <h3><a style="text-decoration: none; color: black;" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)"><b style="font-size:17px">@item.GetType().GetProperty("ProductName").GetValue(item, null)</b></a></h3>
                 @{double avg_rating = item.GetType().GetProperty("AvgRating").GetValue(item, null);}
                 @if (avg_rating >= 1)
                 {
@@ -276,9 +279,11 @@
                                         <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                         <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                         @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
+                                        @if (@item.GetType().GetProperty("Quantity").GetValue(item, null) < 1) {
+                                    <span class="out-of-stock" style="background-color:#FF8C00;">Hết hàng</span>}
                                         @if (@so_ngay_da_moban < 14)
                                         {
-                        <span class="new">New</span>}
+                                    <span class="new">New</span>}
                                     </a>
                                     <div class="button-head">
                                         <div class="product-action">
@@ -290,11 +295,12 @@
                                         <div class="product-action-2">
                                             <a title="Add to cart" class="add-to-cart-a-tag" href="javascript:void(0)">Thêm vào giỏ hàng</a>
                                             <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                                            <input type="hidden" class="Quantity" value="@item.GetType().GetProperty("Quantity").GetValue(item, null)">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="product-content">
-                                    <h3><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
+                                    <h3><a style="text-decoration: none; color: black;" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
                                     <div class="product-price">
                                         <span style="color:black; font-size:17px"><b>@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</b></span>
                                         @if (@item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
@@ -349,14 +355,17 @@
                         <div class="col-xl-3 col-lg-4 col-md-4 col-12">
                             <div class="single-product">
                                 <div class="product-img" style="width: 250px; height: 200px;">
-                                        <a href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">
+                                    <a href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">
                                         <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                         <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                         @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
+                                        @if (@item.GetType().GetProperty("Quantity").GetValue(item, null) < 1)
+                                        {
+                                    <span class="out-of-stock" style="background-color:#FF8C00;">Hết hàng</span>}
                                         @if (@so_ngay_da_moban < 14)
                                         {
-                                             <span class="new">New</span>}
-                                        </a>
+                                    <span class="new">New</span>}
+                                    </a>
                                         <div class="button-head">
                                             <div class="product-action">
                                                 <a data-toggle="modal" data-target="#exampleModal" title="Lượt Xem" href="#"><i class=" ti-eye"></i><span>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null)</span></a>
@@ -367,11 +376,12 @@
                                             <div class="product-action-2">
                                                 <a title="Add to cart" class="add-to-cart-a-tag" href="javascript:void(0)">Thêm vào giỏ hàng</a>
                                                 <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                                                <input type="hidden" class="Quantity" value="@item.GetType().GetProperty("Quantity").GetValue(item, null)">
                                             </div>
                                         </div>
                                 </div>
                                 <div class="product-content">
-                                    <h3><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
+                                    <h3><a style="text-decoration: none; color: black;" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
                                     <div class="product-price">
                                         <span style="color:black; font-size:17px"><b>@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</b></span>
                                         @if (@item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
@@ -401,9 +411,12 @@
                                         <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                         <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                         @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
+                                        @if (@item.GetType().GetProperty("Quantity").GetValue(item, null) < 1)
+                                        {
+                                    <span class="out-of-stock" style="background-color:#FF8C00;">Hết hàng</span>}
                                         @if (@so_ngay_da_moban < 14)
                                         {
-                        <span class="new">New</span>}
+                                    <span class="new">New</span>}
                                     </a>
                                     <div class="button-head">
                                         <div class="product-action">
@@ -415,11 +428,12 @@
                                         <div class="product-action-2">
                                             <a title="Add to cart" class="add-to-cart-a-tag" href="javascript:void(0)">Thêm vào giỏ hàng</a>
                                             <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                                            <input type="hidden" class="Quantity" value="@item.GetType().GetProperty("Quantity").GetValue(item, null)">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="product-content">
-                                    <h3><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
+                                    <h3><a style="text-decoration: none; color: black;" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
                                     <div class="product-price">
                                         <span style="color:black; font-size:17px"><b>@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</b></span>
                                         @if (@item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
@@ -468,11 +482,12 @@
                     <img style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                     <a href="javascript:void(0)" class="buy add-to-cart-a-tag"><i class="fa fa-shopping-bag"></i></a>
                     <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                    <input type="hidden" class="Quantity" value="@item.GetType().GetProperty("Quantity").GetValue(item, null)">
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-12 no-padding">
                 <div class="content">
-                    <h5 class="title"><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
+                    <h5 class="title"><a style="text-decoration: none;color:black;" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
                     <p class="price with-discount">@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</p>
                     <h5 class="title"><a>Đã bán: @item.GetType().GetProperty("NumberSolded").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫  sản phẩm </a> </h5>
                 </div>
@@ -499,11 +514,12 @@
                     <img style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                     <a href="javascript:void(0)" class="buy add-to-cart-a-tag"><i class="fa fa-shopping-bag"></i></a>
                     <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                    <input type="hidden" class="Quantity" value="@item.GetType().GetProperty("Quantity").GetValue(item, null)">
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-12 no-padding">
                 <div class="content">
-                    <h5 class="title"><a style="text-decoration:none" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
+                    <h5 class="title"><a style="text-decoration: none; color: black;" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
                     <p class="price with-discount">@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</p>
 
                     <h5 class="title"><a>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null) <i class=" ti-eye"></i></a> </h5>

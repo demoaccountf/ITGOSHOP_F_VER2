@@ -63,26 +63,18 @@
                                     <h2 class="blog-title">@ViewBag.ProductDetail.GetType().GetProperty("ProductName").GetValue(ViewBag.ProductDetail, null)</h2>
                                     <div class="blog-meta" style="padding-top:30px">
                                         <span class="author">
-                                            <!--if(product->Rating == 0)
-                                            <a><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>Chưa có đánh giá</a>
-                                        else
-                                            <a>
-                                            i = 0;
-                                            for(i; i < product->Rating; $i++)
-                                                <i class="fa fa-star-o"></i>
-                                            endfor
-                                            product->Rating</a>
-                                        endif-->
-                                            <a><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>Chưa có đánh giá</a>
+                                            <a><i class="fa fa-eye" aria-hidden="true"></i>@ViewBag.ProductDetail.GetType().GetProperty("View").GetValue(ViewBag.ProductDetail, null) lượt xem</a>
                                             <a><i class="fa fa-shopping-cart"></i>Đã bán @ViewBag.ProductDetail.GetType().GetProperty("Sold").GetValue(ViewBag.ProductDetail, null)</a>
-                                            @if (ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) < 10)
-                                            {
-                                                <a><i class="fa fa-archive"></i>Chỉ còn lại @ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) sản phẩm</a>
-                                            }
-                                            else
+                                            @if (ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) >= 10)
                                             {
                                                 <a><i class="fa fa-archive"></i>Còn @ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) sản phẩm</a>
+
                                             }
+                                            else if (ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) <= 10)
+                                            {
+                                                 <a style="color:red;"><i class="fa fa-archive" style="color:red;"></i>Đã hết hàng</a>
+                                            }
+                                            else{ <a><i class="fa fa-archive"></i>Chỉ còn lại @ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) sản phẩm</a>}
                                         </span>
                                     </div>
                                     <div class="content">
@@ -97,6 +89,7 @@
                                                 </sub>
                                             </h1>
                                         </div>
+                                        @if (@ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) > 0) {
                                         <div class="single-widget get-button">
                                             <div class="content">
                                                 <p>Số lượng: <input name="quantity" type="number" min="1" value="1" size="4" style="width:50px"></p>
@@ -107,7 +100,7 @@
                                                 </div>
                                                 <input name="productId" type="hidden" class="input_product_id" value="@ViewBag.ProductDetail.GetType().GetProperty("ProductId").GetValue(ViewBag.ProductDetail, null)">
                                             </div>
-                                        </div>
+                                        </div> }
                                     </div>
                                 </form>
                             </div>
@@ -376,24 +369,37 @@
                                         <a href="/ProductDetail/product_detail?productId=@item.ProductId">
                                             <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.ProductImage" alt="#">
                                             <img class="hover-img" src="~/public/images_upload/product/@item.ProductImage" alt="">
-
+                                            @{double so_ngay_da_moban = (DateTime.Now - item.StartsAt).TotalDays;}
+                                            @if (@item.Quantity < 1)
+                                            {
+                                        <span class="out-of-stock" style="background-color:#FF8C00;">Hết hàng</span>}
+                                            @if (@so_ngay_da_moban < 14)
+                                            {
+                                        <span class="new">New</span>}
                                         </a>
                                         <div class="button-head">
                                             <div class="product-action">
                                                 <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Lượt xem: @item.GetType().GetProperty("View").GetValue(item, null)</span></a>
                                                 <a title="Wishlist" href="javascript:void(0)"><i class=" ti-heart "></i><span>Yêu thích</span></a>
-                                                <input type="text" class="ProductId" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                                                <input type="text" class="ProductId" value="@item.ProductId" hidden>
                                             </div>
                                             <div class="product-action-2">
                                                 <a title="Add to cart" class="add-to-cart-a-tag" href="javascript:void(0)">Thêm vào giỏ hàng</a>
-                                                <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                                                <input type="text" value="@item.ProductId" hidden>
+                                                <input type="hidden" class="Quantity" value="@item.Quantity">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="product-content">
-                                        <h3><a href="/ProductDetail/product_detail?productId=@item.ProductId">@item.ProductName</a></h3>
+                                        <h3><a style="text-decoration: none; color: black;" href="/ProductDetail/product_detail?productId=@item.ProductId">@item.ProductName</a></h3>
                                         <div class="product-price">
-                                            <span>@item.Price.ToString("#,###", cul.NumberFormat) ₫</span>
+                                            <span style="color:black; font-size:17px"><b>@item.Price.ToString("#,###", cul.NumberFormat) ₫</b></span>
+                                            @if (@item.Discount > 0)
+                                            {
+                                                double dc = @item.Price + (@item.Price * (@item.Discount / 100));
+                                    <br>
+                                                        <span class="old">@dc.ToString("#,###", cul.NumberFormat) ₫</span>
+                                                                            <span class="o-giam-gia" style="font-size:10px">-@item.Discount% </span>}
                                         </div>
                                     </div>
                                 </div>
@@ -448,11 +454,11 @@
 					data:{ProductId: product_id},
                     success: function (data) {
 						$('#show_comment').html(data);
-					},
-					error:function(data)
-					{
-						alert("Lỗi");
 					}
+					//error:function(data)
+					//{
+					//	alert("Lỗi");
+					//}
 				});
 			}
 			$('.send-comment-button').click(function(){
@@ -517,11 +523,11 @@
 								$('.textarea-commnent-content').val('');
 								add_next_cmt.css('background','#ccf2f4');
 								$('html, body').animate({scrollTop: add_next_cmt.offset().top}, 700);
-							},
-							error:function(data)
-							{
-								alert("Lỗi");
 							}
+							//error:function(data)
+							//{
+							//	alert("Lỗi");
+							//}
 						});
 					}
 					else

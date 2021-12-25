@@ -104,73 +104,70 @@
                                                 <th>Hành động</th>
                                             </tr>
                                         </thead>
-                                        <!-- <tfoot>
+                                        <tfoot>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
-                                                <th>Salary</th>
-                                                <th>Salary</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Danh mục</th>
+                                                <th>Thương hiệu</th>
+                                                <th>Số lượng</th>
+                                                <th>Ảnh sản phẩm</th>
+                                                <th>Giá</th>
+                                                <th>Hành động</th>
                                             </tr>
-                                        </tfoot> -->
+                                        </tfoot>
                                         <tbody>
                                             @foreach (var item in @ViewBag.AllProduct)
                                             {
-                                                <tr>
-                                                    <td><a href="/ProductManagement/update_product?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)" class="active" ui-toggle-class="" style="color:black">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></td>
-                                                    <td>
-                                                        @item.GetType().GetProperty("CategoryName").GetValue(item, null)
-                                                        <input type="text" class="ProductId" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
-                                                    </td>
-                                                    <td>@item.GetType().GetProperty("BrandName").GetValue(item, null)</td>
-                                                    <td>@item.GetType().GetProperty("Quantity").GetValue(item, null)</td>
-                                                    <td><img src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" style="margin: auto; max-width: 60px; max-height: 60px; width: auto; height: auto; "></td>
+                                            <tr>
+                                                <td><a href="/ProductManagement/update_product?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)" class="active" ui-toggle-class="" style="color:black">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></td>
+                                                <td>
+                                                    @item.GetType().GetProperty("CategoryName").GetValue(item, null)
+                                                    <input type="text" class="ProductId" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                                                </td>
+                                                <td>@item.GetType().GetProperty("BrandName").GetValue(item, null)</td>
+                                                @if (@item.GetType().GetProperty("Quantity").GetValue(item, null) > 0) {<td>@item.GetType().GetProperty("Quantity").GetValue(item, null)</td>}
+                                                 else {<td><p style="color:red">Hết hàng</p> </td>}
+                                                <td><img src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" style="margin: auto; max-width: 60px; max-height: 60px; width: auto; height: auto; "></td>
 
-                                                    <td>@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</td>
+                                                <td>@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</td>
 
-                                                    <td>
-                                                        <div class="form-button-action">
-                                                            @if (item.GetType().GetProperty("Status").GetValue(item, null) == 1)
-                                                            {
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị sản phẩm">
-                                                                    <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
-                                                                </button>
+                                                <td>
+                                                    <div class="form-button-action">
+                                                        @if (item.GetType().GetProperty("Status").GetValue(item, null) == 1)
+                                                        {
+                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị sản phẩm">
+                                                <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
+                                            </button>
                                                                 <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn sản phẩm" hidden>
                                                                     <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
-                                                                </button>
-                                                            }
-                                                            else
-                                                            {
+                                                                </button> }
+                                                                                else
+                                                                                {
                                                                 <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị sản phẩm" hidden>
                                                                     <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
                                                                 </button>
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn sản phẩm">
-                                                                    <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
-                                                                </button>
-                                                            }
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Thư viện ảnh">
-                                                                <a href="/ProductManagement/view_productgallary?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)" class="active" ui-toggle-class="">
-                                                                    <i class="fas fa-images"></i>
-                                                                </a>
-                                                            </button>
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Cập nhật sản phẩm">
-                                                                <a href="/ProductManagement/update_product?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)" class="active" ui-toggle-class="">
-                                                                    <i class="fa fa-edit text-active"></i>
-                                                                </a>
-                                                            </button>
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa sản phẩm">
-                                                                <a href="javascript:void(0)" class="active" ui-toggle-class="">
-                                                                    <i class="fa fa-times text-danger text"></i>
-                                                                </a>
-                                                            </button>
-                                                        </div>
+                                                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn sản phẩm">
+                                                                                        <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
+                                                                                    </button>}
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Thư viện ảnh">
+                                                            <a href="/ProductManagement/view_productgallary?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)" class="active" ui-toggle-class="">
+                                                                <i class="fas fa-images"></i>
+                                                            </a>
+                                                        </button>
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Cập nhật sản phẩm">
+                                                            <a href="/ProductManagement/update_product?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)" class="active" ui-toggle-class="">
+                                                                <i class="fa fa-edit text-active"></i>
+                                                            </a>
+                                                        </button>
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa sản phẩm">
+                                                            <a href="javascript:void(0)" class="active" ui-toggle-class="">
+                                                                <i class="fa fa-times text-danger text"></i>
+                                                            </a>
+                                                        </button>
+                                                    </div>
 
-                                                    </td>
-                                                </tr>
+                                                </td>
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>

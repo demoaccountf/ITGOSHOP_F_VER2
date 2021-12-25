@@ -887,6 +887,7 @@ namespace ITGoShop_F_Ver2.Models
                             StartsAt = (DateTime)reader["StartsAt"],
                             Price = Convert.ToInt32(reader["Price"]),
                             View = Convert.ToInt32(reader["View"]),
+                            Quantity = Convert.ToInt32(reader["Quantity"])
                         });
                     }
                 }
@@ -1421,7 +1422,8 @@ namespace ITGoShop_F_Ver2.Models
                             Content = reader["Content"].ToString(),
                             CategoryName = reader["CategoryName"].ToString(),
                             BrandName = reader["BrandName"].ToString(),
-                            SubBrandName = reader["SubBrandName"].ToString()
+                            SubBrandName = reader["SubBrandName"].ToString(),
+                            View = Convert.ToInt32(reader["View"]),
                         };
                         
                     }
@@ -1453,7 +1455,8 @@ namespace ITGoShop_F_Ver2.Models
                             LastName = reader["LastName"].ToString(),
                             OrderStatus = reader["OrderStatus"].ToString(),
                             Total = Convert.ToInt32(reader["Total"]),
-                            PaymentStatus = reader["PaymentStatus"].ToString()
+                            PaymentStatus = reader["PaymentStatus"].ToString(),
+                            OrderDate = (DateTime)reader["OrderDate"]
                         };
                         list.Add(obj);
                     }
@@ -2083,8 +2086,9 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                var str = @"SELECT AVG(Rating) AS avg_rating,  ProductImage, ProductName, P.ProductId , Price, Cost, Discount, View, Sold, StartsAt
+                var str = @"SELECT AVG(Rating) AS avg_rating,  ProductImage, ProductName, P.ProductId , Price, Cost, Discount, View, Sold, StartsAt, Quantity
                             FROM `productrating` PR JOIN `product` P ON P.ProductId = PR.ProductId
+                            WHERE Quantity > 1 
                             group by ProductImage, ProductName, P.ProductId, Price, Cost, Discount, View, Sold, StartsAt
                             LIMIT 6;";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
@@ -2095,6 +2099,7 @@ namespace ITGoShop_F_Ver2.Models
                         var obj = new
                         {
                             ProductImage = reader["ProductImage"].ToString(),
+                            Quantity =  Convert.ToInt32(reader["Quantity"]),
                             //Title = reader["Title"].ToString(),
                             //Content = reader["Content"].ToString(),
                             AvgRating = Convert.ToInt32(reader["avg_rating"]),
