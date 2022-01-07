@@ -72,9 +72,11 @@
                                             }
                                             else if (ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) <= 10)
                                             {
-                                                 <a style="color:red;"><i class="fa fa-archive" style="color:red;"></i>Đã hết hàng</a>
+                                                <a><i class="fa fa-archive"></i>Chỉ còn lại @ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) sản phẩm</a>
                                             }
-                                            else{ <a><i class="fa fa-archive"></i>Chỉ còn lại @ViewBag.ProductDetail.GetType().GetProperty("Quantity").GetValue(ViewBag.ProductDetail, null) sản phẩm</a>}
+                                            else
+                                            { <a style="color:red;"><i class="fa fa-archive" style="color:red;"></i>Đã hết hàng</a>
+                                            }
                                         </span>
                                     </div>
                                     <div class="content">

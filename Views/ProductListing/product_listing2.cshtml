@@ -55,7 +55,7 @@
                                 @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
                                 @if (@so_ngay_da_moban < 14)
                                 {
-                                    <span class="new">New</span>}
+                                    <span class="new" style="right: 180px;" >New</span>}
                             </a>
                             <div class="button-head">
                                 <div class="product-action">
