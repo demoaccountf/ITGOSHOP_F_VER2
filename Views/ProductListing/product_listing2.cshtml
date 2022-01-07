@@ -66,6 +66,7 @@
                                 <div class="product-action-2">
                                     <a title="Add to cart" class="add-to-cart-a-tag" href="javascript:void(0)">Thêm vào giỏ hàng</a>
                                     <input type="text" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>
+                                    <input type="hidden" class="Quantity" value="@item.GetType().GetProperty("Quantity").GetValue(item, null)">
                                 </div>
                             </div>
                         </div>
