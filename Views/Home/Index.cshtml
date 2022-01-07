@@ -95,7 +95,7 @@
                     <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="">
                     <span class="out-of-stock">GIẢM @item.GetType().GetProperty("Discount").GetValue(item, null)%</span>
                     @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
-                    @if (@item.GetType().GetProperty("Quantity").GetValue(item, null) < 1) { 
+                    @if (item.GetType().GetProperty("Quantity").GetValue(item, null) < 1) { 
                 <span class="out-of-stock" style="background-color:#FF8C00;">Hết hàng</span>}
                     @if (@so_ngay_da_moban < 14)
                     {
@@ -279,9 +279,9 @@
                                         <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                         <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                         @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
-                                        @if (@item.GetType().GetProperty("Quantity").GetValue(item, null) < 1) {
+                                        @if (item.GetType().GetProperty("Quantity").GetValue(item, null) < 1) {
                                     <span class="out-of-stock" style="background-color:#FF8C00;">Hết hàng</span>}
-                                        @if (@so_ngay_da_moban < 14)
+                                        @if (so_ngay_da_moban < 14)
                                         {
                                     <span class="new">New</span>}
                                     </a>
@@ -302,7 +302,7 @@
                                     <h3><a style="text-decoration: none; color: black;" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
                                     <div class="product-price">
                                         <span style="color:black; font-size:17px"><b>@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</b></span>
-                                        @if (@item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
+                                        @if (item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
                                         {
                                             double dc = @item.GetType().GetProperty("Price").GetValue(item, null) + (@item.GetType().GetProperty("Price").GetValue(item, null) * (@item.GetType().GetProperty("Discount").GetValue(item, null)) / 100);
                         <br>
@@ -358,10 +358,10 @@
                                         <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                         <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                         @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
-                                        @if (@item.GetType().GetProperty("Quantity").GetValue(item, null) < 1)
+                                        @if (item.GetType().GetProperty("Quantity").GetValue(item, null) < 1)
                                         {
-                                    <span class="out-of-stock" style="background-color:#FF8C00;">Hết hàng</span>}
-                                        @if (@so_ngay_da_moban < 14)
+                                            <span class="out-of-stock" style="background-color:#FF8C00;">Hết hàng</span>}
+                                        @if (so_ngay_da_moban < 14)
                                         {
                                     <span class="new">New</span>}
                                     </a>
@@ -382,7 +382,7 @@
                                     <h3><a style="text-decoration: none; color: black;" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
                                     <div class="product-price">
                                         <span style="color:black; font-size:17px"><b>@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</b></span>
-                                        @if (@item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
+                                        @if (item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
                                         {
                                             double dc = @item.GetType().GetProperty("Price").GetValue(item, null) + (@item.GetType().GetProperty("Price").GetValue(item, null) * (@item.GetType().GetProperty("Discount").GetValue(item, null)) / 100);
                         <br>
@@ -409,10 +409,11 @@
                                         <img class="default-img" style="margin: auto; max-width: 250px; max-height: 200px; width: auto; height: auto; " src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                         <img class="hover-img" src="~/public/images_upload/product/@item.GetType().GetProperty("ProductImage").GetValue(item, null)" alt="#">
                                         @{double so_ngay_da_moban = (DateTime.Now - item.GetType().GetProperty("StartsAt").GetValue(item, null)).TotalDays;}
-                                        @if (@item.GetType().GetProperty("Quantity").GetValue(item, null) < 1)
+                                        @if (item.GetType().GetProperty("Quantity").GetValue(item, null) < 1)
                                         {
-                                    <span class="out-of-stock" style="background-color:#FF8C00;">Hết hàng</span>}
-                                        @if (@so_ngay_da_moban < 14)
+                                        <span class="out-of-stock" style="background-color:#FF8C00;">Hết hàng</span>
+                                        }
+                                        @if (so_ngay_da_moban < 14)
                                         {
                                     <span class="new">New</span>}
                                     </a>
@@ -433,7 +434,7 @@
                                     <h3><a style="text-decoration: none; color: black;" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h3>
                                     <div class="product-price">
                                         <span style="color:black; font-size:17px"><b>@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</b></span>
-                                        @if (@item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
+                                        @if (item.GetType().GetProperty("Discount").GetValue(item, null) > 0)
                                         {
                                             double dc = @item.GetType().GetProperty("Price").GetValue(item, null) + (@item.GetType().GetProperty("Price").GetValue(item, null) * (@item.GetType().GetProperty("Discount").GetValue(item, null)) / 100);
                         <br>
