@@ -1509,7 +1509,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "SELECT * FROM bannerslider BS JOIN BLOG B ON BS.BlogId = B.BlogId WHERE SliderStatus = 1 ORDER BY CreatedAt ASC LIMIT 12";
+                string str = "SELECT * FROM bannerslider BS JOIN BLOG B ON BS.BlogId = B.BlogId WHERE SliderStatus = 1 ORDER BY CreatedAt ASC LIMIT 8";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
