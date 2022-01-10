@@ -901,7 +901,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'LT000' ORDER BY VIEW DESC LIMIT 8 ;";
+                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'LT000' ORDER BY VIEW DESC LIMIT 12 ;";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -937,7 +937,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'PC000' ORDER BY VIEW DESC LIMIT 8 ;";
+                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'PC000' ORDER BY VIEW DESC LIMIT 12 ;";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -1073,7 +1073,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'PK000' ORDER BY VIEW DESC LIMIT 8 ;";
+                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'PK000' ORDER BY VIEW DESC LIMIT 12 ;";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -1509,7 +1509,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "SELECT * FROM bannerslider BS JOIN BLOG B ON BS.BlogId = B.BlogId WHERE SliderStatus = 1 ORDER BY CreatedAt ASC LIMIT 8";
+                string str = "SELECT * FROM bannerslider BS JOIN BLOG B ON BS.BlogId = B.BlogId WHERE SliderStatus = 1 ORDER BY CreatedAt ASC LIMIT 12";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
