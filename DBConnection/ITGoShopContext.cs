@@ -901,7 +901,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'LT000' ORDER BY VIEW DESC LIMIT 12 ;";
+                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'LT000' AND P.Status =1 ORDER BY CreatedAt DESC LIMIT 8 ;";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -937,7 +937,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'PC000' ORDER BY VIEW DESC LIMIT 12 ;";
+                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'PC000' AND P.Status =1 ORDER BY CreatedAt DESC LIMIT 8 ;";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -1073,7 +1073,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'PK000' ORDER BY VIEW DESC LIMIT 12 ;";
+                string str = "SELECT * FROM Product P JOIN category C ON P.CategoryId = C.CategoryId WHERE P.CategoryId = 'PK000' ORDER BY CreatedAt DESC LIMIT 8 ;";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -1109,7 +1109,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "SELECT * FROM (Product P JOIN category C ON P.CategoryId = C.CategoryId) " +
+                string str = "SELECT * FROM (Product P JOIN category C ON P.CategoryId = C.CategoryId) WHERE AND P.Status =1 " +
                     "JOIN brand B ON B.BrandId = P.BrandId " +
                     "JOIN subbrand S ON S.SubBrandId = P.SubBrandId " +
                     "where P.CategoryId = @categoryId";
