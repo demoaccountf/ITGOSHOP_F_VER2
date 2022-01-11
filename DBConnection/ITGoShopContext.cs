@@ -1554,7 +1554,8 @@ namespace ITGoShop_F_Ver2.Models
                             Info.Summary = reader["Summary"].ToString();
                             Info.Content = reader["Content"].ToString();
                             Info.DatePost = (DateTime)reader["DatePost"];
-                            Info.Image = reader["Image"].ToString();
+                        Info.View = Convert.ToInt32(reader["View"]);
+                        Info.Image = reader["Image"].ToString();
                     }
                     else
                         return null;
