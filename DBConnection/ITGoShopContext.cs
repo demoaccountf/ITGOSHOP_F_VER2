@@ -1562,6 +1562,34 @@ namespace ITGoShop_F_Ver2.Models
             }
             return Info;
         }
+
+        public User getProfile(int customerId)
+        {
+            User Info = new User();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT * FROM user " +
+                    "where UserId = @customerId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("UserId", customerId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        Info.UserId = Convert.ToInt32(reader["UserId"]);
+                        Info.Email = reader["Email"].ToString();
+                        Info.FirstName= reader["FirstName"].ToString();
+                        Info.LastName = reader["LastName "].ToString();
+                        Info.Mobile = reader["Mobile "].ToString();
+                        Info.UserImage = reader["UserImage "].ToString();
+                    }
+                    else
+                        return null;
+                }
+            }
+            return Info;
+        }
         public List<Blog> getBlogRelate(int blogId)
         {
             List<Blog> list = new List<Blog>();

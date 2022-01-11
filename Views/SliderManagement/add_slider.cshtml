@@ -50,18 +50,7 @@
                                             <input type="text" name="SliderName" class="form-control" id="email2" required>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-lg-6">
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Chiến dịch khuyến mãi</label>
-                                            <select class="form-control" name="CampaignId" id="exampleFormControlSelect1">
-                                                @foreach (var item in @ViewBag.AllCampaign)
-                                                {
-                                                    <option value="@item.CampaignId">@item.CampaignName</option>
-                                                }
-                                                <option value=""> </option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="col-6 col-lg-6">
                                         <div class="form-group">
                                             <label for="exampleFormControlFile1">Thêm ảnh banner slider</label>

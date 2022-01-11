@@ -489,7 +489,7 @@
                                 <div class="content">
                                     <h5 class="title"><a style="text-decoration: none;color:black;" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></h5>
                                     <p class="price with-discount">@item.GetType().GetProperty("Price").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫</p>
-                                    <h5 class="title"><a>Đã bán: @item.GetType().GetProperty("NumberSolded").GetValue(item, null).ToString("#,###", cul.NumberFormat) ₫  sản phẩm </a> </h5>
+                                    <h5 class="title"><a>Đã bán: @item.GetType().GetProperty("NumberSolded").GetValue(item, null) sản phẩm </a> </h5>
                                 </div>
                             </div>
                         </div>

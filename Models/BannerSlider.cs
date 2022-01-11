@@ -13,14 +13,13 @@ namespace ITGoShop_F_Ver2.Controllers
         private int sliderStatus;
         private int? blogId;
         private DateTime createdAt, updatedAt;
-        private string? campaignId;
         private int campaignDiscount, saleQuantity;
 
         public BannerSlider()
         {
         }
 
-        public BannerSlider(int sliderId, string sliderName, string sliderImage, int sliderStatus, int blogId, DateTime createdAt, DateTime updatedAt, string campaignId, int campaignDiscount, int saleQuantity)
+        public BannerSlider(int sliderId, string sliderName, string sliderImage, int sliderStatus, int blogId, DateTime createdAt, DateTime updatedAt, int campaignDiscount, int saleQuantity)
         {
             this.sliderId = sliderId;
             this.sliderName = sliderName;
@@ -29,7 +28,6 @@ namespace ITGoShop_F_Ver2.Controllers
             this.blogId = blogId;
             this.createdAt = createdAt;
             this.updatedAt = updatedAt;
-            this.campaignId = campaignId;
             this.campaignDiscount = campaignDiscount;
             this.saleQuantity = saleQuantity;
         }
@@ -42,7 +40,6 @@ namespace ITGoShop_F_Ver2.Controllers
         public int? BlogId { get => blogId; set => blogId = value; }
         public DateTime CreatedAt { get => createdAt; set => createdAt = value; }
         public DateTime UpdatedAt { get => updatedAt; set => updatedAt = value; }
-        public string? CampaignId { get => campaignId; set => campaignId = value; }
         public int CampaignDiscount { get => campaignDiscount; set => campaignDiscount = value; }
         public int SaleQuantity { get => saleQuantity; set => saleQuantity = value; }
     }
