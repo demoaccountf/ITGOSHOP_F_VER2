@@ -136,10 +136,11 @@ namespace ITGoShop_F_Ver2.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
 
             // Gửi mail
+
             string customerFirstName = HttpContext.Session.GetString("customerFirstName");
             string customerLastName = HttpContext.Session.GetString("customerLastName");
             string mailContent = getMailContent(order, customerFirstName, customerLastName);
-            await MailUtils.SendMailGoogleSmtp("itgoshop863@gmail.com", "qhuy.bh1901@gmail.com", $"Chào {customerFirstName}, ITGoShop đã nhận được đơn hàng của bạn", mailContent,
+            await MailUtils.SendMailGoogleSmtp("itgoshop863@gmail.com", "cuclth2701@gmail.com", $"Chào {customerFirstName}, ITGoShop đã nhận được đơn hàng của bạn", mailContent,
                                           "itgoshop863@gmail.com", "Itgoshop");
             return RedirectToAction("order_detail", "Order", new { orderId = orderId });
         }

@@ -1509,7 +1509,7 @@ namespace ITGoShop_F_Ver2.Models
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string str = "SELECT * FROM bannerslider BS JOIN BLOG B ON BS.BlogId = B.BlogId WHERE SliderStatus = 1 ORDER BY CreatedAt ASC LIMIT 12";
+                string str = "SELECT * FROM bannerslider BS JOIN BLOG B ON BS.BlogId = B.BlogId WHERE SliderStatus = 1 ORDER BY CreatedAt ASC LIMIT 8";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -1554,7 +1554,36 @@ namespace ITGoShop_F_Ver2.Models
                             Info.Summary = reader["Summary"].ToString();
                             Info.Content = reader["Content"].ToString();
                             Info.DatePost = (DateTime)reader["DatePost"];
-                            Info.Image = reader["Image"].ToString();
+                        Info.View = Convert.ToInt32(reader["View"]);
+                        Info.Image = reader["Image"].ToString();
+                    }
+                    else
+                        return null;
+                }
+            }
+            return Info;
+        }
+
+        public User getProfile(int customerId)
+        {
+            User Info = new User();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                var str = "SELECT * FROM user " +
+                    "where UserId = @customerId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                cmd.Parameters.AddWithValue("UserId", customerId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        Info.UserId = Convert.ToInt32(reader["UserId"]);
+                        Info.Email = reader["Email"].ToString();
+                        Info.FirstName= reader["FirstName"].ToString();
+                        Info.LastName = reader["LastName "].ToString();
+                        Info.Mobile = reader["Mobile "].ToString();
+                        Info.UserImage = reader["UserImage "].ToString();
                     }
                     else
                         return null;

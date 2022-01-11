@@ -44,7 +44,6 @@ namespace ITGoShop_F_Ver2.Controllers
         public IActionResult add_slider()
         {
             var context = new ITGoShopLINQContext();
-            ViewBag.AllCampaign = context.getAllCampaign();
             return View();
         }
 
