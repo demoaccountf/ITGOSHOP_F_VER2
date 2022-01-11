@@ -309,11 +309,11 @@ namespace ITGoShop_F_Ver2.Models
         {
             OrderTracking orderTracking = new OrderTracking(OrderId, OrderStatus, DateTime.Now);
             var ot = OrderTracking.Where(p => p.OrderId == OrderId && p.OrderStatus == OrderStatus).FirstOrDefault();
-            if(ot != null) // nếu dữ liệu chưa tồn tài thì mới thêm
+            if(ot == null) // nếu dữ liệu chưa tồn tài thì mới thêm
             {
                 OrderTracking.Add(orderTracking);
+                SaveChanges();
             }
-            SaveChanges();
         }
 
         public void updateOrderStatus(int OrderId, string OrderStatus)
@@ -387,7 +387,7 @@ namespace ITGoShop_F_Ver2.Models
 
         public List<ProductGallary> getProductGallary(int productId)
         {
-            return ProductGallary.Where(p => p.ProductId == productId).ToList();
+            return ProductGallary.Where(p => p.ProductId == productId && p.GallaryStatus == 1).ToList();
         }
 
         public void updateProductGallaryStatus(int GallaryId, int status)
@@ -579,7 +579,7 @@ namespace ITGoShop_F_Ver2.Models
 
         public List<Order> getOrderListOfCustomer(int userId)
         {
-            var orderList = Order.Where(o => o.UserId == userId).OrderByDescending(o => o.OrderDate).ToList();
+            var orderList = Order.Where(o => o.UserId == userId).OrderByDescending(o => o.OrderId).ToList();
             return orderList;
         }
 

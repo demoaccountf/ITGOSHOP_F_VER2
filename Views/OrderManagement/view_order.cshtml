@@ -121,8 +121,8 @@
                                                     <div class="col-md-12 pr-0">
                                                         <b style="margin-bottom:15px">Trạng thái thanh toán</b>
                                                         <select class="form-control" name="payment" id="trang-thai-thanh-toan" aria-label=".form-select-sm example" style="width:90%;margin-top: 10px">
-                                                            <option value="Đã thanh toán">Đã thanh toán</option>
                                                             <option value="Chờ thanh toán">Chờ thanh toán</option>
+                                                            <option value="Đã thanh toán">Đã thanh toán</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -164,7 +164,7 @@
                         var OrderStatus = parent.find('.OrderStatus').text();
                         var PaymentStatus = parent.find('.PaymentStatus').text();
                         $('#trang-thai-don-hang option[value="' + OrderStatus + '"]').attr('selected', 'selected');
-                        $('#trang-thai-thanh-toan option[value="' + PaymentStatus + '"]').attr('selected', 'selected');
+                        //$('#trang-thai-thanh-toan option[value="' + PaymentStatus + '"]').attr('selected', 'selected');
                     });
                 });
 

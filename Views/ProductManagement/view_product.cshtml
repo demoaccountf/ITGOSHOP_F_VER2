@@ -119,7 +119,7 @@
                                             @foreach (var item in @ViewBag.AllProduct)
                                             {
                                             <tr>
-                                                <td><a href="/ProductManagement/update_product?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)" class="active" ui-toggle-class="" style="color:black">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></td>
+                                                <td><a href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)" class="active" ui-toggle-class="" style="color:black; text-decoration:none">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></td>
                                                 <td>
                                                     @item.GetType().GetProperty("CategoryName").GetValue(item, null)
                                                     <input type="text" class="ProductId" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>

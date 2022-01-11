@@ -91,7 +91,7 @@
                                         <thead>
                                             <tr>
                                                 <th style="width:80px">Ngày tạo</th>
-                                                <th style="max-width:320px">Tên file ảnh</th>
+                                                <th style="max-width:220px">Tên file ảnh</th>
                                                 <th>Hình ảnh</th>
                                                 <th>Loại ảnh</th>
                                                 <th>Hành động</th>
@@ -105,11 +105,7 @@
                                                     <td>@item.GallaryImage<input type="text" class="GallaryId" value="@item.GallaryId" hidden></td>
                                                     <td><img src="~/public/images_upload/product-gallary/@item.GallaryImage" style="margin: 15px; max-width: 260px; max-height: 260px; width: auto; height: auto; "></td>
                                                     <td>
-                                                        @*@if (@item.Admin)
-                                                                Ảnh do Admin thêm
-                                                            @else
-                                                                Ảnh từ khách hàng
-                                                            @endif*@
+                                                        <p>Ảnh do Admin thêm</p>
                                                     </td>
                                                     <td>
                                                         <div class="form-button-action">

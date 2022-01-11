@@ -53,7 +53,7 @@
                                 <tr>
                                     <td class="image" data-title="No" style="width: 60px; height: 60px;"><img style="margin: auto; max-width: 60px; max-height: 60px; width: auto; height: auto; " src="~/public/images_upload/product/@item.Product.ProductImage" alt="#"></td>
                                     <td class="product-des" data-title="Description">
-                                        <p class="product-name"><a href="/Product/product-detail/@item.Product.ProductId">@item.Product.ProductName</a></p>
+                                        <p class="product-name"><a href="/ProductDetail/product_detail?productId=@item.Product.ProductId">@item.Product.ProductName</a></p>
                                     </td>
                                     <td class="price" data-title="Price" data-value="@item.Product.Price"><span>@item.Product.Price.ToString("#,###", cul.NumberFormat) ₫</span></td>
                                     <td class="qty" data-title="Qty">

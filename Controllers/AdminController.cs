@@ -28,7 +28,7 @@ namespace ITGoShop_F_Ver2.Controllers
             if(HttpContext.Session.GetInt32("adminId") != null)
             {
                 // Nếu admin đăng nhập rồi thì vô thẳng dashboard
-                return View("Dashboard");
+                return RedirectToAction("Dashboard");
             }
             if (!string.IsNullOrEmpty(message))
             {
@@ -50,10 +50,12 @@ namespace ITGoShop_F_Ver2.Controllers
                 HttpContext.Session.SetString("adminFirstName", userInfo.FirstName);
                 HttpContext.Session.SetString("adminImage", userInfo.UserImage);
                 var LINQContext = new ITGoShopLINQContext();
-                LoginHistory login = new LoginHistory(userInfo.UserId, DateTime.Now, DateTime.Now);
-                LINQContext.updateLoginHistory(login);
                 // Update last login
                 context.updateLastLogin(userInfo.UserId);
+                // Thêm lịch sử đăng nhập
+                LoginHistory login = new LoginHistory(userInfo.UserId, DateTime.Now, DateTime.Now);
+                LINQContext.updateLoginHistory(login);
+                
                 return RedirectToAction("Dashboard");
             }
             return RedirectToAction("Index", new { message = "Mật khẩu hoặc tài khoản sai. Xin nhập lại!" });
