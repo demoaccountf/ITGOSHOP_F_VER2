@@ -568,6 +568,36 @@ namespace ITGoShop_F_Ver2.Models
             }
             return list;
         }
+        public List<object> getAllSubBrandForBrandManagement()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select SubBrandId, SubBrandName, BrandName, B.Status " +
+                    " from SubBrand B JOIN Brand C ON B.BrandId = C.BrandId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            SubBrandId = reader["SubBrandId"].ToString(),
+                            SubBrandName = reader["SubBrandName"].ToString(),
+                            BrandName = reader["BrandName"].ToString(),
+                            Status = Convert.ToInt32(reader["Status"]),
+                        };
+                        list.Add(obj);
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
         public List<Blog> FindBlog(string kw_submit)
         {
             List<Blog> list = new List<Blog>();
