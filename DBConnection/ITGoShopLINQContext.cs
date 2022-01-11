@@ -60,9 +60,6 @@ namespace ITGoShop_F_Ver2.Models
             var brands = Brand.Where(c => c.Status == 1).ToList();
             return brands;
         }
-
-
-
         public List<SubBrand> getAllSubBrand()
         {
             var subbrand = SubBrand.Where(c => c.Status == 1).ToList();
@@ -311,7 +308,11 @@ namespace ITGoShop_F_Ver2.Models
         public void addOrderTracking(int OrderId, string OrderStatus)
         {
             OrderTracking orderTracking = new OrderTracking(OrderId, OrderStatus, DateTime.Now);
-            OrderTracking.Add(orderTracking);
+            var ot = OrderTracking.Where(p => p.OrderId == OrderId && p.OrderStatus == OrderStatus).FirstOrDefault();
+            if(ot != null) // nếu dữ liệu chưa tồn tài thì mới thêm
+            {
+                OrderTracking.Add(orderTracking);
+            }
             SaveChanges();
         }
 
