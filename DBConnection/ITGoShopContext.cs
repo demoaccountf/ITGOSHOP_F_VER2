@@ -1601,7 +1601,7 @@ namespace ITGoShop_F_Ver2.Models
             {
                 conn.Open();
                 var str = "SELECT * FROM user " +
-                    "where UserId = @customerId";
+                    "where UserId = @UserId";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 cmd.Parameters.AddWithValue("UserId", customerId);
                 using (var reader = cmd.ExecuteReader())
@@ -1611,9 +1611,9 @@ namespace ITGoShop_F_Ver2.Models
                         Info.UserId = Convert.ToInt32(reader["UserId"]);
                         Info.Email = reader["Email"].ToString();
                         Info.FirstName= reader["FirstName"].ToString();
-                        Info.LastName = reader["LastName "].ToString();
-                        Info.Mobile = reader["Mobile "].ToString();
-                        Info.UserImage = reader["UserImage "].ToString();
+                        Info.LastName = reader["LastName"].ToString();
+                        Info.Mobile = reader["Mobile"].ToString();
+                        Info.UserImage = reader["UserImage"].ToString();
                     }
                     else
                         return null;
