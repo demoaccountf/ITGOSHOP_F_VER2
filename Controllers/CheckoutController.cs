@@ -65,6 +65,8 @@ namespace ITGoShop_F_Ver2.Controllers
                 HttpContext.Session.SetString("customerLastName", userInfo.LastName);
                 HttpContext.Session.SetString("customerFirstName", userInfo.FirstName);
                 HttpContext.Session.SetString("customerImage", userInfo.UserImage);
+                HttpContext.Session.SetString("customerEmail", userInfo.Email);
+
                 var LINQContext = new ITGoShopLINQContext();
                 LoginHistory login = new LoginHistory(userInfo.UserId, DateTime.Now, DateTime.Now);
                 LINQContext.updateLoginHistory(login);
@@ -139,8 +141,9 @@ namespace ITGoShop_F_Ver2.Controllers
 
             string customerFirstName = HttpContext.Session.GetString("customerFirstName");
             string customerLastName = HttpContext.Session.GetString("customerLastName");
+            string customerEmail = HttpContext.Session.GetString("customerEmail");
             string mailContent = getMailContent(order, customerFirstName, customerLastName);
-            await MailUtils.SendMailGoogleSmtp("itgoshop863@gmail.com", "cuclth2701@gmail.com", $"Chào {customerFirstName}, ITGoShop đã nhận được đơn hàng của bạn", mailContent,
+            await MailUtils.SendMailGoogleSmtp("itgoshop863@gmail.com", customerEmail, $"Chào {customerFirstName}, ITGoShop đã nhận được đơn hàng của bạn", mailContent,
                                           "itgoshop863@gmail.com", "Itgoshop");
             return RedirectToAction("order_detail", "Order", new { orderId = orderId });
         }
@@ -156,8 +159,6 @@ namespace ITGoShop_F_Ver2.Controllers
 
             string output = @$"<body>
                 <div class='card' style='margin: 40px 100px;'>
-                   <img src = 'https://lh3.googleusercontent.com/7GUtF9Gd14QM4jHIhXwNwW5AZCQDNbauFmKObH3Oa1bcdDI_8DaFYorS6GEYEp4Bnb0Ah1W72kwRYrTASNYinLNQLgIxLBTQtQzuPBGfHzyoHlJU3XjkqTP9BxKMeJelN8esvUHZMES6no3qpOq3F8AR9Arx05KZLqIzI8DYyTPsUus8nxC3zogAg_OOEyvrKDZDuHg5oirg8HuFKCHUTb-c5PzRvn6x3Fjn_hdBTh7roRmwl1xlI_tmujqs2-sKxQ8r-K8lCeoi2Ejxc5dc91b4bpis6X9JH3cSNio3JKr87HWO-1qdeBVcedmpimwU55JmS5ebv2YzjdciiUQXGomRMUQFHDpce6Zwj9g3hfs0ns67L91nh5_Ydcav6j9J5gM0PJse3gAw6cfiKPkB8mkgTeJE460Ki-w88wAF9VHCnibWOWsm76Z2bQqs3n_Kw1a6epqmanz5NVLyuqkdYo7YIvb1X-wQanekzE6vaIQu7ziO5Uh9HT3vZrm7cJu3L5rNQrhQRkT992MlvHRQjBhZWUGSezFctkOnDg3-bzOSCPCQAsw_0UR03yyUDXk9wXTCKaPfDWVSrCr3aBQiMiJySCdeo956H1skmix8qcaR4BFbrZTmqv7m9zeMXzeNQdb0jH-ePoS4k4e7tcJXJXoxa87FpgWqZoswvut-lm9g8vrjclHOIzO2aHeKF-HEGexNToMQzSgJU4TUb9ycyh9l=w220-h64-no?authuser=1' alt = '' style = 'height: 50px;'>
-                   <hr style = 'background-color: #77ACF1;padding: 2px;'>
                         <div class='card-body' style='font-size:16px'>
                             <h2>Cảm ơn quý khách {customerLastName} {customerFirstName} đã đặt hàng tại ITGoShop,</h2>
                             <p class='card-text'>ITGoShop rất vui thông báo đơn hàng #{orderInfo.OrderId} của quý khách đã được tiếp nhận và đang trong quá trình xử lý. ITGoShop sẽ thông báo đến quý khách ngay khi hàng chuẩn bị được giao.</p>

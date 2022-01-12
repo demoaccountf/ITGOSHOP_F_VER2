@@ -44,6 +44,7 @@ namespace ITGoShop_F_Ver2.Models
                         userInfo.LastName = reader["LastName"].ToString();
                         userInfo.Mobile = reader["Mobile"].ToString();
                         userInfo.UserImage = reader["UserImage"].ToString();
+                        userInfo.Email = reader["Email"].ToString();
                         userInfo.Admin = Convert.ToInt32(reader["Admin"]);
                     }
                     else
@@ -557,6 +558,36 @@ namespace ITGoShop_F_Ver2.Models
                             Status = Convert.ToInt32(reader["Status"]),
                             BrandLogo = reader["BrandLogo"].ToString(),
                             CategoryName = reader["CategoryName"].ToString(),
+                        };
+                        list.Add(obj);
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
+        public List<object> getAllSubBrandForBrandManagement()
+        {
+            List<object> list = new List<object>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select SubBrandId, SubBrandName, BrandName, B.Status " +
+                    " from SubBrand B JOIN Brand C ON B.BrandId = C.BrandId";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var obj = new
+                        {
+                            SubBrandId = reader["SubBrandId"].ToString(),
+                            SubBrandName = reader["SubBrandName"].ToString(),
+                            BrandName = reader["BrandName"].ToString(),
+                            Status = Convert.ToInt32(reader["Status"]),
                         };
                         list.Add(obj);
                     }
@@ -1571,7 +1602,7 @@ namespace ITGoShop_F_Ver2.Models
             {
                 conn.Open();
                 var str = "SELECT * FROM user " +
-                    "where UserId = @customerId";
+                    "where UserId = @UserId";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 cmd.Parameters.AddWithValue("UserId", customerId);
                 using (var reader = cmd.ExecuteReader())
@@ -1581,9 +1612,9 @@ namespace ITGoShop_F_Ver2.Models
                         Info.UserId = Convert.ToInt32(reader["UserId"]);
                         Info.Email = reader["Email"].ToString();
                         Info.FirstName= reader["FirstName"].ToString();
-                        Info.LastName = reader["LastName "].ToString();
-                        Info.Mobile = reader["Mobile "].ToString();
-                        Info.UserImage = reader["UserImage "].ToString();
+                        Info.LastName = reader["LastName"].ToString();
+                        Info.Mobile = reader["Mobile"].ToString();
+                        Info.UserImage = reader["UserImage"].ToString();
                     }
                     else
                         return null;

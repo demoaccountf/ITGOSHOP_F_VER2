@@ -54,7 +54,15 @@ namespace ITGoShop_F_Ver2.Controllers
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllBrand = context.getAllBrandForBrandManagement();
-            ViewBag.AllCategory = context.getAllCategory();
+            ViewBag.AllSubBrand = context.getAllCategory();
+            return View();
+        }
+
+        public IActionResult view_subbrand()
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ViewBag.AllBrand = context.getAllBrandForBrandManagement();
+            ViewBag.AllSubBrand = context.getAllSubBrandForBrandManagement();
             return View();
         }
         public IActionResult update_brand(int BrandId)
