@@ -1899,6 +1899,7 @@ namespace ITGoShop_F_Ver2.Models
                             ProductName = reader["ProductName"].ToString(),
                             ProductImage = reader["ProductImage"].ToString(),
                             Sold = Convert.ToInt32(reader["Sold"]),
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
                         };
                         list.Add(product);
                     }
