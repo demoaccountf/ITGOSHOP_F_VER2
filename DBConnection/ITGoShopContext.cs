@@ -44,6 +44,7 @@ namespace ITGoShop_F_Ver2.Models
                         userInfo.LastName = reader["LastName"].ToString();
                         userInfo.Mobile = reader["Mobile"].ToString();
                         userInfo.UserImage = reader["UserImage"].ToString();
+                        userInfo.Email = reader["Email"].ToString();
                         userInfo.Admin = Convert.ToInt32(reader["Admin"]);
                     }
                     else
