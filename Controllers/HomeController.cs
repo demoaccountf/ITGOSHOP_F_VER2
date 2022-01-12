@@ -21,6 +21,7 @@ namespace ITGoShop_F_Ver2.Controllers
         string customerLastName = "";
         string customerFirstName = "";
         string customerImage = "";
+        string customerEmail = "";
         string total1 = "" , total2 = "";
 
         private readonly ILogger<HomeController> _logger;
@@ -71,6 +72,8 @@ namespace ITGoShop_F_Ver2.Controllers
                 HttpContext.Session.SetString("customerLastName", userInfo.LastName);
                 HttpContext.Session.SetString("customerFirstName", userInfo.FirstName);
                 HttpContext.Session.SetString("customerImage", userInfo.UserImage);
+                HttpContext.Session.SetString("customerEmail", userInfo.Email);
+
                 var LINQContext = new ITGoShopLINQContext();
                 LoginHistory login = new LoginHistory(userInfo.UserId, DateTime.Now, DateTime.Now);
                 LINQContext.updateLoginHistory(login);
