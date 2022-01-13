@@ -5,7 +5,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">THƯƠNG HIỆU</h4>
+                <h4 class="page-title">THƯƠNG HIỆU NHÁNH</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -22,7 +22,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Xem thương hiệu</a>
+                        <a href="#">Xem thương hiệu nhánh</a>
                     </li>
                 </ul>
             </div>
@@ -38,64 +38,6 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header no-bd">
-                                            <h5 class="modal-title">
-                                                <span class="fw-mediumbold">
-                                                    Thêm thương hiệu
-                                                </span>
-                                                <span class="fw-light">
-                                                    mới
-                                                </span>
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <p class="small">Create a new row using this form, make sure you fill them all</p>
-                                            <form role="form" action="{{URL::to('/save-brand')}}" method="post">
-                                                {{ csrf_field() }}
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="email2">Tên thương hiệu</label>
-                                                        <input type="text" name="BrandName" class="form-control" id="email2" placeholder="Nhập tên danh mục">
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="comment">Mô tả thương hiệu</label>
-                                                        <textarea class="form-control" name="description" id="comment" rows="5" placeholder="Mô tả danh mục"></textarea>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label class="form-label d-block">Hiển thị</label>
-                                                        <div class="selectgroup selectgroup-secondary selectgroup-pills">
-                                                            <label class="selectgroup-item">
-                                                                <input type="radio" name="status" value="1" class="selectgroup-input" checked="">
-                                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-eye"></i></span>
-                                                            </label>
-                                                            <label class="selectgroup-item">
-                                                                <input type="radio" name="status" value="0" class="selectgroup-input">
-                                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-eye-slash"></i></span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="card-action">
-                                                    <button type="submit" name="add_product_category" class="btn btn-primary">Thêm thương hiệu</button>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="table-responsive">
                                 <div id="add-row_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                                     <table id="multi-filter-select" class="display table table-striped table-hover">
@@ -120,48 +62,47 @@
                                         <tbody>
                                             @foreach (var item in ViewBag.AllSubBrand)
                                             {
-                                            <tr>
-                                                <td> @item.GetType().GetProperty("SubBrandId").GetValue(item, null)</td>
-                                                <td> @item.GetType().GetProperty("SubBrandName").GetValue(item, null)</td>
-                                                <td> @item.GetType().GetProperty("BrandName").GetValue(item, null)</td>
-                                                <td>
-                                                    <div class="form-button-action">
-                                                        @if (@item.GetType().GetProperty("Status").GetValue(item, null) == 1)
-                                                        {
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị thương hiệu">
-                                                                <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
-                                                            </button>
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn thương hiệu" hidden>
-                                                                <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
-                                                            </button> }
-                                                        else
-                                                        {
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị thương hiệu" hidden>
-                                                                <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
-                                                            </button>
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn thương hiệu">
-                                                                <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
-                                                            </button>
-                                                        }
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="form-button-action">
-                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Cập nhật thương hiệu">
-                                                            <a href="#" class="active" ui-toggle-class="">
-                                                                <i class="fa fa-edit text-active"></i>
-                                                            </a>
-                                                        </button>
-                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa thương hiệu">
-                                                            <a href="javascript:void(0)" class="active" ui-toggle-class="">
-                                                                <i class="fa fa-times text-danger text"></i>
-                                                            </a>
-                                                        </button>
-                                                    </div>
-                                                </td>
+                                <tr>
+                                            <input type="hidden" class="SubBrandId" value="@item.GetType().GetProperty("SubBrandId").GetValue(item, null)"/>
+                                    <td> @item.GetType().GetProperty("SubBrandId").GetValue(item, null)</td>
+                                    <td> @item.GetType().GetProperty("SubBrandName").GetValue(item, null)</td>
+                                    <td> @item.GetType().GetProperty("BrandName").GetValue(item, null)</td>
+                                    <td>
+                                        <div class="form-button-action">
+                                            @if (@item.GetType().GetProperty("Status").GetValue(item, null) == 1)
+                                            {
+                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị thương hiệu nhánh">
+                                <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
+                            </button>
+                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn thương hiệu nhánh" hidden>
+                                                    <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
+                                                </button> }
+                                            else
+                                            {
+                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị thương hiệu nhánh" hidden>
+                                <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
+                            </button>
+                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn thương hiệu nhánh">
+                                                    <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
+                                                </button>}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-button-action">
+                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Cập nhật thương hiệu nhánh">
+                                                <a href="/BrandManagement/update_subbrand?SubBrandId=@item.GetType().GetProperty("SubBrandId").GetValue(item, null)" class="active" ui-toggle-class="">
+                                                    <i class="fa fa-edit text-active"></i>
+                                                </a>
+                                            </button>
+                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa thương hiệu nhánh">
+                                                <a href="javascript:void(0)" class="active" ui-toggle-class="">
+                                                    <i class="fa fa-times text-danger text"></i>
+                                                </a>
+                                            </button>
+                                        </div>
+                                    </td>
 
-                                            </tr>
-                                            }
+                                </tr>}
                                         </tbody>
                                     </table>
 
@@ -175,9 +116,78 @@
 
         </div>
 
-        <!-- Custom template | don't include it in your project! -->
-        <!-- End Custom template -->
     </div>
+    <script>
+        $(document).ready(function () {
+            $('button[data-original-title="Hiển thị thương hiệu nhánh"]').click(function () {
+                var SubBrandId = $(this).parents('tr').find('.SubBrandId').val();
+                var activeButton = $(this);
+                var unactiveButton = $(this).parent().find('button[data-original-title="Ẩn thương hiệu nhánh"]');
+                $.ajax({
+                    url: '/BrandManagement/unactive_subbrand',
+                    method: "GET",
+                    data: { SubBrandId: SubBrandId },
+                    success: function (data) {
+                        activeButton.attr('hidden', true);
+                        unactiveButton.removeAttr('hidden');
+                    },
+                    error: function (data) {
+                        alert('Lỗi');
+                    }
+                });
+            });
+
+            $('button[data-original-title="Ẩn thương hiệu nhánh"]').click(function () {
+                var SubBrandId = $(this).parents('tr').find('.SubBrandId').val();
+                var unactiveButton = $(this);
+                var activeButton = $(this).parent().find('button[data-original-title="Hiển thị thương hiệu nhánh"]');
+                $.ajax({
+                    url: '/BrandManagement/active_subbrand',
+                    method: "GET",
+                    data: { SubBrandId: SubBrandId },
+                    success: function (data) {
+                        unactiveButton.attr('hidden', true);
+                        activeButton.removeAttr('hidden');
+                    },
+                    error: function (data) {
+                        alert('Lỗi');
+                    }
+                });
+            });
+
+            $('button[data-original-title="Xóa thương hiệu nhánh"]').click(function () {
+                var SubBrandId = $(this).parents('tr').find('.SubBrandId').val();
+                var thisSlider = $(this).parents('tr');
+                swal({
+                    title: "Xác nhận",
+                    text: "Bạn có chắc muốn thương hiệu nhánh không?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                url: '/BrandManagement/delete_subbrand',
+                                method: "GET",
+                                data: { SubBrandId: SubBrandId },
+                                success: function (data) {
+                                    thisSlider.remove();
+                                    swal("Xóa thương hiệu nhánh thành công!", {
+                                        icon: "success",
+                                    });
+                                },
+                                error: function (data) {
+                                    alert('Lỗi');
+                                }
+                            });
+
+                        }
+                    });
+
+            });
+        });
+    </script>
     <!-- jQuery UI -->
     <script src="~/public/admin/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="~/public/admin/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>

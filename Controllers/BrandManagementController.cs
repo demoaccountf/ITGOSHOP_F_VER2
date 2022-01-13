@@ -24,7 +24,7 @@ namespace ITGoShop_F_Ver2.Controllers
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllCategory = context.getAllCategory();
-            return View();
+            return RedirectToAction("view_subbrand");
         }
         public IActionResult add_subbrand()
         {
@@ -32,15 +32,15 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllBrand = context.getAllBrand();
             return View();
         }
-        [Obsolete]
-        public IActionResult SaveBrand(Brand newBrand)
-        {
+        //[Obsolete]
+        //public IActionResult SaveBrand(Brand newBrand)
+        //{
 
-            var context = new ITGoShopLINQContext();
-            context.saveBrand(newBrand);
-            return RedirectToAction("add_brand");
+        //    var context = new ITGoShopLINQContext();
+        //    context.saveBrand(newBrand);
+        //    return RedirectToAction("add_brand");
 
-        }
+        //}
 
         public IActionResult SaveSubBrand(SubBrand newSubBrand)
         {
@@ -73,6 +73,7 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllCategory = context.getAllCategory();
             return View();
         }
+
         public void unactive_brand(int BrandId)
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
@@ -135,6 +136,40 @@ namespace ITGoShop_F_Ver2.Controllers
             context.updateBrand(brand);
             return RedirectToAction("view_brand");
 
+        }
+
+        public IActionResult save_update_subbrand(SubBrand subBrandInfo)
+        {
+
+            var context = new ITGoShopLINQContext();
+            context.updateSubBrand(subBrandInfo);
+            return RedirectToAction("view_subbrand");
+
+        }
+
+        public IActionResult update_subbrand(string SubBrandId)
+        {
+            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            ViewBag.SubBrandInfo = linqContext.getSubBrandInfo(SubBrandId);
+            ViewBag.AllBrand = context.getAllBrand();
+            return View();
+        }
+        public void unactive_subbrand(string SubBrandId)
+        {
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            linqContext.updateSubBrandStatus(SubBrandId, 0);
+        }
+        public void active_subbrand(string SubBrandId)
+        {
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            linqContext.updateSubBrandStatus(SubBrandId, 1);
+        }
+
+        public void delete_subbrand(string SubBrandId)
+        {
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            linqContext.deleteSubBrand(SubBrandId);
         }
     }
 }

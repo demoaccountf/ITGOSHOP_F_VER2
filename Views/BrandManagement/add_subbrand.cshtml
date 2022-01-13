@@ -34,7 +34,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Thêm thương hiệu</div>
+                            <div class="card-title">Thêm thương hiệu nhánh</div>
                         </div>
                         <form role="form" action="/BrandManagement/SaveSubBrand" method="post" enctype="multipart/form-data">
                             <div class="card-body">
@@ -43,26 +43,19 @@
                                         <div class="form-group">
                                             <label for="email2">Mã thương hiệu nhánh</label>
                                             <input type="text" name="SubBrandId" class="form-control" id="email2" placeholder="Nhập mã thương hiệu nhánh">
-                                            
                                         </div>
                                         <div class="form-group">
                                             <label for="email2">Tên thương hiệu nhánh</label>
                                             <input type="text" name="SubBrandName" class="form-control" id="email2" placeholder="Nhập tên thương hiệu nhánh">
-                                            
                                         </div>
-
-                                        <div class="col-6 col-lg-12">
-                                            <div class="form-group">
-                                                <label for="exampleFormControlSelect1">Thuộc Thương hiệu: </label>
-                                                <select class="form-control" name="BrandId" id="exampleFormControlSelect1">
-                                                    @foreach (var item in @ViewBag.AllBrand)
-                                                    {
-                                                        <option value="@item.BrandId">ID: @item.BrandId - @item.BrandName (Mã Danh Mục: @item.CategoryId)</option>
-                                                    }
-
-                                                </select>
-                                            </div>
-                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Thuộc thương hiệu: </label>
+                                            <select class="form-control" name="BrandId" id="exampleFormControlSelect1">
+                                                @foreach (var item in @ViewBag.AllBrand)
+                                                {
+                                                    <option value="@item.BrandId">ID: @item.BrandId - @item.BrandName (Mã Danh Mục: @item.CategoryId)</option>}
+                                            </select>
+                                        </div>    
                                         <div class="form-group">
                                             <label class="form-label d-block">Hiển thị</label>
                                             <div class="selectgroup selectgroup-secondary selectgroup-pills">
@@ -80,7 +73,7 @@
                                 </div>
                             </div>
                             <div class="card-action">
-                                <button type="submit" name="add_brand" class="btn btn-success">Thêm thương hiệu sản phẩm</button>
+                                <button type="submit" name="add_brand" class="btn btn-success">Thêm thương hiệu nhánh</button>
                                 <button class="btn btn-danger">Hủy</button>
                             </div>
                         </form>

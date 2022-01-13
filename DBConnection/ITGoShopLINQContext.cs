@@ -153,6 +153,20 @@ namespace ITGoShop_F_Ver2.Models
             }
             SaveChanges();
         }
+
+        public void updateSubBrand(SubBrand subbrandInfo)
+        {
+            var subbrand = SubBrand.Where(p => p.SubBrandId == subbrandInfo.SubBrandId).FirstOrDefault();
+            
+            if (subbrand != null)
+            {
+                subbrand.SubBrandName = subbrandInfo.SubBrandName;
+                subbrand.BrandId = subbrandInfo.BrandId;
+                subbrand.Status = subbrandInfo.Status;
+            }
+            SaveChanges();
+        }
+
         public void deleteProduct(int productId)
         {
             var product = (from p in Product
@@ -728,6 +742,31 @@ namespace ITGoShop_F_Ver2.Models
             if (brandInfo != null)
                 return brandInfo;
             return null;
+        }
+
+        public SubBrand getSubBrandInfo(string subbrandId)
+        {
+            var subbrandInfo = SubBrand.Where(b => b.SubBrandId == subbrandId).FirstOrDefault();
+            if (subbrandInfo != null)
+                return subbrandInfo;
+            return null;
+        }
+        public void updateSubBrandStatus(string SubBrandId, int Status)
+        {
+            var subbrand = SubBrand.Where(p => p.SubBrandId == SubBrandId).FirstOrDefault();
+            subbrand.Status = Status;
+            SaveChanges();
+        }
+
+        public void deleteSubBrand(string SubBrandId)
+        {
+            var subbrand = SubBrand.Where(p => p.SubBrandId == SubBrandId).FirstOrDefault();
+
+            if (subbrand != null)
+            {
+                Remove(subbrand);
+                SaveChanges();
+            }
         }
     }
 }
