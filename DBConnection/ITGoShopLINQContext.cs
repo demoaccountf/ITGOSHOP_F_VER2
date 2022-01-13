@@ -785,9 +785,25 @@ namespace ITGoShop_F_Ver2.Models
         }
         public void updateCateStatus(string CategoryId, int Status)
         {
-            var cate= Category.Where(p => p.CategoryId == CategoryId).FirstOrDefault();
+            var cate = Category.Where(p => p.CategoryId == CategoryId).FirstOrDefault();
             cate.Status = Status;
             SaveChanges();
+        }
+
+        public void updateBlogStatus(int BlogId, int Status)
+        {
+            var blog = Blog.Where(p => p.BlogId == BlogId).FirstOrDefault();
+            blog.Status = Status;
+            SaveChanges();
+        }
+        public void deleteBlog(int BlogId)
+        {
+            var blog = Blog.Where(p => p.BlogId == BlogId).FirstOrDefault();
+            if (blog != null)
+            {
+                Remove(blog);
+                SaveChanges();
+            }
         }
     }
 }
