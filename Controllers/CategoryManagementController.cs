@@ -24,7 +24,7 @@ namespace ITGoShop_F_Ver2.Controllers
         public IActionResult add_product_category()
         {
 
-            return RedirectToAction("all_product_category");
+            return View();
         }
 
         [Obsolete]
