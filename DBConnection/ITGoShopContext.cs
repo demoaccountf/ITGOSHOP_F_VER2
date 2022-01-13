@@ -569,6 +569,35 @@ namespace ITGoShop_F_Ver2.Models
             }
             return list;
         }
+
+        public List<Category> getAllCateForCateManagement()
+        {
+            List<Category> list = new List<Category>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "select * from Category ";
+                MySqlCommand cmd = new MySqlCommand(str, conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Category()
+                        {
+                            CategoryId = reader["CategoryId"].ToString(),
+                            CategoryName = reader["CategoryName"].ToString(),
+                            Status = Convert.ToInt32(reader["Status"]),
+
+                        });
+                    }
+                    reader.Close();
+                }
+
+                conn.Close();
+
+            }
+            return list;
+        }
         public List<object> getAllSubBrandForBrandManagement()
         {
             List<object> list = new List<object>();

@@ -23,8 +23,8 @@ namespace ITGoShop_F_Ver2.Controllers
         }
         public IActionResult add_product_category()
         {
-            
-            return View();
+
+            return RedirectToAction("all_product_category");
         }
 
         [Obsolete]
@@ -39,7 +39,7 @@ namespace ITGoShop_F_Ver2.Controllers
         public IActionResult all_product_category()
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            ViewBag.AllCategory = context.getAllCategory();
+            ViewBag.AllCategory = context.getAllCateForCateManagement();
             return View();
         }
         public IActionResult update_product_category(string categoryId)
@@ -50,19 +50,21 @@ namespace ITGoShop_F_Ver2.Controllers
         }
         public void unactive_category(string CategoryId)
         {
-            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            context.updateCateStatus(CategoryId, 0);
+
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            linqContext.updateCateStatus(CategoryId, 0);
         }
         public void active_category(string CategoryId)
         {
-            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            context.updateCateStatus(CategoryId, 1);
+
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            linqContext.updateCateStatus(CategoryId, 0);
         }
 
         public void delete_category(string CategoryId)
         {
-            var context = new ITGoShopLINQContext();
-            context.deleteCategory(CategoryId);
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            linqContext.deleteCategory(CategoryId);
         }
 
         
