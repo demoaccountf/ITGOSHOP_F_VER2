@@ -125,18 +125,24 @@ namespace ITGoShop_F_Ver2.Models
             product.Cost = productInfo.Cost;
             product.Price = productInfo.Price;
             product.Content = productInfo.Content;
-            product.Discount= productInfo.Discount;
+            product.Discount = productInfo.Discount;
             product.UpdatedAt = DateTime.Now;
             product.Status = productInfo.Status;
             product.BrandId = productInfo.BrandId;
             product.SliderId = productInfo.SliderId;
             product.CategoryId = productInfo.CategoryId;
             product.SubBrandId = productInfo.SubBrandId;
-            if(!string.IsNullOrEmpty(productInfo.ProductImage))
+            if (!string.IsNullOrEmpty(productInfo.ProductImage))
             {
                 product.ProductImage = productInfo.ProductImage;
                 // Chưa làm xóa ảnh cũ ở đây
-            }    
+            }
+            this.SaveChanges();
+        }
+        public void updateCate(Category cateInfo)
+        {
+            var cate = Category.Where(p => p.CategoryId == cateInfo.CategoryId).FirstOrDefault();
+            cate.CategoryName = cateInfo.CategoryName;
             this.SaveChanges();
         }
         public void updateBrand(Brand brandInfo)
@@ -767,6 +773,13 @@ namespace ITGoShop_F_Ver2.Models
                 Remove(subbrand);
                 SaveChanges();
             }
+        }
+        public Category getCate(string categoryId)
+        {
+            var cateInfo = Category.Where(b => b.CategoryId == categoryId).FirstOrDefault();
+            if (cateInfo != null)
+                return cateInfo;
+            return null;
         }
     }
 }
