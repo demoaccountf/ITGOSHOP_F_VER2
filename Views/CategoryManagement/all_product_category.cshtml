@@ -119,47 +119,48 @@
                                     <tbody>
                                         @foreach (var item in @ViewBag.AllCategory)
                                         {
-                                            <tr>
-                                                <td>@item.GetType().GetProperty("CategoryId").GetValue(item, null)</td>
-                                                <td>@item.GetType().GetProperty("CategoryName").GetValue(item, null)</td>
-                                                <td>
-                                                    <div class="form-button-action">
-                                                        @if (item.GetType().GetProperty("Status").GetValue(item, null) == 1)
-                                                        {
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị danh mục">
-                                                                <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
-                                                            </button>
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn danh mục" hidden>
-                                                                <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
-                                                            </button> }
-                                                        else
-                                                        {
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị danh mục" hidden>
-                                                                <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
-                                                            </button>
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn danh mục">
-                                                                <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
-                                                            </button>
-                                                        }
+                                        <tr>
+                                            <input type="hidden" class="CategoryId" value="@item.GetType().GetProperty("CategoryId").GetValue(item, null)" />
+                                            <td>@item.GetType().GetProperty("CategoryId").GetValue(item, null)</td>
+                                            <td>@item.GetType().GetProperty("CategoryName").GetValue(item, null)</td>
+                                            <td>
+                                                <div class="form-button-action">
+                                                    @if (item.GetType().GetProperty("Status").GetValue(item, null) == 1)
+                                                    {
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị danh mục">
+                                                            <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
+                                                        </button>
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn danh mục" hidden>
+                                                            <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
+                                                        </button> }
+                                                    else
+                                                    {
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị danh mục" hidden>
+                                                            <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
+                                                        </button>
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn danh mục">
+                                                            <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
+                                                        </button>
+                                                    }
 
 
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="form-button-action">
-                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Cập nhật danh mục">
-                                                            <a href="/CategoryManagement/update_product_category?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)" class="active" ui-toggle-class="">
-                                                                <i class="fa fa-edit text-active"></i>
-                                                            </a>
-                                                        </button>
-                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa danh mục">
-                                                            <a href="javascript:void(0)" class="active" ui-toggle-class="">
-                                                                <i class="fa fa-times text-danger text"></i>
-                                                            </a>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-button-action">
+                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Cập nhật danh mục">
+                                                        <a href="/CategoryManagement/update_product_category?CategoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)" class="active" ui-toggle-class="">
+                                                            <i class="fa fa-edit text-active"></i>
+                                                        </a>
+                                                    </button>
+                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa danh mục">
+                                                        <a href="javascript:void(0)" class="active" ui-toggle-class="">
+                                                            <i class="fa fa-times text-danger text"></i>
+                                                        </a>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>

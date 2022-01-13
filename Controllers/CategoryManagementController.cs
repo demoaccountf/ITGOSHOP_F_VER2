@@ -42,10 +42,10 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllCategory = context.getAllCateForCateManagement();
             return View();
         }
-        public IActionResult update_product_category(string categoryId)
+        public IActionResult update_product_category(string CategoryId)
         {
             ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
-            ViewBag.CateInfo = linqContext.getCate(categoryId);
+            ViewBag.CateInfo = linqContext.getCate(CategoryId);
             return View();
         }
         public void unactive_category(string CategoryId)
@@ -58,7 +58,7 @@ namespace ITGoShop_F_Ver2.Controllers
         {
 
             ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
-            linqContext.updateCateStatus(CategoryId, 0);
+            linqContext.updateCateStatus(CategoryId, 1);
         }
 
         public void delete_category(string CategoryId)
@@ -68,7 +68,6 @@ namespace ITGoShop_F_Ver2.Controllers
         }
 
         
-        [Obsolete]
         public IActionResult save_update_category(Category cate)
         {
             

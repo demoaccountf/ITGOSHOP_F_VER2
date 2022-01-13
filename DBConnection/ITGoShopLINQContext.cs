@@ -142,8 +142,12 @@ namespace ITGoShop_F_Ver2.Models
         public void updateCate(Category cateInfo)
         {
             var cate = Category.Where(p => p.CategoryId == cateInfo.CategoryId).FirstOrDefault();
-            cate.CategoryName = cateInfo.CategoryName;
-            this.SaveChanges();
+            if (cate != null)
+            {
+                cate.CategoryName = cateInfo.CategoryName;
+                cate.Status = cateInfo.Status;
+            }
+            SaveChanges();
         }
         public void updateBrand(Brand brandInfo)
         {
