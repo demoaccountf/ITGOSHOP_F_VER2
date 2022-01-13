@@ -30,7 +30,7 @@ namespace ITGoShop_F_Ver2.Controllers
             List<object> ratingList = context.getRating(productId);
             ViewBag.RatingList = ratingList;
             if(ratingList.Count > 0)
-                ViewBag.AvgRating = ratingList.Average(item => (int)item.GetType().GetProperty("Rating").GetValue(item, null));
+                ViewBag.AvgRating = Math.Round(ratingList.Average(item => (int)item.GetType().GetProperty("Rating").GetValue(item, null)), 1);
             return View("Index");
         }
 

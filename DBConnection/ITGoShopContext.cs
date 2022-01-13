@@ -2081,7 +2081,8 @@ namespace ITGoShop_F_Ver2.Models
                 conn.Open();
                 var str = @"SELECT U.UserId as UserId, FirstName, LastName, Title, Content, Rating, CreatedAt, UserImage, ProductRatingStatus
                             FROM `productrating` PR JOIN `user` U ON PR.UserId = U.UserId 
-                            WHERE PR.ProductId = @productid";
+                            WHERE PR.ProductId = @productid
+                            AND ProductRatingStatus = 1";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 cmd.Parameters.AddWithValue("productid", ProductId);
                 using (var reader = cmd.ExecuteReader())
@@ -2115,7 +2116,8 @@ namespace ITGoShop_F_Ver2.Models
                 conn.Open();
                 var str = @"SELECT U.UserId as UserId, FirstName, LastName, Title, PR.Content, Rating, PR.CreatedAt, UserImage, ProductName, PR.ProductId as ProductId, ProductRatingStatus
                             FROM (`productrating` PR JOIN `user` U ON PR.UserId = U.UserId )
-                                JOIN `product` P ON P.ProductId = PR.ProductId";
+                                JOIN `product` P ON P.ProductId = PR.ProductId
+                            ORDER BY DATE(PR.CreatedAt) DESC";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -2149,9 +2151,9 @@ namespace ITGoShop_F_Ver2.Models
                 conn.Open();
                 var str = @"SELECT AVG(Rating) AS avg_rating,  ProductImage, ProductName, P.ProductId , Price, Cost, Discount, View, Sold, StartsAt, Quantity
                             FROM `productrating` PR JOIN `product` P ON P.ProductId = PR.ProductId
-                            WHERE Quantity > 1 
+                            WHERE Quantity > 1 AND Status = 1 AND DISCOUNT > 0 
                             group by ProductImage, ProductName, P.ProductId, Price, Cost, Discount, View, Sold, StartsAt
-                            LIMIT 6;";
+                            LIMIT 4;";
                 MySqlCommand cmd = new MySqlCommand(str, conn);
                 using (var reader = cmd.ExecuteReader())
                 {

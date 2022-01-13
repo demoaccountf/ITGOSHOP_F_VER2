@@ -60,7 +60,7 @@
                                                     @item.GetType().GetProperty("CreatedAt").GetValue(item, null).ToString("hh:mm tt dd/MM/yyyy")
                                                     <input type="text" class="UserId" value="@item.GetType().GetProperty("UserId").GetValue(item, null)" hidden>
                                                     <input type="text" class="ProductId" value="@item.GetType().GetProperty("ProductId").GetValue(item, null)" hidden>                                  </td>
-                                                <td><a target="_blank" rel="noopener noreferrer" href="/product-detail/'.$item->ProductId)}}" style="text-decoration:none;color:black;">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></td>
+                                                <td><a target="_blank" rel="noopener noreferrer" href="/ProductDetail/product_detail?productId=@item.GetType().GetProperty("ProductId").GetValue(item, null)" style="text-decoration:none;color:black;">@item.GetType().GetProperty("ProductName").GetValue(item, null)</a></td>
                                                 <td>@item.GetType().GetProperty("LastName").GetValue(item, null) @item.GetType().GetProperty("FirstName").GetValue(item, null)</td>
                                                 <td>
                                                     <div class="star-wrapper" style="display: inline-block;font-size:6px">
