@@ -54,7 +54,7 @@ namespace ITGoShop_F_Ver2.Controllers
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
             ViewBag.AllBrand = context.getAllBrandForBrandManagement();
-            ViewBag.AllSubBrand = context.getAllCategory();
+            ViewBag.AllCategory = context.getAllCategory();
             return View();
         }
 
