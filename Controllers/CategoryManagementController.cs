@@ -42,8 +42,10 @@ namespace ITGoShop_F_Ver2.Controllers
             ViewBag.AllCategory = context.getAllCategory();
             return View();
         }
-        public IActionResult update_category()
+        public IActionResult update_product_category(string categoryId)
         {
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            ViewBag.CateInfo = linqContext.getCate(categoryId);
             return View();
         }
         public void unactive_category(string CategoryId)
@@ -63,39 +65,13 @@ namespace ITGoShop_F_Ver2.Controllers
             context.deleteCategory(CategoryId);
         }
 
-        public IActionResult update_category(int productId)
-        {
-            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            ViewBag.ProductInfo = context.getProductInfo(productId);
-            ViewBag.AllCategory = context.getAllCategory();
-            ViewBag.AllBrand = context.getAllBrand();
-            ViewBag.AllSubBrand = context.getAllSubBrand();
-            ViewBag.AllBannerSlider = context.getAllBannerSlider();
-            return View();
-        }
-
+        
         [Obsolete]
-        public IActionResult save_update_category(Product product, List<IFormFile> productImage)
+        public IActionResult save_update_category(Category cate)
         {
-            System.Diagnostics.Debug.WriteLine("PImg: " + product.ProductImage + "-" + product.ProductName);
-            if (!string.IsNullOrEmpty(product.ProductImage))
-            {
-                //Lưu ảnh sản phẩm vào trước
-                string path = Path.Combine(this.Environment.WebRootPath, "public/images_upload/product");
-                foreach (IFormFile postedFile in productImage)
-                {
-                    // Lấy tên file
-                    product.ProductImage = DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName;
-                    // Lưu file vào project
-                    string fileName = Path.GetFileName(DateTime.Now.ToString("yyyy_MM_dd_HHmmss_") + postedFile.FileName);
-                    using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
-                    {
-                        postedFile.CopyTo(stream);
-                    }
-                }
-            }
+            
             var context = new ITGoShopLINQContext();
-            context.updateProduct(product);
+            context.updateCate(cate);
             return RedirectToAction("all_product_category");
 
         }

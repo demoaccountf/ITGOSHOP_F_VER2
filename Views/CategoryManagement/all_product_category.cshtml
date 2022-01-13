@@ -64,16 +64,11 @@
 
                                         <div class="modal-body">
                                             <p class="small">Create a new row using this form, make sure you fill them all</p>
-                                            <form role="form" action="/CategoryManagement/add_product_category" method="post">
+                                            <form role="form" action="/CategoryManagement/SaveCategory" method="post">
                                                 <div class="row">
                                                     <div class="form-group">
                                                         <label for="email2">Tên danh mục sản phẩm</label>
                                                         <input type="text" name="CategoryName" class="form-control" id="email2" placeholder="Nhập tên danh mục">
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="comment">Mô tả danh mục sản phẩm</label>
-                                                        <textarea class="form-control" name="description" id="comment" rows="5" placeholder="Mô tả danh mục"></textarea>
                                                     </div>
 
                                                     <div class="form-group">
@@ -103,70 +98,71 @@
                             </div>
 
                             <div class="table-responsive">
-                                      <table id="multi-filter-select" class="display table table-striped table-hover">
-                                          <thead>
-                                              <tr>
-                                                  <th>Mã danh mục sản phẩm</th>
-                                                  <th>Tên danh mục sản phẩm</th>
-                                                  <th>Hiển thị</th>
-                                                  <th>Hành động</th>
+                                <table id="multi-filter-select" class="display table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã danh mục sản phẩm</th>
+                                            <th>Tên danh mục sản phẩm</th>
+                                            <th>Hiển thị</th>
+                                            <th>Hành động</th>
 
-                                              </tr>
-                                          </thead>
-                                          <tfoot>
-                                              <tr>
-                                                  <th>Mã danh mục sản phẩm</th>
-                                                  <th>Tên danh mục sản phẩm</th>
-                                                  <th>Hiển thị</th>
-                                                  <th>Hành động</th>
-                                              </tr>
-                                          </tfoot>
-                                          <tbody>
-                                              @foreach (var item in @ViewBag.AllCategory)
-                                              {
-                                                  <tr>
-                                                      <td>@item.GetType().GetProperty("CategoryId").GetValue(item, null)</td>
-                                                      <td>@item.GetType().GetProperty("CategoryName").GetValue(item, null)</td>
-                                                      <td>
-                                                          <div class="form-button-action">
-                                                              @if (item.GetType().GetProperty("Status").GetValue(item, null) == 1)
-                                                              {
-                                                                  <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị">
-                                                                      <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
-                                                                  </button>
-                                                                  <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn " hidden>
-                                                                      <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
-                                                                  </button> }
-                                                              else
-                                                              {
-                                                                  <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị " hidden>
-                                                                      <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
-                                                                  </button>
-                                                                  <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn ">
-                                                                      <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
-                                                                  </button>
-                                                              }
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Mã danh mục sản phẩm</th>
+                                            <th>Tên danh mục sản phẩm</th>
+                                            <th>Hiển thị</th>
+                                            <th>Hành động</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var item in @ViewBag.AllCategory)
+                                        {
+                                            <tr>
+                                                <td>@item.GetType().GetProperty("CategoryId").GetValue(item, null)</td>
+                                                <td>@item.GetType().GetProperty("CategoryName").GetValue(item, null)</td>
+                                                <td>
+                                                    <div class="form-button-action">
+                                                        @if (item.GetType().GetProperty("Status").GetValue(item, null) == 1)
+                                                        {
+                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị">
+                                                                <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
+                                                            </button>
+                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn" hidden>
+                                                                <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
+                                                            </button> }
+                                                        else
+                                                        {
+                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị" hidden>
+                                                                <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
+                                                            </button>
+                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn">
+                                                                <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
+                                                            </button>
+                                                        }
 
 
-                                                          </div>
-                                                      </td>
-                                                      <td>
-                                                          <div class="form-button-action">
-                                                              <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Cập nhật sản phẩm">
-                                                                  <a href="/CategoryManagement/update_product_category?blogtId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)" class="active" ui-toggle-class="">
-                                                                      <i class="fa fa-edit text-active"></i>
-                                                                  </a>
-                                                              </button>
-                                                              <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa sản phẩm">
-                                                                  <a href="javascript:void(0)" class="active" ui-toggle-class="">
-                                                                      <i class="fa fa-times text-danger text"></i>
-                                                                  </a>
-                                                              </button>
-                                                          </div>
-                                                      </td>
-                                                  </tr>}
-                                          </tbody>
-                                      </table>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-button-action">
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Cập nhật danh mục">
+                                                            <a href="/CategoryManagement/update_product_category?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)" class="active" ui-toggle-class="">
+                                                                <i class="fa fa-edit text-active"></i>
+                                                            </a>
+                                                        </button>
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa danh mục">
+                                                            <a href="javascript:void(0)" class="active" ui-toggle-class="">
+                                                                <i class="fa fa-times text-danger text"></i>
+                                                            </a>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -193,6 +189,77 @@
 <!-- Atlantis DEMO methods, don't include it in your project! -->
 <script src="~/public/admin/js/setting-demo2.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $('button[data-original-title="Hiển thị"]').click(function () {
+            var CategoryId = $(this).parents('tr').find('.CategoryId').val();
+            var activeButton = $(this);
+            var unactiveButton = $(this).parent().find('button[data-original-title="Ẩn"]');
+            $.ajax({
+                url: '/CategoryManagement/unactive_category',
+                method: "GET",
+                data: { CategoryId: CategoryId },
+                success: function (data) {
+                    activeButton.attr('hidden', true);
+                    unactiveButton.removeAttr('hidden');
+                },
+                error: function (data) {
+                    alert('Lỗi');
+                }
+            });
+        });
+
+        $('button[data-original-title="Ẩn"]').click(function () {
+            var CategoryId = $(this).parents('tr').find('.CategoryId').val();
+            var unactiveButton = $(this);
+            var activeButton = $(this).parent().find('button[data-original-title="Hiển thị"]');
+            $.ajax({
+                url: '/CategoryManagement/active_category',
+                method: "GET",
+                data: { CategoryId: CategoryId },
+                success: function (data) {
+                    unactiveButton.attr('hidden', true);
+                    activeButton.removeAttr('hidden');
+                },
+                error: function (data) {
+                    alert('Lỗi');
+                }
+            });
+        });
+
+        $('button[data-original-title="Xóa danh mục"]').click(function () {
+            var CategoryId = $(this).parents('tr').find('.CategoryId').val();
+            var thisSlider = $(this).parents('tr');
+            swal({
+                title: "Xác nhận",
+                text: "Bạn có chắc muốn xóa danh mục không?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: '/CategoryManagement/delete_category',
+                            method: "GET",
+                            data: { CategoryId: CategoryId },
+                            success: function (data) {
+                                thisSlider.remove();
+                                swal("Xóa danh mục thành công!", {
+                                    icon: "success",
+                                });
+                            },
+                            error: function (data) {
+                                alert('Lỗi');
+                            }
+                        });
+
+                    }
+                });
+
+        });
+    });
+</script>
 <script>
 		$(document).ready(function() {
 			$('#basic-datatables').DataTable({
