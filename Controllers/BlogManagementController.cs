@@ -49,24 +49,24 @@ namespace ITGoShop_F_Ver2.Controllers
         public IActionResult view_content()
         {
             ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            ViewBag.AllBlog = context.getAllBlog();
+            ViewBag.AllBlog = context.getAllBlogForBlogManagement();
             return View();
         }
-        public void unactive_blog(int ProductId)
+        public void unactive_blog(int BlogId)
         {
-            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            context.updateProductStatus(ProductId, 0);
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            linqContext.updateBlogStatus(BlogId, 0);
         }
-        public void active_blog(int ProductId)
+        public void active_blog(int BlogId)
         {
-            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            context.updateProductStatus(ProductId, 1);
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            linqContext.updateBlogStatus(BlogId, 1);
         }
 
-        public void delete_blog(int ProductId)
+        public void delete_blog(int BlogId)
         {
-            ITGoShopContext context = HttpContext.RequestServices.GetService(typeof(ITGoShop_F_Ver2.Models.ITGoShopContext)) as ITGoShopContext;
-            context.deleteProduct(ProductId);
+            ITGoShopLINQContext linqContext = new ITGoShopLINQContext();
+            linqContext.deleteBlog(BlogId);
         }
     }
 }

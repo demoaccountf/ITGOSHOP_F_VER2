@@ -33,7 +33,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Thêm thương hiệu nhánh</div>
+                            <div class="card-title">Cập nhật hiệu nhánh</div>
                         </div>
                         <form role="form" action="/BrandManagement/save_update_subbrand" method="post" enctype="multipart/form-data">
                             <div class="card-body">
@@ -53,7 +53,7 @@
                                             <select class="form-control" name="BrandId" id="exampleFormControlSelect1">
                                                 @foreach (var item in @ViewBag.AllBrand)
                                                 {
-                                            @if (item.BrandId == @ViewBag.SubBrandInfo.BrandId)
+                                            @if (item.BrandId == ViewBag.SubBrandInfo.BrandId)
                                             {
                                             <option value="@item.BrandId">ID: @item.BrandId - @item.BrandName (Mã Danh Mục: @item.CategoryId)</option> }
                                                             else

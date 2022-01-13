@@ -62,53 +62,51 @@
                                         <tbody>
                                             @foreach (var item in @ViewBag.AllBlog)
                                             {
-                                                <tr>
-                                                    <td> @item.GetType().GetProperty("Author").GetValue(item, null)</td>
-                                                    <td>@item.GetType().GetProperty("DatePost").GetValue(item, null)</td>
-                                                    <td>@item.GetType().GetProperty("Title").GetValue(item, null)</td>
-                                                    <td>@item.GetType().GetProperty("Summary").GetValue(item, null)</td>
-                                                    <td><img src="~/public/images_upload/blog/@item.GetType().GetProperty("Image").GetValue(item, null)" height="80" width="80"></td>
+                                            <tr>
+                                                <input type="hidden" class="BlogId" value="@item.GetType().GetProperty("BlogId").GetValue(item, null)" />
+                                                <td> @item.GetType().GetProperty("Author").GetValue(item, null)</td>
+                                                <td>@item.GetType().GetProperty("DatePost").GetValue(item, null)</td>
+                                                <td>@item.GetType().GetProperty("Title").GetValue(item, null)</td>
+                                                <td>@item.GetType().GetProperty("Summary").GetValue(item, null)</td>
+                                                <td><img src="~/public/images_upload/blog/@item.GetType().GetProperty("Image").GetValue(item, null)" height="80" width="80"></td>
 
-                                                    <td>
-                                                        <div class="form-button-action">
-                                                            @if (item.GetType().GetProperty("Status").GetValue(item, null) == 1)
-                                                            {
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị sản phẩm">
-                                                                    <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
-                                                                </button>
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn sản phẩm" hidden>
-                                                                    <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
-                                                                </button>
-                                                            }
-                                                            else
-                                                            {
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị sản phẩm" hidden>
-                                                                    <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
-                                                                </button>
-                                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn sản phẩm">
-                                                                    <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
-                                                                </button>
-                                                            }
-
-
-
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-button-action">
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Cập nhật sản phẩm">
-                                                                <a href="/BlogManagement/update_content?blogtId=@item.GetType().GetProperty("BlogId").GetValue(item, null)" class="active" ui-toggle-class="">
-                                                                    <i class="fa fa-edit text-active"></i>
-                                                                </a>
+                                                <td>
+                                                    <div class="form-button-action">
+                                                        @if (@item.GetType().GetProperty("Status").GetValue(item, null) == 1)
+                                                        {
+                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị bài đăng">
+                                                                <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
                                                             </button>
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa sản phẩm">
-                                                                <a href="javascript:void(0)" class="active" ui-toggle-class="">
-                                                                    <i class="fa fa-times text-danger text"></i>
-                                                                </a>
+                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn bài đăng" hidden>
+                                                                <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
+                                                            </button> }
+                                                        else
+                                                        {
+                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Hiển thị bài đăng" hidden>
+                                                                <span class="fa-thumb-styling fa fa-eye" style="font-size:18px"></span>
                                                             </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Ẩn bài đăng">
+                                                                <span class="fa-thumb-styling fa fa-eye-slash" style="color:red; font-size:18px"></span>
+                                                            </button>}
+
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-button-action">
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Cập nhật bài đăng">
+                                                            <a href="/BlogManagement/update_content?blogtId=@item.GetType().GetProperty("BlogId").GetValue(item, null)" class="active" ui-toggle-class="">
+                                                                <i class="fa fa-edit text-active"></i>
+                                                            </a>
+                                                        </button>
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa bài đăng">
+                                                            <a href="javascript:void(0)" class="active" ui-toggle-class="">
+                                                                <i class="fa fa-times text-danger text"></i>
+                                                            </a>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -120,7 +118,77 @@
             </div>
         </div>
     </div>
+    <script>
+    $(document).ready(function () {
+        $('button[data-original-title="Hiển thị bài đăng"]').click(function () {
+    var BlogId = $(this).parents('tr').find('.BlogId').val();
+    var activeButton = $(this);
+            var unactiveButton = $(this).parent().find('button[data-original-title="Ẩn bài đăng"]');
+    $.ajax({
+        url: '/BlogManagement/unactive_blog',
+    method: "GET",
+    data: { BlogId: BlogId },
+    success: function (data) {
+    activeButton.attr('hidden', true);
+    unactiveButton.removeAttr('hidden');
+    },
+    error: function (data) {
+    alert('Lỗi');
+    }
+    });
+    });
 
+        $('button[data-original-title="Ẩn bài đăng"]').click(function () {
+        var BlogId = $(this).parents('tr').find('.BlogId').val();
+    var unactiveButton = $(this);
+            var activeButton = $(this).parent().find('button[data-original-title="Hiển thị bài đăng"]');
+    $.ajax({
+        url: '/BlogManagement/active_blog',
+    method: "GET",
+        data: { BlogId: BlogId },
+    success: function (data) {
+    unactiveButton.attr('hidden', true);
+    activeButton.removeAttr('hidden');
+    },
+    error: function (data) {
+    alert('Lỗi');
+    }
+    });
+    });
+
+    $('button[data-original-title="Xóa bài đăng"]').click(function () {
+        var BlogId = $(this).parents('tr').find('.BlogId').val();
+    var thisSlider = $(this).parents('tr');
+    swal({
+    title: "Xác nhận",
+    text: "Bạn có chắc muốn xoá bài đăng không?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+    })
+    .then((willDelete) => {
+    if (willDelete) {
+    $.ajax({
+        url: '/BlogManagement/delete_blog',
+    method: "GET",
+        data: { BlogId: BlogId },
+    success: function (data) {
+    thisSlider.remove();
+    swal("Xóa thương hiệu nhánh thành công!", {
+    icon: "success",
+    });
+    },
+    error: function (data) {
+    alert('Lỗi');
+    }
+    });
+
+    }
+    });
+
+    });
+    });
+    </script>
     <!-- jQuery UI -->
     <script src="~/public/admin/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="~/public/admin/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>

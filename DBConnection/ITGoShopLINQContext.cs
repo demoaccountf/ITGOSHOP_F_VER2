@@ -142,8 +142,12 @@ namespace ITGoShop_F_Ver2.Models
         public void updateCate(Category cateInfo)
         {
             var cate = Category.Where(p => p.CategoryId == cateInfo.CategoryId).FirstOrDefault();
-            cate.CategoryName = cateInfo.CategoryName;
-            this.SaveChanges();
+            if (cate != null)
+            {
+                cate.CategoryName = cateInfo.CategoryName;
+                cate.Status = cateInfo.Status;
+            }
+            SaveChanges();
         }
         public void updateBrand(Brand brandInfo)
         {
@@ -186,19 +190,7 @@ namespace ITGoShop_F_Ver2.Models
             }
         }
 
-        public void deleteCategory(string categoryId)
-        {
-            var cate = (from p in Category
-                           where (p.CategoryId == categoryId)
-                           select p).FirstOrDefault();
-
-            if (cate != null)
-            {
-                Remove(cate);
-                SaveChanges();
-            }
-        }
-
+        
         public void deleteBrand(int brandId)
         {
             var subbrand = (from p in SubBrand
@@ -775,12 +767,44 @@ namespace ITGoShop_F_Ver2.Models
                 SaveChanges();
             }
         }
+        public void deleteCategory(string categoryId)
+        {
+            var cate = Category.Where(p => p.CategoryId == categoryId).FirstOrDefault();
+            if (cate != null)
+            {
+                Remove(cate);
+                SaveChanges();
+            }
+        }
+
         public Category getCate(string categoryId)
         {
             var cateInfo = Category.Where(b => b.CategoryId == categoryId).FirstOrDefault();
             if (cateInfo != null)
                 return cateInfo;
             return null;
+        }
+        public void updateCateStatus(string CategoryId, int Status)
+        {
+            var cate = Category.Where(p => p.CategoryId == CategoryId).FirstOrDefault();
+            cate.Status = Status;
+            SaveChanges();
+        }
+
+        public void updateBlogStatus(int BlogId, int Status)
+        {
+            var blog = Blog.Where(p => p.BlogId == BlogId).FirstOrDefault();
+            blog.Status = Status;
+            SaveChanges();
+        }
+        public void deleteBlog(int BlogId)
+        {
+            var blog = Blog.Where(p => p.BlogId == BlogId).FirstOrDefault();
+            if (blog != null)
+            {
+                Remove(blog);
+                SaveChanges();
+            }
         }
     }
 }

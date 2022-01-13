@@ -145,7 +145,12 @@
                             {
                                 <li class="menu-item"><a href="/ProductListing/product_listing2?categoryId=@item.GetType().GetProperty("CategoryId").GetValue(item, null)" style="text-decoration:none">Phụ Kiện</a></li>
                             }}
-                        <li class="menu-item"><a href="/Blog/all_blog" style="text-decoration:none">Tin Tức</a></li>
+                        @foreach (var item in @ViewBag.AllCategory)
+                        {
+                            @if (item.GetType().GetProperty("CategoryId").GetValue(item, null) == "BL000")
+                            {
+                                <li class="menu-item"><a href="/Blog/all_blog" style="text-decoration:none">Tin Tức</a></li>
+                            }}
                     </ul>
                 </div>
                 <div class="navigation__column right" style="height:60px; margin-bottom: 15px;">
