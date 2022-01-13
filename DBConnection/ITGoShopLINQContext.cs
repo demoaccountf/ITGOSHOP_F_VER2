@@ -691,7 +691,8 @@ namespace ITGoShop_F_Ver2.Models
                 Content = content,
                 Rating = rating,
                 UserId = userId,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                ProductRatingStatus = 1
             };
             ProductRating.Add(productRating);
             SaveChanges();
