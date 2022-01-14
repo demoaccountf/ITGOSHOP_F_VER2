@@ -1431,11 +1431,6 @@ namespace ITGoShop_F_Ver2.Models
                 cmd.Parameters.AddWithValue("productId", productId);
                 cmd.ExecuteNonQuery();
 
-                str = "DELETE FROM CartItem WHERE ProductId = @productId";
-                cmd = new MySqlCommand(str, conn);
-                cmd.Parameters.AddWithValue("productId", productId);
-                cmd.ExecuteNonQuery();
-
                 str = "DELETE FROM Product WHERE ProductId = @productId";
                 cmd = new MySqlCommand(str, conn);
 
