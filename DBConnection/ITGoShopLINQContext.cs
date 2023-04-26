@@ -9,7 +9,7 @@ namespace ITGoShop_F_Ver2.Models
 {
     public class ITGoShopLINQContext : DbContext
     {
-        private const string connectionString = "server=localhost;port=3307;database=itgoshop;uid=root;password=;Convert Zero Datetime=True";
+        private const string connectionString = "server=localhost;port=3306;database=itgoshop;uid=root;password=c@123456;Convert Zero Datetime=True";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
